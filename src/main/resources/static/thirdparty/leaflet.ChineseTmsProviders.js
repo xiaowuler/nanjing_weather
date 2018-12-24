@@ -1,6 +1,6 @@
 L.TileLayer.ChinaProvider = L.TileLayer.extend({
 
-    initialize: function (type, options) { // (type, Object)
+    initialize: function(type, options) { // (type, Object)
         var providers = L.TileLayer.ChinaProvider.providers;
 
         var parts = type.split('.');
@@ -11,8 +11,6 @@ L.TileLayer.ChinaProvider = L.TileLayer.extend({
 
         var url = providers[providerName][mapName][mapType];
         options.subdomains = providers[providerName].Subdomains;
-        options.fillColor='#3554ff';
-        options.fillOpacity=1;
 
         L.TileLayer.prototype.initialize.call(this, url, options);
     }
@@ -21,8 +19,8 @@ L.TileLayer.ChinaProvider = L.TileLayer.extend({
 L.TileLayer.ChinaProvider.providers = {
     TianDiTu: {
         Normal: {
-            Map: "http://t{s}.tianditu.cn/DataServer?T=vec_w&X={x}&Y={y}&L={z}&apistyle=s.t:3|p.v:off",
-            //Annotion: "http://t{s}.tianditu.cn/DataServer?T=cva_w&X={x}&Y={y}&L={z}"
+            Map: "http://t{s}.tianditu.cn/DataServer?T=vec_w&X={x}&Y={y}&L={z}",
+            Annotion: "http://t{s}.tianditu.cn/DataServer?T=cva_w&X={x}&Y={y}&L={z}"
         },
         Satellite: {
             Map: "http://t{s}.tianditu.cn/DataServer?T=img_w&X={x}&Y={y}&L={z}",
@@ -37,7 +35,7 @@ L.TileLayer.ChinaProvider.providers = {
 
     GaoDe: {
         Normal: {
-            Map: 'http://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}&apistyle=s.t:3|p.v:off'
+            Map: 'http://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}'
         },
         Satellite: {
             Map: 'http://webst0{s}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}',
@@ -48,7 +46,7 @@ L.TileLayer.ChinaProvider.providers = {
 
     Google: {
         Normal: {
-            Map: "http://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}&apistyle=s.t:3|p.v:off"
+            Map: "http://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}"
         },
         Satellite: {
             Map: "http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}"
@@ -70,6 +68,6 @@ L.TileLayer.ChinaProvider.providers = {
     }
 };
 
-L.tileLayer.chinaProvider = function (type, options) {
+L.tileLayer.chinaProvider = function(type, options) {
     return new L.TileLayer.ChinaProvider(type, options);
 };
