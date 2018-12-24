@@ -517,20 +517,24 @@ var App = function () {
             $('.imgeUrl2').html(imgHtml2);
             app.Relayout();
             length = overview.find('ul li').length;
-           // $(".imgeUrl").find(".action").trigger('click');
 
             $('.imgeUrl').html(imgHtml);
+
+            $(".imgeUrl").find(".action").trigger('click');
+
             $('.bigImg').attr('src',data[0]);
             tabNum = tab.find('ul li').length;
+
             $('.imgeUrl').width(($('.imgeUrl li').length) * tabWidth);
             $('.imgeUrl').find('li').width(tabWidth - 1);
             $('.imgeUrl').find('li').eq(tabNum - 1).addClass("action");
             overview.find('ul li').eq(tabNum - 1).show();
 
+
             var num = tabNum - showNum;
             var tWidth = -(num * tabWidth);
             tab.find('ul').stop().animate({'left': tWidth}, 600);
-            app.ElementsTab();
+          //app.ElementsTab();
         })
     })
 }

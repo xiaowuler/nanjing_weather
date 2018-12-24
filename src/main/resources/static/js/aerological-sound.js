@@ -520,6 +520,8 @@ var App = function () {
            // $(".imgeUrl").find(".action").trigger('click');
 
             $('.imgeUrl').html(imgHtml);
+            //$(".imgeUrl").find(".action").trigger('click');
+
             $('.bigImg').attr('src',data[0]);
             tabNum = tab.find('ul li').length;
             $('.imgeUrl').width(($('.imgeUrl li').length) * tabWidth);
@@ -531,6 +533,7 @@ var App = function () {
             var tWidth = -(num * tabWidth);
             tab.find('ul').stop().animate({'left': tWidth}, 600);
             app.ElementsTab();
+            $(".imgeUrl li.action").trigger('click');
         })
     })
 }
