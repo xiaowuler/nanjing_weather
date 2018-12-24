@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="easyUI/easyui.css">
+    <link rel="stylesheet" href="css/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/map.css">
+</head>
+<body>
+<div class="map-wrapper" id="map-wrapper">
+    <div class="map" id="map">
+    </div>
+</div>
+<div class="box">
+    <div class="top clearfix">
+        <div class="logo fl">
+            <img src="images/logo.png">
+        </div>
+        <div class="top-menu fr clearfix">
+            <div class="nav fl">
+                <ul class="clearfix">
+                    <li class="action"><a href="javascript:;" class="nav-home">首页</a></li>
+                    <li><a href="javascript:;" class="nav-detect">非常规高空探测</a></li>
+                    <li><a href="javascript:;" class="nav-sequence">气象资料监控</a></li>
+                    <li><a href="javascript:;" class="nav-warn">产品制作</a></li>
+                    <li><a href="javascript:;" class="nav-manage">系统管理</a></li>
+                </ul>
+            </div>
+            <div class="operate fr">
+                <a href="javascript:;" class="operate-admin fl">欢迎admin</a>
+                <a href="javascript:;" class="operate-cancel fl">注销</a>
+            </div>
+        </div>
+    </div>
+    <div class="main clearfix">
+        <div class="left fl">
+            <div class="chart-type clearfix">
+                <div class="theme theme-radar">
+                    <div class="title">
+                        <h2>激光雷达</h2>
+                        <ul class="title-tab clearfix">
+                            <li class="action">云高</li>
+                            <li>消光指数</li>
+                            <li>PM10浓度</li>
+                        </ul>
+                    </div>
+                    <div class="theme-content">
+                        <div class="theme-chart" style="display: block;">
+                            <img src="images/chart1.jpg">
+                        </div>
+                        <div class="theme-chart">
+                            <img src="images/chart2.jpg">
+                        </div>
+                        <div class="theme-chart">
+                            <img src="images/chart3.jpg">
+                        </div>
+                    </div>
+                </div>
+                <div class="theme">
+                    <div class="title">
+                        <h2>风廓线雷达</h2>
+                        <ul class="title-tab clearfix">
+                            <li class="action">时时采样</li>
+                            <li>半小时平均</li>
+                            <li>1小时平均</li>
+                        </ul>
+                    </div>
+                    <div class="theme-content">
+                        <div class="theme-chart" style="display: block;">
+                            <img src="images/chart2.jpg">
+                        </div>
+                        <div class="theme-chart">
+                            <img src="images/chart1.jpg">
+                        </div>
+                        <div class="theme-chart">
+                            <img src="images/chart3.jpg">
+                        </div>
+                    </div>
+                </div>
+                <div class="theme">
+                    <div class="title">
+                        <h2>GPS/MET</h2>
+                        <ul class="title-tab clearfix">
+                            <li class="action">站点1</li>
+                            <li>站点2</li>
+                            <li>站点3</li>
+                        </ul>
+                    </div>
+                    <div class="theme-content">
+                        <div class="theme-chart" style="display: block;">
+                            <img src="images/chart3.jpg">
+                        </div>
+                        <div class="theme-chart">
+                            <img src="images/chart2.jpg">
+                        </div>
+                        <div class="theme-chart">
+                            <img src="images/chart4.jpg">
+                        </div>
+                    </div>
+                </div>
+                <div class="theme">
+                    <div class="title">
+                        <h2>微波辐射</h2>
+                        <ul class="title-tab clearfix">
+                            <li class="action">水汽密度</li>
+                            <li>相对湿度</li>
+                            <li>温度</li>
+                        </ul>
+                    </div>
+                    <div class="theme-content">
+                        <div class="theme-chart" style="display: block;">
+                            <img src="images/chart4.jpg">
+                        </div>
+                        <div class="theme-chart">
+                            <img src="images/chart2.jpg">
+                        </div>
+                        <div class="theme-chart">
+                            <img src="images/chart3.jpg">
+                        </div>
+                    </div>
+                </div>
+                <div class="theme theme-raindrop">
+                    <div class="title">
+                        <h2>雨滴谱</h2>
+                        <ul class="title-tab clearfix">
+                            <li class="action">水汽密度</li>
+                            <li>相对湿度</li>
+                            <li>温度</li>
+                        </ul>
+                    </div>
+                    <div class="theme-content">
+                        <div class="theme-chart" style="display: block;">
+                            <img src="images/chart5.jpg">
+                        </div>
+                        <div class="theme-chart">
+                            <img src="images/chart2.jpg">
+                        </div>
+                        <div class="theme-chart">
+                            <img src="images/chart1.jpg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="rain-chat">
+                <div class="title">
+                    <h2>雨滴谱</h2>
+                    <div class="title-tab">
+                        <ul class="clearfix">
+                            <li class="action">水汽密度</li>
+                            <li>相对湿度</li>
+                            <li>温度</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="theme-chart">
+                    <img src="images/chart5.jpg">
+                </div>
+            </div>-->
+            <div class="angle angle1"></div>
+            <div class="angle angle2"></div>
+            <div class="angle angle3"></div>
+            <div class="angle angle4"></div>
+        </div>
+        <div class="right fr">
+            <div class="time">
+                <div class="time-date time-font" id="date"></div>
+                <div class="current-date time-font"><span id="current"></span><span class="time-week" id="week"></span></div>
+                <div class="refresh">
+                    自动刷新<a href="javascript:;"></a>
+                </div>
+            </div>
+            <div class="rainfall bg shadow">
+                <div class="rainfall-tab">
+                    <ul class="clearfix">
+                        <!--<li class="action">降水</li>-->
+                        <li class="action">降雨</li>
+                        <li>温度</li>
+                        <li>风</li>
+                        <li>相对湿度</li>
+                        <li>气压</li>
+                        <li>地温</li>
+                    </ul>
+                </div>
+                <div class="rainfall-content bg">
+                    <div class="rainfall-information" style="display: block;">
+                        <div class="clearfix">
+                            <div class="rainfall-radio">
+                                <input type="radio" id="rainfall-radio1" value="option1" name="radio1" checked="">
+                                <label for="rainfall-radio1">1小时</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="rainfall-radio2" value="option2" name="radio1">
+                                <label for="rainfall-radio2">3小时</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="rainfall-radio5" value="option2" name="radio1">
+                                <label for="rainfall-radio5">24小时</label>
+                            </div>
+                        </div>
+                        <div class="rainfall-border clearfix">
+                            <div class="rainfall-radio">
+                                <input type="radio" id="rainfall-radio6" value="option1" name="radio2" checked="">
+                                <label for="rainfall-radio6">>0.00mm</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="rainfall-radio7" value="option2" name="radio2">
+                                <label for="rainfall-radio7">≥10.0mm</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="rainfall-radio8" value="option2" name="radio2">
+                                <label for="rainfall-radio8">≥25mm</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="rainfall-radio9" value="option2" name="radio2">
+                                <label for="rainfall-radio9">≥50mm</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="rainfall-radio10" value="option2" name="radio2">
+                                <label for="rainfall-radio10">≥100mm</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rainfall-information">
+                        <div class="clearfix">
+                            <div class="rainfall-radio">
+                                <input type="radio" id="temperature-radio1" value="option1" name="radio3" checked="">
+                                <label for="temperature-radio1">温度</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="temperature-radio2" value="option2" name="radio3">
+                                <label for="temperature-radio2">最高温度</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="temperature-radio3" value="option2" name="radio3">
+                                <label for="temperature-radio3">最低温度</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="temperature-radio4" value="option2" name="radio8">
+                                <label for="temperature-radio4">24小时变温</label>
+                            </div>
+                        </div>
+                        <div class="rainfall-border clearfix">
+                            <div class="rainfall-radio">
+                                <input type="radio" id="temperature-radio5" value="option2" name="radio8" checked="">
+                                <label for="temperature-radio5">≥30℃</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="temperature-radio6" value="option2" name="radio8">
+                                <label for="temperature-radio6">≥35℃</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="temperature-radio7" value="option2" name="radio8">
+                                <label for="temperature-radio7">≥40℃</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="temperature-radio8" value="option2" name="radio8">
+                                <label for="temperature-radio8">≤0℃</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="temperature-radio9" value="option2" name="radio8">
+                                <label for="temperature-radio9">≤-5℃</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="temperature-radio10" value="option2" name="radio8">
+                                <label for="temperature-radio10">≤-10℃</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rainfall-information">
+                        <div class="clearfix">
+                            <div class="rainfall-radio rainfall-width">
+                                <input type="radio" id="wind-radio1" value="option1" name="radio4" checked="">
+                                <label for="wind-radio1">平均风</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="wind-radio2" value="option2" name="radio4">
+                                <label for="wind-radio2">2分钟风向风速</label>
+                            </div>
+                            <div class="rainfall-radio rainfall-width">
+                                <input type="radio" id="wind-radio3" value="option2" name="radio4">
+                                <label for="wind-radio3">10分钟风向风速</label>
+                            </div>
+                        </div>
+                        <div class="rainfall-border clearfix">
+                            <div class="rainfall-radio">
+                                <input type="radio" id="wind-radio4" value="option2" name="radio9" checked="">
+                                <label for="wind-radio4">>0m/s</label>
+                            </div>
+                            <div class="rainfall-radio rainfall-width">
+                                <input type="radio" id="wind-radio5" value="option2" name="radio9">
+                                <label for="wind-radio5">≥14m/s</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="wind-radio6" value="option2" name="radio9">
+                                <label for="wind-radio6">≥17m/s</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="wind-radio7" value="option2" name="radio9">
+                                <label for="wind-radio7">≥20m/s</label>
+                            </div>
+                            <div class="rainfall-radio">
+                                <input type="radio" id="wind-radio8" value="option2" name="radio9">
+                                <label for="wind-radio8">≥24m/s</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rainfall-information clearfix">
+                        <div class="rainfall-radio">
+                            <input type="radio" id="humidity-radio1" value="option1" name="radio5" checked="">
+                            <label for="humidity-radio1">>0%</label>
+                        </div>
+                        <div class="rainfall-radio">
+                            <input type="radio" id="humidity-radio2" value="option2" name="radio5">
+                            <label for="humidity-radio2">≥70%</label>
+                        </div>
+                        <div class="rainfall-radio">
+                            <input type="radio" id="humidity-radio3" value="option2" name="radio5">
+                            <label for="humidity-radio3">≥80%</label>
+                        </div>
+                        <div class="rainfall-radio">
+                            <input type="radio" id="humidity-radio4" value="option2" name="radio5">
+                            <label for="humidity-radio4">≥90%</label>
+                        </div>
+                    </div>
+                    <div class="rainfall-information clearfix">
+                        <div class="rainfall-radio">
+                            <input type="radio" id="pressure-radio1" value="option1" name="radio6" checked="">
+                            <label for="humidity-radio1">本站气压</label>
+                        </div>
+                        <div class="rainfall-radio">
+                            <input type="radio" id="pressure-radio2" value="option2" name="radio6">
+                            <label for="pressure-radio2">24小时变压</label>
+                        </div>
+                    </div>
+                    <div class="rainfall-information clearfix">
+                        <div class="rainfall-radio">
+                            <input type="radio" id="geothermal-radio1" value="option1" name="radio7" checked="">
+                            <label for="geothermal-radio1">地面温度</label>
+                        </div>
+                        <div class="rainfall-radio">
+                            <input type="radio" id="geothermal-radio2" value="option2" name="radio7">
+                            <label for="geothermal-radio2">5cm地温</label>
+                        </div>
+                        <div class="rainfall-radio">
+                            <input type="radio" id="geothermal-radio3" value="option2" name="radio7">
+                            <label for="geothermal-radio3">10cm地温</label>
+                        </div>
+                        <div class="rainfall-radio">
+                            <input type="radio" id="geothermal-radio4" value="option1" name="radio7">
+                            <label for="geothermal-radio4">15cm地温</label>
+                        </div>
+                        <div class="rainfall-radio">
+                            <input type="radio" id="geothermal-radio5" value="option1" name="radio7">
+                            <label for="geothermal-radio5">20cm地温</label>
+                        </div>
+                        <div class="rainfall-radio">
+                            <input type="radio" id="geothermal-radio6" value="option1" name="radio7">
+                            <label for="geothermal-radio6">40cm地温</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="angle angle1"></div>
+                <div class="angle angle2"></div>
+                <div class="angle angle3"></div>
+                <div class="angle angle4"></div>
+            </div>
+            <!--<div class="date bg shadow">
+                <form>
+                    <div class="date-box date-start">
+                        <input class="easyui-datebox" id="date-start" label="开始" data-options="editable:false" value="123">
+                    </div>
+                    <div class="date-box date-end">
+                        <input class="easyui-datebox" id="date-end" label="结束" data-options="editable:false" value="123">
+                    </div>
+                </form>
+                <div class="btn">
+                    <a href="javascript:;" class="easyui-linkbutton">重置</a>
+                    <a href="javascript:;" class="easyui-linkbutton">查询</a>
+                </div>
+                <div class="angle angle1"></div>
+                <div class="angle angle2"></div>
+                <div class="angle angle3"></div>
+                <div class="angle angle4"></div>
+            </div>
+            <div class="threshold text bg shadow">
+                <h2 class="font">阈值</h2>
+                <div class="threshold-txt">
+                    <input id="threshold" class="easyui-numberspinner" value="50" data-options="labelPosition:'top',spinAlign:'horizontal'">
+                    <a href="javascript:;" class="easyui-linkbutton">确定</a>
+                </div>
+                <div class="angle angle1"></div>
+                <div class="angle angle2"></div>
+                <div class="angle angle3"></div>
+                <div class="angle angle4"></div>
+            </div>-->
+            <div class="layer text bg shadow">
+                <h2 class="font">图层信息</h2>
+                <div class="layer-txt clearfix">
+                    <div class="layer-box">
+                        <input id="checkbox1" type="checkbox" checked>
+                        <label for="checkbox1">站名</label>
+                    </div>
+                    <div class="layer-box">
+                        <input id="checkbox2" type="checkbox">
+                        <label for="checkbox2">等值线</label>
+                    </div>
+                    <div class="layer-box">
+                        <input id="checkbox3" type="checkbox">
+                        <label for="checkbox3">色斑图</label>
+                    </div>
+                </div>
+                <div class="angle angle1"></div>
+                <div class="angle angle2"></div>
+                <div class="angle angle3"></div>
+                <div class="angle angle4"></div>
+            </div>
+        </div>
+        <div class="bottom fl clearfix">
+            <div class="slide slide-left fl">
+                <div class="slide-title">
+                    <div class="slide-time-txt">时间</div>
+                    <div class="slide-txt slide-line">非常规数据采集名称</div>
+                    <div class="slide-txt slide-txt-blue">激光雷达</div>
+                    <div class="slide-txt">风廓线</div>
+                    <div class="slide-txt slide-txt-blue">GPS/MET</div>
+                    <div class="slide-txt">微波辐射</div>
+                    <div class="slide-txt slide-txt-blue">雨滴谱</div>
+                </div>
+                <div class="slide-tab">
+                    <div class="swiper-container swiper-left">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="slide-time">14:00</div>
+                                <div class="slide-state">完成状态</div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slide-time">14:05</div>
+                                <div class="slide-state">完成状态</div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slide-time">14:10</div>
+                                <div class="slide-state">完成状态</div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slide-time">14:15</div>
+                                <div class="slide-state">完成状态</div>
+                                <div class="slide-des"><span class="color green"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slide-time">14:20</div>
+                                <div class="slide-state">完成状态</div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slide-time">14:25</div>
+                                <div class="slide-state">完成状态</div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slide-time">14:30</div>
+                                <div class="slide-state">完成状态</div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slide-time">14:35</div>
+                                <div class="slide-state">完成状态</div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                            </div>
+                        </div>
+                        <div class="swiper-button-next swiper-next-left"></div>
+                        <div class="swiper-button-prev swiper-prev-left"></div>
+                    </div>
+                </div>
+                <div class="angle angle1"></div>
+                <div class="angle angle2"></div>
+                <div class="angle angle3"></div>
+                <div class="angle angle4"></div>
+            </div>
+            <div class="slide slide-right fr">
+                <div class="slide-title">
+                    <div class="slide-time-txt">时间</div>
+                    <div class="slide-txt slide-line">非常规数据采集名称</div>
+                    <div class="slide-txt slide-txt-blue">激光雷达</div>
+                    <div class="slide-txt">风廓线</div>
+                    <div class="slide-txt slide-txt-blue">GPS/MET</div>
+                    <div class="slide-txt">微波辐射</div>
+                    <div class="slide-txt slide-txt-blue">雨滴谱</div>
+                </div>
+                <div class="slide-tab">
+                    <div class="swiper-container swiper-right">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="slide-time">14:00</div>
+                                <div class="slide-state">完成状态</div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slide-time">14:05</div>
+                                <div class="slide-state">完成状态</div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slide-time">14:10</div>
+                                <div class="slide-state">完成状态</div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slide-time">14:15</div>
+                                <div class="slide-state">完成状态</div>
+                                <div class="slide-des"><span class="color green"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slide-time">14:20</div>
+                                <div class="slide-state">完成状态</div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slide-time">14:25</div>
+                                <div class="slide-state">完成状态</div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slide-time">14:30</div>
+                                <div class="slide-state">完成状态</div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slide-time">14:35</div>
+                                <div class="slide-state">完成状态</div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                                <div class="slide-des"><span class="color orange"></span></div>
+                                <div class="slide-des"><span class="color red"></span></div>
+                            </div>
+                        </div>
+                        <div class="swiper-button-next swiper-next-right"></div>
+                        <div class="swiper-button-prev swiper-prev-right"></div>
+                    </div>
+                </div>
+                <div class="angle angle1"></div>
+                <div class="angle angle2"></div>
+                <div class="angle angle3"></div>
+                <div class="angle angle4"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="easyUI/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="easyUI/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="js/swiper-3.4.2.min.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/map.js"></script>
+</html>

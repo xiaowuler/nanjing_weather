@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--客户映射 指定到dao接口 -->
+<mapper namespace="com.nanjing.weather.dao.PressuresMapper">
+    <select id="findAll" resultType="com.nanjing.weather.domain.Pressures">
+        select * from pressures;
+
+    </select>
+
+    <select id="findPressuresByid" parameterType="String" resultType="com.nanjing.weather.domain.Pressures">
+        select  * from pressures where  station_id=#{id};
+
+    </select>
+
+    <insert id="add" parameterType="com.nanjing.weather.domain.Pressures">
+       INSERT INTO `pressures` (`station_id`, `min_value`, `min_value_time`, `max_value`, `max_value_time`, `routine_time`, `create_time`) VALUES (#{station_id},#{min_value}, #{min_value_time}, #{max_value},#{max_value_time},#{routine_time},#{create_time});
+    </insert>
+
+    <delete id="delete" parameterType="String">
+      delete  from `pressures`where  station_id=#{id};
+    </delete>
+
+    <update id="update" parameterType="com.nanjing.weather.domain.Pressures">
+       UPDATE `pressures` SET `station_id`=#{id}, `min_value`=#{min_value}, `min_value_time`=#{min_value_time}, `max_value`=#{max_value},`max_value_time`=#{max_value_time},`routine_time=#{routine_time}`,`create_time=#{create_time}` WHERE station_id=#{id} ;
+    </update>
+
+    <select id="findAllByTerm" resultType="com.nanjing.weather.domain.Pressures">
+        select * from pressures where routine_time = (SELECT max(routine_time) FROM `pressures`)
+    </select>
+
+    <select id="findAllByAvg" resultType="com.nanjing.weather.domain.Pressures">
+        select * from pressures where routine_time = (SELECT date_sub(#{0},interval '24' hour)) and station_id = #{1}
+    </select>
+
+    <resultMap id="findAllBySomeMap" type="com.nanjing.weather.entity.Pressure">
+        <result column="station_id" property="stationId"/>
+        <collection property="pressureCenter" ofType="com.nanjing.weather.entity.PressureCenter">
+            <result column="value" property="value"/>
+            <result column="routine_time" property="routineTime"/>
+            <result column="create_time" property="createTime"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAllBySomeTerm" resultMap="findAllBySomeMap">
+        SELECT * from pressures where 1 = 1
+        <if test="createTime != null and routineTime != null">
+            and routine_time BETWEEN #{createTime} AND #{routineTime}
+        </if>
+    </select>
+</mapper>

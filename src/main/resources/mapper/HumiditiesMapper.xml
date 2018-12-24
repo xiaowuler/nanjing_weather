@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--客户映射 指定到dao接口 -->
+<mapper namespace="com.nanjing.weather.dao.HumiditiesMapper">
+    <select id="findAll" resultType="com.nanjing.weather.domain.Humidities">
+
+        select * from humidities;
+
+    </select>
+
+
+    <select id="findHumiditiesByid" parameterType="String" resultType="com.nanjing.weather.domain.Humidities">
+
+        select * from humidities where station_id=#{id};
+
+    </select>
+
+    <insert id="add" parameterType="com.nanjing.weather.domain.Humidities">
+       INSERT INTO `humidities` (`station_id`, `value`, `value_time`, `routine_time`, `create_time`) VALUES (#{id},#{value},#{value_time}, #{routine_time}, #{create_time});
+    </insert>
+
+    <delete id="delete" parameterType="String">
+      delete  from `humidities`where  station_id=#{id};
+</delete>
+
+    <update id="update" parameterType="com.nanjing.weather.domain.Humidities">
+       UPDATE `humidities` SET `station_id`=#{id}, `value`=#{value},`value_time`=#{value_time}, `routine_time`=#{routine_time}, `create_time`=#{create_time} WHERE station_id=#{id} ;
+
+    </update>
+
+    <select id="findAllByTerm" parameterType="Integer"  resultType="com.nanjing.weather.domain.Humidities">
+      SELECT * from humidities where routine_time = (SELECT max(routine_time) FROM `humidities`) and value &gt;= #{id};
+    </select>
+
+    <resultMap id="findAllBySomeTermMap" type="com.nanjing.weather.entity.Humiditie">
+        <result column="station_id" property="stationId"/>
+        <collection property="humiditieCenter" ofType="com.nanjing.weather.entity.HumiditieCenter">
+            <result column="value" property="value"/>
+            <result column="routine_time" property="routineTime"/>
+            <result column="create_time" property="createTime"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAllBySomeTerm" parameterType="com.nanjing.weather.entity.HumiditieCenter" resultMap="findAllBySomeTermMap">
+        SELECT * from humidities where 1 = 1
+        <if test="createTime != null and routineTime != null">
+            and routine_time BETWEEN #{createTime} AND #{routineTime}
+        </if>
+        <if test="value != null">
+            and value >= #{value}
+        </if>
+    </select>
+
+</mapper>
+

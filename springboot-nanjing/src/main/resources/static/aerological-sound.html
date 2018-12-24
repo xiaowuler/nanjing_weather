@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://java.sun.com/jsf/html">
+<head>
+    <meta charset="UTF-8">
+    <title>非常规高空探测 - 南京市基础气象信息综合数据平台</title>
+    <link rel="stylesheet" href="easyUI/easyui.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/aerological-sound.css">
+</head>
+<body>
+<div class="box">
+    <div class="top clearfix">
+        <div class="logo fl">
+            <img src="images/logo.png">
+        </div>
+        <div class="top-menu fr clearfix">
+            <div class="nav fl">
+                <ul class="clearfix">
+                    <li class="nav-home"><a href="index.html">首页</a></li>
+                    <li class="nav-detect action"><a href="aerological-sound.html?category=ji-guang-lei-da">非常规高空探测</a></li>
+                    <li class="nav-observe"><a href="home.html">自动站常规要素观测</a></li>
+                    <li class="nav-sequence"><a href="data-monitor.html">观测资料监控</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="main">
+        <div class="aside">
+            <ul id="first-menu">
+                <li class="level-first-menu first-menu-click level-radar">
+                    <span class="aside-title" val="ji-guang-lei-da">激光雷达</span>
+                </li>
+                <li class="level-first-menu first-menu-click level-broad">
+                    <span class="aside-title" val="feng-kuo-xian">风廓线</span>
+                </li>
+                <li class="level-first-menu first-menu-click level-microwave">
+                    <span class="aside-title" val="wei-bo-fu-she">微波辐射</span>
+                </li>
+                <li class="level-first-menu first-menu-click level-raindrop">
+                    <span class="aside-title" val="yu-di-pu">雨滴谱</span>
+                </li>
+                <li class="level-first-menu first-menu-click level-gps">
+                    <span class="aside-title" val="gps/met">GPS/MET</span>
+                </li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="content-column aerological clearfix">
+                <div class="aerological-interval fl">
+                    <div class="aerological-select">
+                        <span id="aerological">间隔3s</span>
+                        <ul id="select">
+                            <li class="action" val="1000">间隔1s</li>
+                            <li val="2000">间隔2s</li>
+                            <li val="3000">间隔3s</li>
+                            <li val="4000">间隔4s</li>
+                            <li val="5000">间隔5s</li>
+                        </ul>
+                    </div>
+                    <div class="aerological-play">
+                        <button class="play" id="play">播放</button>
+                        <button class="pause" id="pause">暂停</button>
+                    </div>
+                    <div class="other-buttons">
+                        <button class="export" id="export">导出</button>
+                        <a href="products/downloadFile" id="download-link" style="display:none;"></a>
+                    </div>
+
+                </div>
+                <div class="fr">
+                    <div class="content-txt">
+                        <div class="content-calendar">
+                            <input class="easyui-datebox" id="calendar" label="日期" data-options="editable:false" value="123">
+                        </div>
+                        <div class="hour-select broad-hour-select">
+                            <a href="javascript:;" class="interval-arrow interval-prev fl" id="broad-prev"></a>
+                            <a href="javascript:;" class="interval-arrow interval-next fr" id="broad-next"></a>
+                            <div class="element-select broad-element">
+                                <span class="interval-text" id="broad-text">00时</span>
+                                <ul id="broad-select">
+                                    <li class="action">00时</li>
+                                    <li>01时</li>
+                                    <li>02时</li>
+                                    <li>03时</li>
+                                    <li>04时</li>
+                                    <li>05时</li>
+                                    <li>06时</li>
+                                    <li>07时</li>
+                                    <li>08时</li>
+                                    <li>09时</li>
+                                    <li>10时</li>
+                                    <li>11时</li>
+                                    <li>12时</li>
+                                    <li>13时</li>
+                                    <li>14时</li>
+                                    <li>15时</li>
+                                    <li>16时</li>
+                                    <li>17时</li>
+                                    <li>18时</li>
+                                    <li>19时</li>
+                                    <li>20时</li>
+                                    <li>21时</li>
+                                    <li>22时</li>
+                                    <li>23时</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="hour-select" id="hour-slide">
+                            <a href="javascript:;" class="interval-arrow interval-prev fl" id="interval-prev"></a>
+                            <a href="javascript:;" class="interval-arrow interval-next fr" id="interval-next"></a>
+                            <div class="element-select hour-element">
+                                <span class="interval-text" id="interval-text">00时</span>
+                                <ul id="interval-select">
+                                    <li class="action">00时</li>
+                                    <li>01时</li>
+                                    <li>02时</li>
+                                    <li>03时</li>
+                                    <li>04时</li>
+                                    <li>05时</li>
+                                    <li>06时</li>
+                                    <li>07时</li>
+                                    <li>08时</li>
+                                    <li>09时</li>
+                                    <li>10时</li>
+                                    <li>11时</li>
+                                    <li>12时</li>
+                                    <li>13时</li>
+                                    <li>14时</li>
+                                    <li>15时</li>
+                                    <li>16时</li>
+                                    <li>17时</li>
+                                    <li>18时</li>
+                                    <li>19时</li>
+                                    <li>20时</li>
+                                    <li>21时</li>
+                                    <li>22时</li>
+                                    <li>23时</li>
+                                </ul>
+                            </div>
+                            <div class="element-select minute-element">
+                                <span class="interval-text" id="interval-text6">06分钟</span>
+                                <ul id="interval-select6">
+                                    <li class="action">06分钟</li>
+                                    <li>12分钟</li>
+                                    <li>18分钟</li>
+                                    <li>24分钟</li>
+                                    <li>30分钟</li>
+                                    <li>36分钟</li>
+                                    <li>42分钟</li>
+                                    <li>48分钟</li>
+                                    <li>54分钟</li>
+                                </ul>
+                            </div>
+                            <div class="element-select minute-element30">
+                                <span class="interval-text" id="interval-text30">30分钟</span>
+                                <ul id="interval-select30">
+                                    <li class="action">30分钟</li>
+                                    <li>00分钟</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="content-txt content-query" id="query-button">查询</button>
+                </div>
+            </div>
+            <div class="detail">
+              <!--  <h2 class="detail-title">云高<span id="title-time">（2018年11月00时）</span></h2>-->
+                <div class="detail-txt">
+                    <div class="detail-overview" id="overview">
+                            <ul class="clearfix imgeUrl2" >
+                                <!--  <li><div><img class="img1" src="" class="bigImg"></div></li>
+                                       <li><img src="images/detail-big-picture2.png"></li>
+                                       <li><img src="images/detail-big-picture.png"></li>
+                                       <li><img src="images/detail-big-picture2.png"></li>
+                                       <li><img src="images/detail-big-picture.png"></li>
+                                       <li><img src="images/detail-big-picture2.png"></li>
+                                       <li><img src="images/detail-big-picture.png"></li>
+                                       <li><img src="images/detail-big-picture2.png"></li>
+                                       <li><img src="images/detail-big-picture.png"></li>-->
+                        </ul>
+                    </div>
+                    <div class="detail-slide">
+                        <div class="detail-tab" id="tab">
+                            <ul class="clearfix imgeUrl">
+                      <!--      <li class="action">
+                                    <div>
+                                        <img src="imagess\detail-picture.jpg" class="width100">
+                                        <p>00时</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <img src="images/detail-picture2.jpg" class="width100">
+                                        <p>03时</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <img src="images/detail-picture.jpg" class="width100">
+                                        <p>06时</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <img src="images/detail-picture2.jpg" class="width100">
+                                        <p>09时</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <img src="images/detail-picture.jpg" class="width100">
+                                        <p>12时</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <img src="images/detail-picture2.jpg" class="width100">
+                                        <p>15时</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <img src="images/detail-picture.jpg" class="width100">
+                                        <p>18时</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <img src="images/detail-picture2.jpg" class="width100">
+                                        <p>21时</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <img src="images/detail-picture.jpg" class="width100">
+                                        <p>24时</p>
+                                    </div>
+                                </li>-->
+                            </ul>
+                        </div>
+                        <a href="javascript:;" class="slide-arrow arrow-left" id="prev"></a>
+                        <a href="javascript:;" class="slide-arrow arrow-right" id="next"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="aerological-right bg">
+                <div class="aerological-panel area shadow">
+                    <h2>选择区域</h2>
+                    <div class="area-select clearfix" id="Onregions">
+                        <!--<a href="javascript:;" class="action" val="nanjing">南京</a>
+                        <a href="javascript:;" val="jiang-ning">江宁</a>
+                        <a href="javascript:;" val="pu-kou">浦口</a>
+                        <a href="javascript:;" val="liu-he">六合</a>
+                        <a href="javascript:;" val="xuan-wu">玄武</a>
+                        <a href="javascript:;" val="li-shui">溧水</a>
+                        <a href="javascript:;" val="gao-chun">高淳</a>-->
+                    </div>
+                    <!--<div class="angle angle1"></div>
+                    <div class="angle angle2"></div>
+                    <div class="angle angle3"></div>
+                    <div class="angle angle4"></div>-->
+                </div>
+                <div class="aerological-panel product shadow">
+                    <h2>产品列表</h2>
+                    <div class="product-select product-radar clearfix">
+                        <a href="javascript:;" class="action" val="xiao-guang">消光</a>
+                        <a href="javascript:;" val="tui-pian">退偏</a>
+                        <a href="javascript:;" val="pm10">PM10</a>
+
+                    </div>
+                    <div class="product-select product-broad">
+                        <a href="javascript:;" class="action" id="6minute" val="6-fen-zhong">6分钟</a>
+                        <a href="javascript:;" id="30minute" val="30-fen-zhong">30分钟</a>
+                        <a href="javascript:;" id="60minute"  val="60-fen-zhong">60分钟</a>
+                    </div>
+
+                    <div class="product-select product-microwave">
+                        <a href="javascript:;" class="action" val="3d-tu">3D图</a>
+                        <a href="javascript:;" val="kuo-xian">廓线</a>
+                        <a href="javascript:;" val="2d-tu">2D图</a>
+                    </div>
+                    <div class="product-select product-raindrop">
+                        <a href="javascript:;" class="action" val="yu-di-pu">雨滴谱</a>
+                    </div>
+                    <div class="product-select product-gps">
+                        <a href="javascript:;" class="action" val="gps/met">GPS/MET</a>
+                    </div>
+                    <div class="angle angle1"></div>
+                    <div class="angle angle2"></div>
+                    <div class="angle angle3"></div>
+                    <div class="angle angle4"></div>
+                </div>
+
+                  <div class="aerological-panel product direction shadow">
+                      <h2>产品类别</h2>
+                      <div class="direction-select clearfix">
+                          <a href="javascript:;" class="action" val="contour" >等风速线</a>
+                        <a href="javascript:;"  val="full">全风向</a>
+                        <a href="javascript:;" val="east-west" >东西风</a>
+                        <a href="javascript:;" val="south-north" >南北风</a>
+
+                      </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="easyUI/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="easyUI/easyui-lang-zh_CN.js"></script>
+<script src="js/helper.js"></script>
+<script type="text/javascript" src="js/aerological-sound.js"></script>
+</html>
