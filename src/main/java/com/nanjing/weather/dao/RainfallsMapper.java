@@ -11,17 +11,15 @@ import java.util.List;
 @Mapper
 public interface RainfallsMapper {
 
-    public List<Rainfalls> findAll();
+    List<Rainfalls> findAll();
 
-    public Rainfalls findRainfallsByid(String stationId);
+    Rainfalls findRainfallsByid(String stationId);
 
-    public void add(Rainfalls rainfalls);
+    void add(Rainfalls rainfalls);
 
-    public void update(Rainfalls rainfalls);
+    void update(Rainfalls rainfalls);
 
-    public void delete(String stationIds);
-
-    List<Rainfalls> findAllByTerm(Integer time, Double rainfalls);
+    void delete(String stationIds);
 
     List<RainFall> findAllBySomeTerm(RainFallCenter rainFallCenter);
 }

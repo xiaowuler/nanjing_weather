@@ -18,16 +18,12 @@
 
     <delete id="delete" parameterType="String">
       delete  from `rainfalls`where  station_id=#{id};
-</delete>
+    </delete>
 
     <update id="update" parameterType="com.nanjing.weather.domain.Rainfalls">
        UPDATE `rainfalls` SET `station_id`=#{id}, `value`=#{value}, `data_time`=#{routine_time}, `create_time`=#{create_time} WHERE station_id=#{id} ;
 
     </update>
-
-    <select id="findAllByTerm"  resultType="com.nanjing.weather.domain.Rainfalls">
-      SELECT * FROM rainfalls where routine_time = (SELECT max(routine_time) FROM `temperatures`) and create_time BETWEEN (SELECT date_sub(NOW(),interval #{0} hour)) and NOW() and value >= #{1};
-    </select>
 
     <resultMap id="findAllBySomeMap" type="com.nanjing.weather.entity.RainFall">
         <result column="station_id" property="stationId"/>

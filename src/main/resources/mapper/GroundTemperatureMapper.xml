@@ -2,22 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanjing.weather.dao.GroundTemperatureMapper">
 
-    <resultMap id="findAllByTermMap" type="com.nanjing.weather.domain.GroundTemperatures">
-        <result column="station_id" property="stationId"></result>
-        <result column="value_5cm" property="valueFiveCM"/>
-        <result column="value_10cm" property="valueTenCM"/>
-        <result column="value_15cm" property="valueFifteenCM"/>
-        <result column="value_20cm" property="valueTwentyCM"/>
-        <result column="value_40cm" property="valueFortyCM"/>
-        <result column="routine_time" property="routineTime"/>
-        <result column="create_time" property="createTime"/>
-    </resultMap>
-
-    <!--根据条件查询-->
-    <select id="findAllByTerm" resultMap="findAllByTermMap">
-        select station_id,value,value_5cm,value_10cm,value_15cm,value_20cm,value_40cm,routine_time,create_time from ground_temperatures where routine_time = (SELECT max(routine_time) FROM `temperatures`)
-    </select>
-
     <resultMap id="findAllBySomeTermMap" type="com.nanjing.weather.entity.GroupTemperature">
         <result column="station_id" property="stationId"></result>
         <collection property="groupTemperatureCenter" ofType="com.nanjing.weather.entity.GroupTemperatureCenter">

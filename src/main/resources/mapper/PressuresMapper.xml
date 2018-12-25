@@ -24,14 +24,6 @@
        UPDATE `pressures` SET `station_id`=#{id}, `min_value`=#{min_value}, `min_value_time`=#{min_value_time}, `max_value`=#{max_value},`max_value_time`=#{max_value_time},`routine_time=#{routine_time}`,`create_time=#{create_time}` WHERE station_id=#{id} ;
     </update>
 
-    <select id="findAllByTerm" resultType="com.nanjing.weather.domain.Pressures">
-        select * from pressures where routine_time = (SELECT max(routine_time) FROM `pressures`)
-    </select>
-
-    <select id="findAllByAvg" resultType="com.nanjing.weather.domain.Pressures">
-        select * from pressures where routine_time = (SELECT date_sub(#{0},interval '24' hour)) and station_id = #{1}
-    </select>
-
     <resultMap id="findAllBySomeMap" type="com.nanjing.weather.entity.Pressure">
         <result column="station_id" property="stationId"/>
         <collection property="pressureCenter" ofType="com.nanjing.weather.entity.PressureCenter">

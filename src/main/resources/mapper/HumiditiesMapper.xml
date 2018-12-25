@@ -21,16 +21,12 @@
 
     <delete id="delete" parameterType="String">
       delete  from `humidities`where  station_id=#{id};
-</delete>
+    </delete>
 
     <update id="update" parameterType="com.nanjing.weather.domain.Humidities">
        UPDATE `humidities` SET `station_id`=#{id}, `value`=#{value},`value_time`=#{value_time}, `routine_time`=#{routine_time}, `create_time`=#{create_time} WHERE station_id=#{id} ;
 
     </update>
-
-    <select id="findAllByTerm" parameterType="Integer"  resultType="com.nanjing.weather.domain.Humidities">
-      SELECT * from humidities where routine_time = (SELECT max(routine_time) FROM `humidities`) and value &gt;= #{id};
-    </select>
 
     <resultMap id="findAllBySomeTermMap" type="com.nanjing.weather.entity.Humiditie">
         <result column="station_id" property="stationId"/>

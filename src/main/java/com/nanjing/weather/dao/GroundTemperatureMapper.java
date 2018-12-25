@@ -10,7 +10,5 @@ import java.util.List;
 @Mapper
 public interface GroundTemperatureMapper {
 
-    List<GroundTemperatures> findAllByTerm();
-
     List<GroupTemperature> findAllBySomeTerm(GroupTemperatureCenter groupTemperatureCenter);
 }

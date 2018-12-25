@@ -3,17 +3,6 @@
 <!--客户映射 指定到dao接口 -->
 <mapper namespace="com.nanjing.weather.dao.TemperaturesMapper">
 
-    <!-- 定义映射map-->
-    <resultMap id="MaxTem" type="com.nanjing.weather.domain.Temperatures">
-        <id column="station_id"  property="station_Id" />
-        <result column="max_value"  property="value" />
-    </resultMap>
-
-    <resultMap id="MinTem" type="com.nanjing.weather.domain.Temperatures">
-        <id column="station_id"  property="station_Id" />
-        <result column="min_value"  property="value" />
-    </resultMap>
-
     <select id="findAll" resultType="com.nanjing.weather.domain.Temperatures">
         SELECT * from temperatures where routine_time = (SELECT max(routine_time) FROM `temperatures`) and create_time BETWEEN (SELECT date_sub(NOW(),interval #{0} hour)) and NOW() and value >= #{1};
     </select>
@@ -34,38 +23,6 @@
        UPDATE `temperatures` SET `station_id`=#{id}, `value`=#{value}, `data_time`=#{routine_time}, `create_time`=#{create_time} WHERE station_id=#{id} ;
 
     </update>
-
-    <select id="findAllByTemHigh" parameterType="Integer" resultType="com.nanjing.weather.domain.Temperatures">
-      SELECT * from temperatures where routine_time = (SELECT max(routine_time) FROM `temperatures`) and  value &gt;= #{id};
-    </select>
-
-    <select id="findAllByTemLow" parameterType="Integer" resultType="com.nanjing.weather.domain.Temperatures">
-      SELECT * from temperatures where routine_time = (SELECT max(routine_time) FROM `temperatures`) and  value &lt;= #{id};
-    </select>
-
-    <select id="findAllByTemHHigh" parameterType="Integer" resultMap="MaxTem">
-      SELECT * from temperatures_min_max where routine_time = (SELECT max(routine_time) FROM `temperatures`) and  max_value &gt;= #{id};
-    </select>
-
-    <select id="findAllByTemHLow" parameterType="Integer" resultMap="MaxTem">
-      SELECT * from temperatures_min_max where routine_time = (SELECT max(routine_time) FROM `temperatures`) and  max_value &lt;= #{id};
-    </select>
-
-    <select id="findAllByTemLHigh" parameterType="Integer" resultMap="MinTem">
-      SELECT * from temperatures_min_max where routine_time = (SELECT max(routine_time) FROM `temperatures`) and  min_value &gt;= #{id};
-    </select>
-
-    <select id="findAllByTemLLow" parameterType="Integer" resultMap="MinTem">
-      SELECT * from temperatures_min_max where routine_time = (SELECT max(routine_time) FROM `temperatures`) and  min_value &lt;= #{id};
-    </select>
-
-    <select id="findAllByTemTHigh" resultType="com.nanjing.weather.domain.Temperatures">
-      SELECT * FROM temperatures where create_time BETWEEN (SELECT date_sub(NOW(),interval #{0} hour)) and NOW() and value &gt;= #{1};
-    </select>
-
-    <select id="findAllByTemTLow" resultType="com.nanjing.weather.domain.Temperatures">
-      SELECT * FROM temperatures where create_time BETWEEN (SELECT date_sub(NOW(),interval #{0} hour)) and NOW() and value &lt;= #{1};
-    </select>
 
     <resultMap id="findAllBySomeDataHHMap" type="com.nanjing.weather.entity.Temperature">
         <result column="station_id" property="stationId"/>
