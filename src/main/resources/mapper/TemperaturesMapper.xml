@@ -84,6 +84,12 @@
         <if test="createTime != null and routineTime != null">
             and routine_time BETWEEN #{createTime} AND #{routineTime}
         </if>
+        <if test="createTime == null and routineTime == null">
+            and routine_time = (SELECT max(routine_time) FROM `temperatures`)
+        </if>
+        <if test="createTime == null and routineTime != null">
+            and create_time BETWEEN (SELECT date_sub(NOW(),interval #{routineTime} hour)) and NOW()
+        </if>
     </select>
 
     <select id="findAllBySomeDataHh" parameterType="com.nanjing.weather.entity.TemperatureCenter" resultMap="findAllBySomeDataHHMap">
@@ -94,6 +100,13 @@
         <if test="createTime != null and routineTime != null">
             and routine_time BETWEEN #{createTime} AND #{routineTime}
         </if>
+        <if test="createTime == null and routineTime == null">
+            and routine_time = (SELECT max(routine_time) FROM `temperatures`)
+        </if>
+        <if test="createTime == null and routineTime != null">
+            and create_time BETWEEN (SELECT date_sub(NOW(),interval #{routineTime} hour)) and NOW()
+        </if>
+
     </select>
 
     <resultMap id="findAllBySomeDatahhMap" type="com.nanjing.weather.entity.Temperature">
@@ -117,6 +130,9 @@
         <if test="createTime != null and routineTime != null">
             and routine_time BETWEEN #{createTime} AND #{routineTime}
         </if>
+        <if test="createTime == null and routineTime == null">
+            and routine_time = (SELECT max(routine_time) FROM `temperatures`)
+        </if>
     </select>
 
     <select id="findAllBySomeDatahH" parameterType="com.nanjing.weather.entity.TemperatureNinMax" resultMap="findAllBySomeDatahhMap">
@@ -129,6 +145,9 @@
         </if>
         <if test="createTime != null and routineTime != null">
             and routine_time BETWEEN #{createTime} AND #{routineTime}
+        </if>
+        <if test="createTime == null and routineTime == null">
+            and routine_time = (SELECT max(routine_time) FROM `temperatures`)
         </if>
     </select>
 

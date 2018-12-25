@@ -83,10 +83,6 @@ public class RainfallsController {
     }
 
     //根据条件查询
-    @RequestMapping("/findAllByTerm")
-    public ContourResult<Rainfalls> findAllByTerm(String parms1, String parms2){
-        return rainfallsService.findAllByTerm(Integer.parseInt(parms1),parms2);
-    }
 
     @RequestMapping("/findAllBySomeTerm")
     public ContourResult<Rainfalls> findAllBySomeTerm(String parmOne, String parmTwo, String time){

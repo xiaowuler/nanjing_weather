@@ -71,146 +71,19 @@ public class WindsServiceImpl implements WindsService {
     }
 
     @Override
-    public ContourResult<Winds> findAllByTerm(String parms1, String parms2) {
-        List<ValuePoint> list = new ArrayList<>();
-        List<Winds> winds ;
-        Integer num = Integer.parseInt(parms2.substring(1));
-
-        //判断前端查询条件
-        if(parms1.equals("平均风")){
-            winds = WindsMapper.findAllByZTerm(num);
-        }else if(parms1.equals("2分钟风向风速")){
-            winds = WindsMapper.findAllByTTerm(num);
-        }else{
-            winds = WindsMapper.findAllByTeTerm(num);
-        }
-
-        //判断查询数据是否可用
-        if(winds.size()>0){
-            //list = CodeIntegration.getValuePoint(winds,"getStation_Id","getAvg_Speed");
-            for(Winds wind:winds){
-                if(Double.parseDouble(wind.getAvg_Speed().toString())<999 && Double.parseDouble(wind.getAvg_Speed_Direction().toString())<999){
-                    Stations stations = stationsMapper.findStationsByid(wind.getStation_Id());
-                    ValuePoint valuePoint = new ValuePoint();
-                    valuePoint.setName(stations.getName());
-                    valuePoint.setLatitude(Double.parseDouble(stations.getLatitude().toString()));
-                    valuePoint.setLongitude(Double.parseDouble(stations.getLongitude().toString()));
-                    valuePoint.setValue(Double.parseDouble(wind.getAvg_Speed().toString()));
-                    valuePoint.setId(stations.getId());
-                    valuePoint.setInstantDirection(Double.parseDouble(wind.getAvg_Speed_Direction().toString()));
-                    list.add(valuePoint);
-                }
-
-            }
-            if(list.size()>0){
-                ContourResult winds1 = CodeIntegration.getResult("winds", list, TimeFormat.getTime(winds.get(0).getRoutine_Time()));
-                return winds1;
-            }
-        }
-        return null;
-    }
-
-    @Override
     public ContourResult<Winds> findAllBySomeTerm(String parmsOne, String parmsTwo, String time) {
         List<ValuePoint> list = new ArrayList<>();
-        List<Wind> winds = new ArrayList<>();
+        List<Wind> winds;
         List<Winds> windsList = new ArrayList<>();
         Integer num = Integer.parseInt(parmsTwo.substring(1));
-        //判断前端查询条件
-        /*if(parmsOne.equals("平均风")){
-            WindCenter windCenter = new WindCenter();
-            windCenter.setSpeed(new BigDecimal(num));
-            windCenter.setCreateTime(time.split(":")[0]);
-            windCenter.setRoutineTime(time.split(":")[1]);
-            winds =WindsMapper.findAllBySomeTerm(windCenter);
-            if(winds.size() > 0){
-                for(Wind wind:winds){
-                    double x = 0;
-                    double z = 0;
-                    double y = 0;
-                    for(WindCenter windCenters:wind.getWindCenter()){
-                        if(Double.parseDouble(windCenters.getSpeed().toString())<9999 && Double.parseDouble(windCenters.getDirection().toString())<9999){
-                            x += Double.parseDouble(windCenters.getSpeed().toString());
-                            z += Double.parseDouble(windCenters.getDirection().toString());
-                            y++;
-                        }
-                    }
-                    //System.out.println(x+"\t"+y+"\t"+z);
-                    Winds windOne = new Winds();
-                    if(y != 0){
-                        windOne.setAvg_Speed(new BigDecimal(new DecimalFormat("#.00").format(x/y)));
-                        windOne.setAvg_Speed_Direction(new BigDecimal(new DecimalFormat("#.00").format(z/y)));
-                        //windOne.setAvg_Speed(new BigDecimal(x/y));
-                        //windOne.setAvg_Speed_Direction(new BigDecimal(z/y));
-                        windOne.setStation_Id(wind.getStationId());
-                        windsList.add(windOne);
-                    }
-                }
-            }
-        }else if(parmsOne.equals("2分钟风向风速")){
-            WindCenter windCenter = new WindCenter();
-            windCenter.setSpeedTwoMin(new BigDecimal(num));
-            windCenter.setCreateTime(time.split(":")[0]);
-            windCenter.setRoutineTime(time.split(":")[1]);
-            winds =WindsMapper.findAllBySomeTerm(windCenter);
-            if(winds.size() > 0){
-                for(Wind wind:winds){
-                    double x = 0;
-                    double z = 0;
-                    double y = 0;
-                    for(WindCenter windCenters:wind.getWindCenter()){
-                        if(Double.parseDouble(windCenters.getSpeedTwoMin().toString())<9999 && Double.parseDouble(windCenters.getDirectionTwoMin().toString())<9999){
-                            x += Double.parseDouble(windCenters.getSpeedTwoMin().toString());
-                            z += Double.parseDouble(windCenters.getDirectionTwoMin().toString());
-                            y++;
-                        }
-                    }
-                    //System.out.println(x+"\t"+y+"\t"+z);
-                    Winds windOne = new Winds();
-                    if(y != 0){
-                        windOne.setAvg_Speed(new BigDecimal(new DecimalFormat("#.00").format(x/y)));
-                        windOne.setAvg_Speed_Direction(new BigDecimal(new DecimalFormat("#.00").format(z/y)));
-                        windOne.setStation_Id(wind.getStationId());
-                        windsList.add(windOne);
-                    }
-                }
-            }
-        }else{
-            WindCenter windCenter = new WindCenter();
-            windCenter.setSpeedTenMin(new BigDecimal(num));
-            windCenter.setCreateTime(time.split(":")[0]);
-            windCenter.setRoutineTime(time.split(":")[1]);
-            winds =WindsMapper.findAllBySomeTerm(windCenter);
-            if(winds.size() > 0){
-                for(Wind wind:winds){
-                    double x = 0;
-                    double z = 0;
-                    double y = 0;
-                    for(WindCenter windCenters:wind.getWindCenter()){
-                        if(Double.parseDouble(windCenters.getSpeedTenMin().toString())<9999 && Double.parseDouble(windCenters.getDirectionTenMin().toString())<9999){
-                            x += Double.parseDouble(windCenters.getSpeedTenMin().toString());
-                            z += Double.parseDouble(windCenters.getDirectionTenMin().toString());
-                            y++;
-                        }
-                    }
-                    //System.out.println(x+"\t"+y+"\t"+z);
-                    Winds windOne = new Winds();
-                    if(y != 0){
-                        windOne.setAvg_Speed(new BigDecimal(new DecimalFormat("#.00").format(x/y)));
-                        windOne.setAvg_Speed_Direction(new BigDecimal(new DecimalFormat("#.00").format(z/y)));
-                        //windOne.setAvg_Speed(new BigDecimal(x/y));
-                        //windOne.setAvg_Speed_Direction(new BigDecimal(z/y));
-                        windOne.setStation_Id(wind.getStationId());
-                        windsList.add(windOne);
-                    }
-                }
-            }
-        }*/
 
+        //判断前端查询条件
         WindCenter windCenter = new WindCenter();
         windCenter.setSpeed(new BigDecimal(num));
-        windCenter.setCreateTime(time.split(":")[0]);
-        windCenter.setRoutineTime(time.split(":")[1]);
+        if(time != null){
+            windCenter.setCreateTime(time.split(":")[0]);
+            windCenter.setRoutineTime(time.split(":")[1]);
+        }
         winds =WindsMapper.findAllBySomeTerm(windCenter);
         if(winds.size() > 0){
             for(Wind wind:winds){
@@ -269,8 +142,11 @@ public class WindsServiceImpl implements WindsService {
 
             }
             if(list.size()>0){
-                ContourResult winds1 = CodeIntegration.getResult("winds", list, time.split(":")[1]);
-                return winds1;
+                if(time != null){
+                    return CodeIntegration.getResult("winds", list, time.split(":")[1]);
+                }else{
+                    return CodeIntegration.getResult("winds", list, winds.get(0).getWindCenter().get(0).getRoutineTime());
+                }
             }
         }
 

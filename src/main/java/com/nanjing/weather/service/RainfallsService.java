@@ -47,8 +47,5 @@ public interface RainfallsService {
     /**
      * 返回ContourResult
      */
-
-    ContourResult<Rainfalls> findAllByTerm(Integer time, String railfalls);
-
     ContourResult<Rainfalls> findAllBySomeTerm(String parmOne,String parmTwo,String time);
 }

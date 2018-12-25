@@ -61,66 +61,28 @@ public class TemperaturesServiceImpl implements TemperaturesService {
     }
 
     @Override
-    public ContourResult<Temperatures> findAllByTerm(String parm1, String parm2) {
-        List<ValuePoint> list;
-        List<Temperatures> temperatures ;
-        //获取温度值
-        Integer num = Integer.parseInt(parm2.substring(1));
-        //判断前端传值信息
-        if(parm1.equals("温度")){
-            String numParm = parm2.substring(0,1);
-            if(numParm.equals("≥")){
-                temperatures= temperaturesMapper.findAllByTemHigh(num);
-            }else{
-                temperatures= temperaturesMapper.findAllByTemLow(num);
-            }
-        }else if(parm1.equals("最高温度")){
-            if(num >= 0){
-                temperatures= temperaturesMapper.findAllByTemHHigh(num);
-            }else{
-                temperatures= temperaturesMapper.findAllByTemHLow(num);
-            }
-        }else if(parm1.equals("最低温度")){
-            if(num >= 0){
-                temperatures= temperaturesMapper.findAllByTemLHigh(num);
-            }else{
-                temperatures= temperaturesMapper.findAllByTemLLow(num);
-            }
-        }else{
-            if(num >= 0){
-                temperatures= temperaturesMapper.findAllByTemTHigh(24,num);
-            }else{
-                temperatures= temperaturesMapper.findAllByTemTLow(24,num);
-            }
-        }
-        if(temperatures.size()>0){
-            list = CodeIntegration.getValuePoint(temperatures,"getStation_Id","getValue");
-            if(list.size()>0){
-                return CodeIntegration.getResult("temperatures",list,TimeFormat.getTime(temperatures.get(0).getRoutine_Time()));
-            }
-        }
-        return null;
-    }
-
-    @Override
     public ContourResult<Temperatures> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
         List<ValuePoint> list;
         List<Temperatures> temperatures = new ArrayList<>();
-        List<Temperature> temperatureList;
+        List<Temperature> temperatureList = new ArrayList<>();
         Integer num = Integer.parseInt(parmTwo.substring(1));
         if(parmOne.equals("温度")){
             String numParm = parmTwo.substring(0,1);
             if(numParm.equals("≥")){
                 TemperatureCenter temperatureCenter = new TemperatureCenter();
                 temperatureCenter.setValue(new BigDecimal(parmTwo.substring(1)));
-                temperatureCenter.setCreateTime(time.split(":")[0]);
-                temperatureCenter.setRoutineTime(time.split(":")[1]);
+                if(time != null){
+                    temperatureCenter.setCreateTime(time.split(":")[0]);
+                    temperatureCenter.setRoutineTime(time.split(":")[1]);
+                }
                 temperatureList = temperaturesMapper.findAllBySomeDataHH(temperatureCenter);
             }else{
                 TemperatureCenter temperatureCenter = new TemperatureCenter();
                 temperatureCenter.setValue(new BigDecimal(parmTwo.substring(1)));
-                temperatureCenter.setCreateTime(time.split(":")[0]);
-                temperatureCenter.setRoutineTime(time.split(":")[1]);
+                if(time != null){
+                    temperatureCenter.setCreateTime(time.split(":")[0]);
+                    temperatureCenter.setRoutineTime(time.split(":")[1]);
+                }
                 temperatureList = temperaturesMapper.findAllBySomeDataHh(temperatureCenter);
             }
             if(temperatureList.size()>0){
@@ -145,14 +107,18 @@ public class TemperaturesServiceImpl implements TemperaturesService {
             if(num >= 0){
                 TemperatureNinMax temperatureNinMax = new TemperatureNinMax();
                 temperatureNinMax.setMaxValue(new BigDecimal(parmTwo.substring(1)));
-                temperatureNinMax.setCreateTime(time.split(":")[0]);
-                temperatureNinMax.setRoutineTime(time.split(":")[1]);
+                if(time != null){
+                    temperatureNinMax.setCreateTime(time.split(":")[0]);
+                    temperatureNinMax.setRoutineTime(time.split(":")[1]);
+                }
                 temperatureList = temperaturesMapper.findAllBySomeDatahh(temperatureNinMax);
             }else{
                 TemperatureNinMax temperatureNinMax = new TemperatureNinMax();
                 temperatureNinMax.setMaxValue(new BigDecimal(parmTwo.substring(1)));
-                temperatureNinMax.setCreateTime(time.split(":")[0]);
-                temperatureNinMax.setRoutineTime(time.split(":")[1]);
+                if(time != null){
+                    temperatureNinMax.setCreateTime(time.split(":")[0]);
+                    temperatureNinMax.setRoutineTime(time.split(":")[1]);
+                }
                 temperatureList = temperaturesMapper.findAllBySomeDatahH(temperatureNinMax);
             }
             if(temperatureList.size()>0){
@@ -175,14 +141,18 @@ public class TemperaturesServiceImpl implements TemperaturesService {
             if(num >= 0){
                 TemperatureNinMax temperatureNinMax = new TemperatureNinMax();
                 temperatureNinMax.setMinValue(new BigDecimal(parmTwo.substring(1)));
-                temperatureNinMax.setCreateTime(time.split(":")[0]);
-                temperatureNinMax.setRoutineTime(time.split(":")[1]);
+                if(time != null){
+                    temperatureNinMax.setCreateTime(time.split(":")[0]);
+                    temperatureNinMax.setRoutineTime(time.split(":")[1]);
+                }
                 temperatureList = temperaturesMapper.findAllBySomeDatahh(temperatureNinMax);
             }else{
                 TemperatureNinMax temperatureNinMax = new TemperatureNinMax();
                 temperatureNinMax.setMinValue(new BigDecimal(parmTwo.substring(1)));
-                temperatureNinMax.setCreateTime(time.split(":")[0]);
-                temperatureNinMax.setRoutineTime(time.split(":")[1]);
+                if(time != null){
+                    temperatureNinMax.setCreateTime(time.split(":")[0]);
+                    temperatureNinMax.setRoutineTime(time.split(":")[1]);
+                }
                 temperatureList = temperaturesMapper.findAllBySomeDatahH(temperatureNinMax);
             }
             if(temperatureList.size()>0){
@@ -201,11 +171,46 @@ public class TemperaturesServiceImpl implements TemperaturesService {
                     temperatures.add(tempera);
                 }
             }
+        }else if(parmOne.equals("24小时变温")){
+            String numParm = parmTwo.substring(0,1);
+            if(numParm.equals("≥")){
+                TemperatureCenter temperatureCenter = new TemperatureCenter();
+                temperatureCenter.setValue(new BigDecimal(parmTwo.substring(1)));
+                temperatureCenter.setRoutineTime("24");
+                temperatureList = temperaturesMapper.findAllBySomeDataHH(temperatureCenter);
+            }else{
+                TemperatureCenter temperatureCenter = new TemperatureCenter();
+                temperatureCenter.setValue(new BigDecimal(parmTwo.substring(1)));
+                temperatureCenter.setRoutineTime("24");
+                temperatureList = temperaturesMapper.findAllBySomeDataHh(temperatureCenter);
+            }
+            if(temperatureList.size()>0){
+                for(Temperature temperature:temperatureList){
+                    double x = 0;
+                    double y = 0;
+                    for(TemperatureCenter center:temperature.getTemperatureCenter()){
+                        if(Double.parseDouble(center.getValue().toString())<999){
+                            x += Double.parseDouble(center.getValue().toString());
+                            y++;
+                        }
+                    }
+                    if(y != 0){
+                        Temperatures tempera = new Temperatures();
+                        tempera.setStation_Id(temperature.getStationId());
+                        tempera.setValue(new BigDecimal(new DecimalFormat("#.00").format(x/y)));
+                        temperatures.add(tempera);
+                    }
+                }
+            }
         }
         if(temperatures.size()>0){
             list = CodeIntegration.getValuePoint(temperatures,"getStation_Id","getValue");
             if(list.size()>0){
-                return CodeIntegration.getResult("temperatures",list,time.split(":")[1]);
+                if(time != null){
+                    return CodeIntegration.getResult("temperatures",list,time.split(":")[1]);
+                }else {
+                    return CodeIntegration.getResult("temperatures",list,temperatureList.get(0).getTemperatureCenter().get(0).getRoutineTime());
+                }
             }
         }
         return null;

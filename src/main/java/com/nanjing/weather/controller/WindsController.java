@@ -81,13 +81,6 @@ public class WindsController {
         return windsService.findAll(page, pagesize);
     }
 
-    /**
-     * 根据条件绘制色斑图
-     */
-    @RequestMapping("/findAllByTerm")
-    public ContourResult<Winds> findAllByTerm(String parms1,String parms2){
-        return windsService.findAllByTerm(parms1,parms2);
-    }
 
     @RequestMapping("/demo")
     public void demo (){
@@ -95,6 +88,9 @@ public class WindsController {
         WindsMapper windsMapper = applicationContext.getBean(WindsMapper.class);
     }
 
+    /**
+     * 根据条件绘制色斑图
+     */
     @RequestMapping("/findAllBySomeTerm")
     public ContourResult<Winds> findAllBySomeTerm(String parmOne,String parmTwo,String time){
         return windsService.findAllBySomeTerm(parmOne,parmTwo,time);

@@ -85,10 +85,6 @@ public class HumiditiesController {
     /**
      * 绘制色斑图
      */
-    @RequestMapping("/findAllByTerm")
-    public ContourResult<Humidities> findAllByTerm(String parms1,String parms2){
-        return humiditiesService.findAllByTerm(parms1);
-    }
 
     @RequestMapping("/findAllBySomeTerm")
     public ContourResult<Humidities> findAllBySomeTerm(String parmOne, String parmTwo, String time){

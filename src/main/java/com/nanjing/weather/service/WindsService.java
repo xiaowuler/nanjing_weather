@@ -46,7 +46,5 @@ public interface WindsService {
     /**
      * 返回wContour结果集
      */
-    ContourResult<Winds> findAllByTerm(String parms1,String parms2);
-
     ContourResult<Winds> findAllBySomeTerm(String parmsOne,String parmsTwo,String time);
 }

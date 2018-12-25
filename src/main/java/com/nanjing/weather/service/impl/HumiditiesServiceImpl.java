@@ -71,27 +71,15 @@ public class HumiditiesServiceImpl implements HumiditiesService {
     }
 
     @Override
-    public ContourResult<Humidities> findAllByTerm(String value) {
-        List<ValuePoint> list;
-        Integer num = Integer.parseInt(value.substring(1));
-        List<Humidities> humidities = humiditiesMapper.findAllByTerm(num);
-        if(humidities.size()>0){
-            list = CodeIntegration.getValuePoint(humidities,"getStation_Id","getValue");
-            if(list.size()>0){
-                return CodeIntegration.getResult("humidities",list,TimeFormat.getTime(humidities.get(0).getRoutine_Time()));
-            }
-        }
-        return null;
-    }
-
-    @Override
     public ContourResult<Humidities> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
         List<ValuePoint> list;
         List<Humidities> humiditiesList = new ArrayList<>();
         HumiditieCenter humiditieCenter = new HumiditieCenter();
         humiditieCenter.setValue(new BigDecimal(parmOne.substring(1)));
-        humiditieCenter.setCreateTime(time.split(":")[0]);
-        humiditieCenter.setRoutineTime(time.split(":")[1]);
+        if(time != null){
+            humiditieCenter.setCreateTime(time.split(":")[0]);
+            humiditieCenter.setRoutineTime(time.split(":")[1]);
+        }
         List<Humiditie> allBySomeTerm = humiditiesMapper.findAllBySomeTerm(humiditieCenter);
         for(Humiditie humiditie:allBySomeTerm){
             double x = 0;
@@ -113,7 +101,11 @@ public class HumiditiesServiceImpl implements HumiditiesService {
         if(humiditiesList.size()>0){
             list = CodeIntegration.getValuePoint(humiditiesList,"getStation_Id","getValue");
             if(list.size()>0){
-                return CodeIntegration.getResult("humidities",list,time.split(":")[1]);
+                if(time != null){
+                    return CodeIntegration.getResult("humidities",list,time.split(":")[1]);
+                }else {
+                    return CodeIntegration.getResult("humidities",list,allBySomeTerm.get(0).getHumiditieCenter().get(0).getRoutineTime());
+                }
             }
         }
         return null;

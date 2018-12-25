@@ -82,10 +82,6 @@ public class PressuresController {
     /**
      * 返回色斑图绘制值
      */
-    @RequestMapping("/findAllByTerm")
-    public ContourResult<Pressures> findAllByTerm(String parms1){
-        return pressuresService.findAllByTerm(parms1);
-    }
 
     @RequestMapping("/findAllBySomeTerm")
     public ContourResult<Pressures> findAllBySomeTerm(String parmOne,String parmTwo,String time){

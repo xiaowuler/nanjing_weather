@@ -44,7 +44,5 @@ public interface PressuresService {
      */
     public PageInfo<Pressures> findAll(int page, int pageSize);
 
-    ContourResult<Pressures> findAllByTerm(String parms);
-
     ContourResult<Pressures> findAllBySomeTerm(String parmOne,String parmTwo,String time);
 }

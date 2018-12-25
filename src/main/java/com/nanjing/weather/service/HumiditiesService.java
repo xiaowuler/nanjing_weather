@@ -47,8 +47,6 @@ public interface HumiditiesService {
     /**
      * 返回wContour结果集
      */
-    ContourResult<Humidities> findAllByTerm(String value);
-
     ContourResult<Humidities> findAllBySomeTerm(String parmOne, String parmTwo, String time);
 }
 

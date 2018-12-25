@@ -17,10 +17,6 @@ public class GroundTemperatureController {
     /**
      * 定义色斑图映射
      */
-    @RequestMapping("/findAllByTerm")
-    public ContourResult<GroundTemperatures> findAllByTerm(String parms1,String parms2){
-        return groundTemperatureService.findAllByTerm(parms1);
-    }
 
     @RequestMapping("/findAllBySomeTerm")
     public ContourResult<GroundTemperatures> findAllBySomeTerm(String parmOne, String parmTwo, String time){

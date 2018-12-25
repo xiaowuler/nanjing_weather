@@ -43,6 +43,11 @@
         <if test="createTime != null and routineTime != null">
             and routine_time BETWEEN #{createTime} AND #{routineTime}
         </if>
+
+        <if test="routineTime != null and createTime == null">
+            and create_time BETWEEN (SELECT date_sub(NOW(),interval #{routineTime} hour)) and NOW()
+        </if>
+
         <if test="value != null">
             and value >= #{value}
         </if>

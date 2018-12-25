@@ -41,8 +41,5 @@ public interface TemperaturesService {
     /**
      * 返回ContourResult
      */
-
-    ContourResult<Temperatures> findAllByTerm(String parm1,String parm2);
-
     ContourResult<Temperatures> findAllBySomeTerm(String parmOne,String parmTwo,String time);
 }

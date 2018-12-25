@@ -74,49 +74,18 @@ public class PressuresServiceImpl implements PressuresService {
     }
 
     @Override
-    public ContourResult<Pressures> findAllByTerm(String parms) {
-        List<ValuePoint> list = new ArrayList<>();
-        List<Pressures> allByTerm = pressuresMapper.findAllByTerm();
-
-        if(allByTerm.size()>0){
-            for(Pressures pressures:allByTerm){
-                if(Double.parseDouble(pressures.getValue().toString())<10000){
-                    Stations station = stationsMapper.findStationsByid(pressures.getStation_Id());
-                    ValuePoint valuePoint = new ValuePoint();
-                    if(parms.equals("本站气压")){
-                        valuePoint.setValue(Double.parseDouble(pressures.getValue().toString()));
-                    }else if(parms.equals("24小时变压")){
-                        //24小时前的值
-                        BigDecimal decimal = pressuresMapper.findAllByAvg(pressures.getRoutine_Time().toString(), pressures.getStation_Id()).getValue();
-                        valuePoint.setValue(Double.parseDouble(pressures.getValue().toString())-Double.parseDouble((decimal.toString())));
-                    }
-                    valuePoint.setLatitude(Double.parseDouble(station.getLatitude() + ""));
-                    valuePoint.setLongitude(Double.parseDouble(station.getLongitude() + ""));
-                    valuePoint.setId(station.getId());
-                    valuePoint.setName(station.getName());
-                    list.add(valuePoint);
-                }
-            }
-
-            if(list.size()>0){
-                /*List<LegendLevel> levels = legendLevelMapper.findAll("winds");
-                ContourHelper contourHelper = new ContourHelper("D:\\project\\springboot-nanjing\\springboot-nanjing\\src\\main\\resources\\static\\json\\nanjing.json");
-                ContourResult contourResult = contourHelper.Calc(list, levels, 8, -9999);
-                contourResult.setTime(TimeFormat.getTime(allByTerm.get(0).getRoutine_Time()));
-                return contourResult;*/
-                return CodeIntegration.getResult("pressures",list,TimeFormat.getTime(allByTerm.get(0).getRoutine_Time()));
-            }
-        }
-        return null;
-    }
-
-    @Override
     public ContourResult<Pressures> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
         List<ValuePoint> list;
         List<Pressures> pressuresList = new ArrayList<>();
         PressureCenter pressureCenter = new PressureCenter();
-        pressureCenter.setCreateTime(time.split(":")[0]);
-        pressureCenter.setRoutineTime(time.split(":")[1]);
+        if(parmOne.equals("本站气压")){
+            if(time != null){
+                pressureCenter.setCreateTime(time.split(":")[0]);
+                pressureCenter.setRoutineTime(time.split(":")[1]);
+            }
+        }else {
+            pressureCenter.setRoutineTime("24");
+        }
         List<Pressure> allBySomeMap = pressuresMapper.findAllBySomeTerm(pressureCenter);
         for(Pressure pressure:allBySomeMap){
             double x = 0;
@@ -138,7 +107,11 @@ public class PressuresServiceImpl implements PressuresService {
         if(pressuresList.size()>0){
             list = CodeIntegration.getValuePoint(pressuresList,"getStation_Id","getValue");
             if(list.size()>0){
-                return CodeIntegration.getResult("pressures",list,time.split(":")[1]);
+                if(time == null){
+                    return CodeIntegration.getResult("pressures",list,allBySomeMap.get(0).getPressureCenter().get(0).getRoutineTime());
+                }else {
+                    return CodeIntegration.getResult("pressures",list,time.split(":")[1]);
+                }
             }
         }
         return null;

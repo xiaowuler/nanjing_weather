@@ -77,26 +77,18 @@ public class RainfallsServiceImpl implements RainfallsService {
     }
 
     @Override
-    public ContourResult<Rainfalls> findAllByTerm(Integer time, String railfalls) {
-        List<ValuePoint> list;
-        List<Rainfalls> temperatures = rainfallsMapper.findAllByTerm(time,Double.parseDouble(railfalls));
-        if(temperatures.size()>0){
-            list = CodeIntegration.getValuePoint(temperatures,"getStation_Id","getValue");
-            if(list.size()>0){
-                return CodeIntegration.getResult("rainfalls",list,TimeFormat.getTime(temperatures.get(0).getRoutine_Time()));
-            }
-        }
-        return null;
-    }
-
-    @Override
     public ContourResult<Rainfalls> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
         List<ValuePoint> list;
         List<Rainfalls> rainfallsList = new ArrayList<>();
         RainFallCenter rainFallCenter = new RainFallCenter();
-        rainFallCenter.setValue(new BigDecimal(parmOne.substring(1)));
-        rainFallCenter.setCreateTime(time.split(":")[0]);
-        rainFallCenter.setRoutineTime(time.split(":")[1]);
+        if(time != null){
+            rainFallCenter.setValue(new BigDecimal(parmOne.substring(1)));
+            rainFallCenter.setCreateTime(time.split(":")[0]);
+            rainFallCenter.setRoutineTime(time.split(":")[1]);
+        }else {
+            rainFallCenter.setValue(new BigDecimal(parmTwo));
+            rainFallCenter.setRoutineTime(parmOne);
+        }
         List<RainFall> rainFalls = rainfallsMapper.findAllBySomeTerm(rainFallCenter);
         if(rainFalls.size()>0){
             for(RainFall rainFall:rainFalls){
@@ -119,7 +111,11 @@ public class RainfallsServiceImpl implements RainfallsService {
             }
             list = CodeIntegration.getValuePoint(rainfallsList,"getStation_Id","getValue");
             if(rainfallsList.size()>0){
-                return CodeIntegration.getResult("rainfalls",list,time.split(":")[1]);
+                if(time != null){
+                    return CodeIntegration.getResult("rainfalls",list,time.split(":")[1]);
+                }else {
+                    return CodeIntegration.getResult("rainfalls",list,rainFalls.get(0).getRainFallCenter().get(0).getRoutineTime());
+                }
             }
         }
         return null;

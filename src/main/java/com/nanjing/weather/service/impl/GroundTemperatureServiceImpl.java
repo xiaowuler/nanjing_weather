@@ -36,50 +36,15 @@ public class GroundTemperatureServiceImpl implements GroundTemperatureService {
     @Autowired
     private StationsMapper stationsMapper;
 
-    /**
-     * 获取色斑图值
-     * @param value
-     * @return
-     */
-    @Override
-    public ContourResult<GroundTemperatures> findAllByTerm(String value) {
-        //获取数据库的低温值
-        List<GroundTemperatures> groundTemperatures = groundTemperatureMapper.findAllByTerm();
-        List<ValuePoint> list = new ArrayList<>();
-
-        //判断数据库是否获取到值
-        if(groundTemperatures.size()>0){
-                if(value.equals("0")){
-                    list = CodeIntegration.getValuePoint(groundTemperatures,"getStationId","getValue");
-                }else if(value.equals("5")){
-                    list = CodeIntegration.getValuePoint(groundTemperatures,"getStationId","getValueFiveCM");
-                }else if(value.equals("10")){
-                    list = CodeIntegration.getValuePoint(groundTemperatures,"getStationId","getValueTenCM");
-                }else if(value.equals("15")){
-                    list = CodeIntegration.getValuePoint(groundTemperatures,"getStationId","getValueFifteenCM");
-                }else if(value.equals("20")){
-                    list = CodeIntegration.getValuePoint(groundTemperatures,"getStationId","getValueTwentyCM");
-                }else if(value.equals("40")){
-
-                    list = CodeIntegration.getValuePoint(groundTemperatures,"getStationId","getValueFortyCM");
-                }
-
-            //判断点值是否有值
-            if(list.size()>0){
-                return CodeIntegration.getResult("groundTemperature",list,TimeFormat.getTime(groundTemperatures.get(0).getRoutineTime()));
-            }
-        }
-
-        return null;
-    }
-
     @Override
     public ContourResult<GroundTemperatures> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
         List<GroundTemperatures> groundTemperatures  = new ArrayList<>();
         List<ValuePoint> list;
         GroupTemperatureCenter groupTemperatureCenter = new GroupTemperatureCenter();
-        groupTemperatureCenter.setCreateTime(time.split(":")[0]);
-        groupTemperatureCenter.setRoutineTime(time.split(":")[1]);
+        if(time != null){
+            groupTemperatureCenter.setCreateTime(time.split(":")[0]);
+            groupTemperatureCenter.setRoutineTime(time.split(":")[1]);
+        }
         List<GroupTemperature> allBySomeTerm = groundTemperatureMapper.findAllBySomeTerm(groupTemperatureCenter);
         for(GroupTemperature groupTemperature:allBySomeTerm){
             double x = 0;
@@ -128,7 +93,11 @@ public class GroundTemperatureServiceImpl implements GroundTemperatureService {
         if(groundTemperatures.size()>0){
             list = CodeIntegration.getValuePoint(groundTemperatures,"getStationId","getValue");
             if(list.size()>0){
-                return CodeIntegration.getResult("groundTemperature",list,time.split(":")[1]);
+                if(time != null){
+                    return CodeIntegration.getResult("groundTemperature",list,time.split(":")[1]);
+                }else {
+                    return CodeIntegration.getResult("groundTemperature",list,allBySomeTerm.get(0).getGroupTemperatureCenter().get(0).getRoutineTime());
+                }
             }
         }
 

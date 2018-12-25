@@ -126,10 +126,10 @@ var RightPanel = function () {
         $.ajax({
             type: "POST",
             dataType: 'json',
-            url: this.requestPath + "temperatures/findAllByTerm",
+            url: this.requestPath + "temperatures/findAllBySomeTerm",
             data: {
-                parms1: '温度',
-                parms2: '≥0'
+                parmOne: '温度',
+                parmTwo: '≥0'
             },
             beforeSend: function () {
                 // show loading...
@@ -184,10 +184,10 @@ var RightPanel = function () {
             $.ajax({
                 type: "POST",
                 dataType: 'json',
-                url: this.requestPath + this.requestValue + "/findAllByTerm",
+                url: this.requestPath + this.requestValue + "/findAllBySomeTerm",
                 data: {
-                    parms1: this.parmOne,
-                    parms2: this.parmTwo
+                    parmOne: this.parmOne,
+                    parmTwo: this.parmTwo
                 },
                 beforeSend: function () {
                     // show loading...
@@ -209,25 +209,6 @@ var RightPanel = function () {
                         this.result = null;
                         this.result = data;
                         $("#color-unit").attr("style","display: block")
-                        /*if($("#checkbox3").attr('checked')){
-                            this.MapInfo.CreateSpotLayer(data.spotPolygons, data.legendLevels)
-                            this.MapInfo.PlotColor(data.legendLevels);
-                        }
-                        if($("#checkbox2").attr('checked')){
-                            this.MapInfo.CreateContourLayer(data.contourPolylines);
-                        }
-                        if($("#checkbox1").attr('checked')){
-                            this.MapInfo.PlotSite(data.valuePoints);
-                            //this.MapInfo.CreateDir(data.valuePoints);
-                        }
-                        if ($("#checkbox0").attr('checked')) {
-                            this.MapInfo.PlotSite(data.valuePoints);
-                            //this.MapInfo.CreateDir(data.valuePoints);
-                        }
-                        if ($("#checkbox4").attr('checked')) {
-                            this.MapInfo.CreatePlotValue(data.valuePoints)
-                            //this.MapInfo.CreateDir(data.valuePoints);
-                        }*/
                         if ($("#checkbox3").prop('checked')) {
                             this.MapInfo.CreateSpotLayer(data.spotPolygons, data.legendLevels)
                             this.MapInfo.PlotColor(data.legendLevels);

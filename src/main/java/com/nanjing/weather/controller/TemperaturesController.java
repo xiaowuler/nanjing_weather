@@ -73,10 +73,6 @@ public class TemperaturesController {
     }
 
     //根据条件查询
-    @RequestMapping("/findAllByTerm")
-    public ContourResult<Temperatures> findAllByTerm(String parms1,String parms2){
-        return temperaturesService.findAllByTerm(parms1, parms2);//temperaturesService.findAllByTerm(parms1,parms2);
-    }
 
     @RequestMapping("/findAllBySomeTerm")
     public ContourResult<Temperatures> findAllBySomeTerm(String parmOne,String parmTwo,String time){
