@@ -3,6 +3,7 @@ var LeftPanel = function () {
     this.requestPath = '';
     this.laserRadarIndex = 0;
     this.laserRadarTime = 0;
+    this.laserRadar = null;
 
     this.windProfileIndex = 0;
     this.windProfileTime = 0;
@@ -22,6 +23,7 @@ var LeftPanel = function () {
 
         this.winLoadPicture();
         this.autoChang();
+        //this.loadPageEvent();
     }
 
     this.winLoadPicture = function () {
@@ -69,6 +71,10 @@ var LeftPanel = function () {
                     $("#gpsMetImg").html('<div class="theme-area-chart" style="display: block;">' + '<div class="theme-chart theme-chart1" style="display: block;">' + '<img src="'+data[i].productRegion[0].productTypes[0].productData.url+'">' + '</div>' + '</div>')
                 }
             }
+            var laserRadar = new Category();
+            laserRadar.Init(data[0]);
+
+            console.log(laserRadar)
             this.windProfileWheel();
             this.Tab();
             this.TabChang();
@@ -210,7 +216,7 @@ var LeftPanel = function () {
 
     this.Tab = function () {
         $(".theme").each(function () {
-            var tab = $(".theme-area a").on('click', function (e) {
+            $(".theme-area a").on('click', function (e) {
                 $(e.target).addClass("action").siblings().removeClass("action");
                 $(e.target).parents(".theme-area").next().find(".theme-area-table a").eq(0).addClass("action").siblings().removeClass("action");
                 var parentIndex = $(e.target).parents(".theme").index();
@@ -238,11 +244,14 @@ var LeftPanel = function () {
     };
 
     this.autoChang = function(){
-        setInterval(function () {
+        /*setInterval(function () {
             $.post(this.requestPath+"products/findAllByTypeAndArea",function (data) {
                 this.result = data;
             })
-        }.bind(this),1000*60*5)
+        }.bind(this),1000*60*5)*/
+        $.post(this.requestPath+"products/findAllByTypeAndArea",function (data) {
+            this.result = data;
+        })
     }
 
     this.OpenProductPage = function (category) {
@@ -255,41 +264,33 @@ var LeftPanel = function () {
         var parmOne = '';
         var parmTwo = '';
         $(".theme-chart0 img").on('click', function (e) {
-            //alert($(e.target).attr("src"))
             parmOne = $(e.target).parents(".theme-content").prev().find(".theme-area-table a.action").text();
             parmTwo = $(e.target).parents(".theme-content").prev().prev().find(".theme-area-table a.action").text();
             parentValue = $(e.target).parents(".theme").find(".title h2").attr('category');
             this.OpenProductPage(parentValue);
         }.bind(this))
         $(".theme-chart1 img").on('click', function (e) {
-            //alert($(e.target).attr("src"))
             parmOne = $(e.target).parents(".theme-content").prev().find(".theme-area-table a.action").text();
             parmTwo = $(e.target).parents(".theme-content").prev().prev().find(".theme-area-table a.action").text();
             parentValue = $(e.target).parents(".theme").find(".title h2").attr('category');
             this.OpenProductPage(parentValue);
         }.bind(this))
         $(".theme-chart2 img").on('click', function (e) {
-            //alert($(e.target).attr("src"))
             parmOne = $(e.target).parents(".theme-content").prev().find(".theme-area-table a.action").text();
             parmTwo = $(e.target).parents(".theme-content").prev().prev().find(".theme-area-table a.action").text();
             parentValue = $(e.target).parents(".theme").find(".title h2").attr('category');
-            //window.location.href = "products/findModelAndView?type="+parmOne+"&providers="+parmTwo+"&category="+parentValue;
             this.OpenProductPage(parentValue);
         }.bind(this))
         $(".theme-chart3 img").on('click', function (e) {
-            //alert($(e.target).attr("src"))
             parmOne = $(e.target).parents(".theme-content").prev().find(".theme-area-table a.action").text();
             parmTwo = $(e.target).parents(".theme-content").prev().prev().find(".theme-area-table a.action").text();
             parentValue = $(e.target).parents(".theme").find(".title h2").attr('category');
-            //window.location.href = "products/findModelAndView?type="+parmOne+"&providers="+parmTwo+"&category="+parentValue;
             this.OpenProductPage(parentValue);
         }.bind(this))
         $(".theme-chart4 img").on('click', function (e) {
-            //alert($(e.target).attr("src"))
             parmOne = $(e.target).parents(".theme-content").prev().find(".theme-area-table a.action").text();
             parmTwo = $(e.target).parents(".theme-content").prev().prev().find(".theme-area-table a.action").text();
             parentValue = $(e.target).parents(".theme").find(".title h2").attr('category');
-            //window.location.href = "products/findModelAndView?type="+parmOne+"&providers="+parmTwo+"&category="+parentValue;
             this.OpenProductPage(parentValue);
         }.bind(this))
 
