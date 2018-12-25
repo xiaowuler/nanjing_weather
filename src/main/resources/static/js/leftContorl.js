@@ -6,6 +6,7 @@ var Product = function (product) {
 var Region = function () {
     this.name = null;
     this.products = [];
+    this.productPlayIndex = 0;
 
     this.Init = function (products) {
         this.name = products.name;
@@ -15,11 +16,21 @@ var Region = function () {
         }
     }
 
+    this.Play = function (playCompleteCallback) {
+        this.productPlayIndex++;
+
+        if (this.productPlayIndex >= this.products.count()){
+            playCompleteCallback();
+            this.productPlayIndex = 0;
+        }
+
+    }
 }
 
 var Category = function () {
     this.name = null;
     this.regions = [];
+    this.regionPlayIndex = 0;
 
     this.Init = function (category) {
         this.name = category.categoryCode;
@@ -30,4 +41,14 @@ var Category = function () {
         }
     }
 
+    this.Play = function (){
+        this.regions[this.regionPlayIndex].play(this.RegionPlayCompleteCallback);
+    }
+
+    this.RegionPlayCompleteCallback = function () {
+        this.regionPlayIndex ++;
+        if(this.regionPlayIndex >= regions.count()){
+            this.regionPlayIndex = 0;
+        }
+    }
 }
