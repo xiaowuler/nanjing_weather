@@ -3,17 +3,12 @@ package com.nanjing.weather.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.nanjing.wContour.ContourHelper;
 import com.nanjing.wContour.bean.ContourResult;
-import com.nanjing.wContour.bean.LegendLevel;
 import com.nanjing.wContour.bean.ValuePoint;
 import com.nanjing.weather.dao.LegendLevelMapper;
 import com.nanjing.weather.dao.RainfallsMapper;
 import com.nanjing.weather.dao.StationsMapper;
 import com.nanjing.weather.domain.Rainfalls;
-import com.nanjing.weather.domain.Stations;
-import com.nanjing.weather.domain.Temperatures;
-import com.nanjing.weather.domain.Winds;
 import com.nanjing.weather.entity.RainFall;
 import com.nanjing.weather.entity.RainFallCenter;
 import com.nanjing.weather.service.RainfallsService;
@@ -24,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +108,7 @@ public class RainfallsServiceImpl implements RainfallsService {
                 if(time != null){
                     return CodeIntegration.getResult("rainfalls",list,time.split(":")[1]);
                 }else {
-                    return CodeIntegration.getResult("rainfalls",list,rainFalls.get(0).getRainFallCenter().get(0).getRoutineTime());
+                    return CodeIntegration.getResult("rainfalls",list,TimeFormat.getTime(rainFalls.get(0).getRainFallCenter().get(0).getRoutineTime()));
                 }
             }
         }

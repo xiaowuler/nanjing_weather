@@ -1,14 +1,11 @@
 package com.nanjing.weather.service.impl;
 
-import com.nanjing.wContour.ContourHelper;
 import com.nanjing.wContour.bean.ContourResult;
-import com.nanjing.wContour.bean.LegendLevel;
 import com.nanjing.wContour.bean.ValuePoint;
 import com.nanjing.weather.dao.GroundTemperatureMapper;
 import com.nanjing.weather.dao.LegendLevelMapper;
 import com.nanjing.weather.dao.StationsMapper;
 import com.nanjing.weather.domain.GroundTemperatures;
-import com.nanjing.weather.domain.Stations;
 import com.nanjing.weather.entity.GroupTemperature;
 import com.nanjing.weather.entity.GroupTemperatureCenter;
 import com.nanjing.weather.service.GroundTemperatureService;
@@ -96,7 +93,7 @@ public class GroundTemperatureServiceImpl implements GroundTemperatureService {
                 if(time != null){
                     return CodeIntegration.getResult("groundTemperature",list,time.split(":")[1]);
                 }else {
-                    return CodeIntegration.getResult("groundTemperature",list,allBySomeTerm.get(0).getGroupTemperatureCenter().get(0).getRoutineTime());
+                    return CodeIntegration.getResult("groundTemperature",list,TimeFormat.getTime(allBySomeTerm.get(0).getGroupTemperatureCenter().get(0).getRoutineTime()));
                 }
             }
         }

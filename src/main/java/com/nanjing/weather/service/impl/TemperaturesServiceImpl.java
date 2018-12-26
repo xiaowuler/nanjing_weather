@@ -1,13 +1,10 @@
 package com.nanjing.weather.service.impl;
 
-import com.nanjing.wContour.ContourHelper;
 import com.nanjing.wContour.bean.ContourResult;
-import com.nanjing.wContour.bean.LegendLevel;
 import com.nanjing.wContour.bean.ValuePoint;
 import com.nanjing.weather.dao.LegendLevelMapper;
 import com.nanjing.weather.dao.StationsMapper;
 import com.nanjing.weather.dao.TemperaturesMapper;
-import com.nanjing.weather.domain.Stations;
 import com.nanjing.weather.domain.Temperatures;
 import com.nanjing.weather.entity.Temperature;
 import com.nanjing.weather.entity.TemperatureCenter;
@@ -209,7 +206,7 @@ public class TemperaturesServiceImpl implements TemperaturesService {
                 if(time != null){
                     return CodeIntegration.getResult("temperatures",list,time.split(":")[1]);
                 }else {
-                    return CodeIntegration.getResult("temperatures",list,temperatureList.get(0).getTemperatureCenter().get(0).getRoutineTime());
+                    return CodeIntegration.getResult("temperatures",list,TimeFormat.getTime(temperatureList.get(0).getTemperatureCenter().get(0).getRoutineTime()));
                 }
             }
         }

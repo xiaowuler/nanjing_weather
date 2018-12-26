@@ -2,15 +2,12 @@ package com.nanjing.weather.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.nanjing.wContour.ContourHelper;
 import com.nanjing.wContour.bean.ContourResult;
-import com.nanjing.wContour.bean.LegendLevel;
 import com.nanjing.wContour.bean.ValuePoint;
 import com.nanjing.weather.dao.LegendLevelMapper;
 import com.nanjing.weather.dao.PressuresMapper;
 import com.nanjing.weather.dao.StationsMapper;
 import com.nanjing.weather.domain.Pressures;
-import com.nanjing.weather.domain.Stations;
 import com.nanjing.weather.entity.Pressure;
 import com.nanjing.weather.entity.PressureCenter;
 import com.nanjing.weather.service.PressuresService;
@@ -108,7 +105,7 @@ public class PressuresServiceImpl implements PressuresService {
             list = CodeIntegration.getValuePoint(pressuresList,"getStation_Id","getValue");
             if(list.size()>0){
                 if(time == null){
-                    return CodeIntegration.getResult("pressures",list,allBySomeMap.get(0).getPressureCenter().get(0).getRoutineTime());
+                    return CodeIntegration.getResult("pressures",list,TimeFormat.getTime(allBySomeMap.get(0).getPressureCenter().get(0).getRoutineTime()));
                 }else {
                     return CodeIntegration.getResult("pressures",list,time.split(":")[1]);
                 }

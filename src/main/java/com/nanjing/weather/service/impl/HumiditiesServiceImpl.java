@@ -2,16 +2,12 @@ package com.nanjing.weather.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.nanjing.wContour.ContourHelper;
 import com.nanjing.wContour.bean.ContourResult;
-import com.nanjing.wContour.bean.LegendLevel;
 import com.nanjing.wContour.bean.ValuePoint;
 import com.nanjing.weather.dao.HumiditiesMapper;
 import com.nanjing.weather.dao.LegendLevelMapper;
 import com.nanjing.weather.dao.StationsMapper;
 import com.nanjing.weather.domain.Humidities;
-import com.nanjing.weather.domain.Stations;
-import com.nanjing.weather.domain.Winds;
 import com.nanjing.weather.entity.Humiditie;
 import com.nanjing.weather.entity.HumiditieCenter;
 import com.nanjing.weather.service.HumiditiesService;
@@ -104,7 +100,7 @@ public class HumiditiesServiceImpl implements HumiditiesService {
                 if(time != null){
                     return CodeIntegration.getResult("humidities",list,time.split(":")[1]);
                 }else {
-                    return CodeIntegration.getResult("humidities",list,allBySomeTerm.get(0).getHumiditieCenter().get(0).getRoutineTime());
+                    return CodeIntegration.getResult("humidities",list,TimeFormat.getTime(allBySomeTerm.get(0).getHumiditieCenter().get(0).getRoutineTime()));
                 }
             }
         }
