@@ -84,7 +84,7 @@ public class PressuresController {
      */
 
     @RequestMapping("/findAllBySomeTerm")
-    public ContourResult<Pressures> findAllBySomeTerm(String parmOne,String parmTwo,String time){
-        return pressuresService.findAllBySomeTerm(parmOne,parmTwo,time);
+    public ContourResult<Pressures> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
+        return pressuresService.findAllBySomeTerm(parmOne, parmTwo, time);
     }
 }

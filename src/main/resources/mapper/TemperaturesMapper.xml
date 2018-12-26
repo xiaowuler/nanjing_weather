@@ -32,8 +32,9 @@
             <result column="create_time" property="createTime"/>
         </collection>
     </resultMap>
-    
-    <select id="findAllBySomeDataHH" parameterType="com.nanjing.weather.entity.TemperatureCenter" resultMap="findAllBySomeDataHHMap">
+
+    <select id="findAllBySomeDataHH" parameterType="com.nanjing.weather.entity.TemperatureCenter"
+            resultMap="findAllBySomeDataHHMap">
         SELECT * FROM temperatures where 1 = 1
         <if test="value != null">
             and value >= #{value}
@@ -49,7 +50,8 @@
         </if>
     </select>
 
-    <select id="findAllBySomeDataHh" parameterType="com.nanjing.weather.entity.TemperatureCenter" resultMap="findAllBySomeDataHHMap">
+    <select id="findAllBySomeDataHh" parameterType="com.nanjing.weather.entity.TemperatureCenter"
+            resultMap="findAllBySomeDataHHMap">
         SELECT * FROM temperatures where 1 = 1
         <if test="value != null">
             and value &lt; #{value}
@@ -76,7 +78,8 @@
         </collection>
     </resultMap>
 
-    <select id="findAllBySomeDatahh" parameterType="com.nanjing.weather.entity.TemperatureNinMax" resultMap="findAllBySomeDatahhMap">
+    <select id="findAllBySomeDatahh" parameterType="com.nanjing.weather.entity.TemperatureNinMax"
+            resultMap="findAllBySomeDatahhMap">
         SELECT * FROM temperatures_min_max where 1 = 1
         <if test="maxValue != null">
             and max_value >= #{maxValue}
@@ -92,7 +95,8 @@
         </if>
     </select>
 
-    <select id="findAllBySomeDatahH" parameterType="com.nanjing.weather.entity.TemperatureNinMax" resultMap="findAllBySomeDatahhMap">
+    <select id="findAllBySomeDatahH" parameterType="com.nanjing.weather.entity.TemperatureNinMax"
+            resultMap="findAllBySomeDatahhMap">
         SELECT * FROM temperatures_min_max where 1 = 1
         <if test="maxValue != null">
             and max_value &lt; #{maxValue}

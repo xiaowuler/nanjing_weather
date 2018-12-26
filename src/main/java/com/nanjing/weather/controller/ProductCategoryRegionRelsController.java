@@ -11,11 +11,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/ProductCategoryRegionRels")
 public class ProductCategoryRegionRelsController {
-   @Autowired
-   private ProductCategoryRegionRelsService productCategoryRegionRelsService;
+    @Autowired
+    private ProductCategoryRegionRelsService productCategoryRegionRelsService;
 
-   @RequestMapping("/findByCategoryCode")
-   public List<ProductCategoryRegionRels> findByCategoryCode(String categoryCode){
-      return productCategoryRegionRelsService.findByCategoryCode(categoryCode);
-   }
+    @RequestMapping("/findByCategoryCode")
+    public List<ProductCategoryRegionRels> findByCategoryCode(String categoryCode) {
+        return productCategoryRegionRelsService.findByCategoryCode(categoryCode);
+    }
 }

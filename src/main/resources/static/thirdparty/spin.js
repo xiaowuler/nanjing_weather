@@ -1,5 +1,5 @@
 var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
+    __assign = Object.assign || function (t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
             s = arguments[i];
             for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
@@ -31,9 +31,12 @@ var defaults = {
 };
 var Spinner = /** @class */ (function () {
     function Spinner(opts) {
-        if (opts === void 0) { opts = {}; }
+        if (opts === void 0) {
+            opts = {};
+        }
         this.opts = __assign({}, defaults, opts);
     }
+
     /**
      * Adds the spinner to the given target element. If this instance is already
      * spinning, it is automatically removed from its previous target by calling
@@ -79,7 +82,8 @@ var Spinner = /** @class */ (function () {
     };
     return Spinner;
 }());
-export { Spinner };
+export {Spinner};
+
 /**
  * Sets multiple style properties at once.
  */
@@ -89,12 +93,14 @@ function css(el, props) {
     }
     return el;
 }
+
 /**
  * Returns the line color from the given string or array.
  */
 function getColor(color, idx) {
     return typeof color == 'string' ? color : color[idx % color.length];
 }
+
 /**
  * Internal method that draws the individual lines.
  */
@@ -134,6 +140,7 @@ function drawLines(el, opts) {
         el.appendChild(backgroundLine);
     }
 }
+
 function parseBoxShadow(boxShadow) {
     var regex = /^\s*([a-zA-Z]+\s+)?(-?\d+(\.\d+)?)([a-zA-Z]*)\s+(-?\d+(\.\d+)?)([a-zA-Z]*)(.*)$/;
     var shadows = [];
@@ -167,6 +174,7 @@ function parseBoxShadow(boxShadow) {
     }
     return shadows;
 }
+
 /**
  * Modify box-shadow x/y offsets to counteract rotation
  */
@@ -179,6 +187,7 @@ function normalizeShadow(shadows, degrees) {
     }
     return normalized.join(', ');
 }
+
 function convertOffset(x, y, degrees) {
     var radians = degrees * Math.PI / 180;
     var sin = Math.sin(radians);

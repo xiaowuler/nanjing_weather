@@ -1,10 +1,6 @@
 //Test.java
 package com.nanjing.weather.demo;
 
-import org.springframework.context.annotation.Bean;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +13,9 @@ public class Test {
         List list = new ArrayList();
         list.add(new demo("张三", "女"));
         list.add(new demo("李四", "男"));
-        for(Object object:list){
+        for (Object object : list) {
             demo demo = (demo) object;
-            System.out.println(demo.getName()+"\t"+ demo.getSex());
+            System.out.println(demo.getName() + "\t" + demo.getSex());
         }
         /*try {
             // 遍历集合
@@ -60,8 +56,7 @@ public class Test {
     }
 
     /**
-     * @param src
-     *            源字符串
+     * @param src 源字符串
      * @return 字符串，将src的第一个字母转换为大写，src为空时返回null
      */
     public static String change(String src) {

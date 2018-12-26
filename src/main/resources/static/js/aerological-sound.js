@@ -58,8 +58,8 @@ var App = function () {
         $('#export').on('click', this.OnexportButtonClick.bind(this));
         $('#prev').on('click', this.OnPrevButtonClick.bind(this));
         $('#next').on('click', this.OnNextButtonClick.bind(this));
-        $('#query-button').click(function(){
-          this.serachDataList();
+        $('#query-button').click(function () {
+            this.serachDataList();
         }.bind(this))
 
         setTimeout(this.ChangeProduct.bind(this), 500);
@@ -76,13 +76,13 @@ var App = function () {
         link[0].click();
     };
 
-    this.current=function () {
-        var startH= $('#interval-text').text();
-        var index1=startH.split("时")
-           index=index1[0];
+    this.current = function () {
+        var startH = $('#interval-text').text();
+        var index1 = startH.split("时")
+        index = index1[0];
     }
 
-   this.Relayout = function () {
+    this.Relayout = function () {
         var windowWidth = $(window).width();
         var height = $(window).height();
         var topHeight = $('.top').height() + 10;
@@ -111,10 +111,10 @@ var App = function () {
     var hour = null;
     this.OnBroadClick = function () {
         $('.level-broad .aside-title,#6minute').click(function () {
-            Minute= $('#interval-text6').text();
+            Minute = $('#interval-text6').text();
             date = $('#calendar').val();
-            hour=$('#broad-text').text();
-            imagetime = date +'/'+hour+'/'+Minute;
+            hour = $('#broad-text').text();
+            imagetime = date + '/' + hour + '/' + Minute;
 
             $('.direction').show();
             $('.minute-element').show();
@@ -133,10 +133,10 @@ var App = function () {
     };
     this.On30MinuteClick = function () {
         $('#30minute').click(function () {
-            Minute= $('#interval-text30').text();
+            Minute = $('#interval-text30').text();
             date = $('#calendar').val();
-             hour=$('#broad-text').text();
-            imagetime = date +'/'+hour+'/'+Minute;
+            hour = $('#broad-text').text();
+            imagetime = date + '/' + hour + '/' + Minute;
 
             $('.direction').show();
             $('.minute-element30').show();
@@ -147,11 +147,11 @@ var App = function () {
 
     this.On60MinuteClick = function () {
         $('#60minute').click(function () {
-            Minute=null;
+            Minute = null;
             date = $('#calendar').val();
-            hour= $('#interval-text').text();
+            hour = $('#interval-text').text();
 
-            imagetime = date +'/'+hour;
+            imagetime = date + '/' + hour;
             $('.hour-element').show();
             $('.minute-element,.minute-element30,.broad-hour-select').hide();
             $('#hour-slide').removeClass('arrow-hide');
@@ -182,8 +182,8 @@ var App = function () {
             this.Interval(index);
         } else {
             this.Interval(0);
-            index=0;
-            i=1;
+            index = 0;
+            i = 1;
         }
         this.serachDataList();
     };
@@ -202,7 +202,7 @@ var App = function () {
             this.BroadInterval(index);
         }
         i--;
-      this.serachDataList();
+        this.serachDataList();
     };
 
     this.OnNextBroadIntervalSelect = function () {
@@ -212,17 +212,17 @@ var App = function () {
             this.BroadInterval(index);
         } else {
             this.BroadInterval(0);
-            index=0;
-            i=1;
+            index = 0;
+            i = 1;
         }
         this.serachDataList();
     };
 
     this.OnHourIntervalSelect = function () {
         $('#interval-text').toggleClass('select-arrow');
-        $('#interval-select').fadeToggle(300, function() {
-            $(this).find('li').click(function (){
-                index  =  interval.index(this);
+        $('#interval-select').fadeToggle(300, function () {
+            $(this).find('li').click(function () {
+                index = interval.index(this);
 
                 var text = interval.eq(index).html();
                 $('#interval-text').html(text);
@@ -232,9 +232,9 @@ var App = function () {
             })
         });
         $('#interval-text6').toggleClass('select-arrow');
-        $('#interval-select6').fadeToggle(300, function() {
-            $(this).find('li').click(function (){
-                index  =  interval6.index(this);
+        $('#interval-select6').fadeToggle(300, function () {
+            $(this).find('li').click(function () {
+                index = interval6.index(this);
 
                 var text = interval6.eq(index).html();
                 $('#interval-text6').html(text);
@@ -244,9 +244,9 @@ var App = function () {
             })
         });
         $('#interval-text30').toggleClass('select-arrow');
-        $('#interval-select30').fadeToggle(300, function() {
-            $(this).find('li').click(function (){
-                index  =  interval30.index(this);
+        $('#interval-select30').fadeToggle(300, function () {
+            $(this).find('li').click(function () {
+                index = interval30.index(this);
                 var text = interval30.eq(index).html();
                 $('#interval-text30').html(text);
                 interval30.eq(index).addClass('action').siblings().removeClass('action');
@@ -258,9 +258,9 @@ var App = function () {
 
     this.OnBroadHourSelect = function () {
         $('#broad-text').toggleClass('select-arrow');
-        $('#broad-select').fadeToggle(300, function() {
-            $(this).find('li').click(function (){
-                index  =  broad.index(this);
+        $('#broad-select').fadeToggle(300, function () {
+            $(this).find('li').click(function () {
+                index = broad.index(this);
                 var text = broad.eq(index).html();
                 $('#broad-text').html(text);
                 broad.eq(index).addClass('action').siblings().removeClass('action');
@@ -271,23 +271,23 @@ var App = function () {
     };
 
     this.DocumentHide = function () {
-        if($("#interval-text").hasClass("select-arrow")){
+        if ($("#interval-text").hasClass("select-arrow")) {
             $('#interval-select').siblings('span').removeClass('select-arrow');
             $('#interval-select').fadeOut();
         }
-        if($("#interval-text6").hasClass("select-arrow")){
+        if ($("#interval-text6").hasClass("select-arrow")) {
             $('#interval-select6').siblings('span').removeClass('select-arrow');
             $('#interval-select6').fadeOut();
         }
-        if($("#interval-text30").hasClass("select-arrow")){
+        if ($("#interval-text30").hasClass("select-arrow")) {
             $('#interval-select30').siblings('span').removeClass('select-arrow');
             $('#interval-select30').fadeOut();
         }
-        if ($('#aerological').hasClass('select-arrow')){
+        if ($('#aerological').hasClass('select-arrow')) {
             $('#select').siblings().removeClass('select-arrow');
             $('#select').fadeOut();
         }
-        if ($('#broad-text').hasClass('select-arrow')){
+        if ($('#broad-text').hasClass('select-arrow')) {
             $('#broad-select').siblings().removeClass('select-arrow');
             $('#broad-select').fadeOut();
         }
@@ -313,9 +313,9 @@ var App = function () {
 
     this.OnSecondIntervalSelect = function () {
         $('#aerological').addClass('select-arrow');
-        $('#select').fadeToggle(300, function() {
-            $(this).find('li').click(function (){
-                timing= $(this).attr('val');
+        $('#select').fadeToggle(300, function () {
+            $(this).find('li').click(function () {
+                timing = $(this).attr('val');
                 $(this).addClass('action').siblings().removeClass('action');
                 $(this).parents('#select').siblings().text($(this).text()).attr("val", $(this).text());
                 $(this).parents('#select').siblings().removeClass('select-arrow');
@@ -323,14 +323,14 @@ var App = function () {
             })
         });
     };
-    var timing=3000;
+    var timing = 3000;
     this.OnPlayButtonClick = function () {
         $('#play').show();
         $('#pause').hide();
         time = setInterval(function () {
             var num = index - showNum + 2;
             var tWidth = -(num * tabWidth);
-            tab.find('ul li').css('float','left');
+            tab.find('ul li').css('float', 'left');
             if (tabNum > 7) {
                 if (index < 6) {
                     tWidth = 0;
@@ -340,15 +340,15 @@ var App = function () {
                 }
                 tab.find('ul').stop().animate({'left': tWidth}, 600);
             }
-            overview.find('ul li').eq(number).css("display","block").siblings().css("display","none");
+            overview.find('ul li').eq(number).css("display", "block").siblings().css("display", "none");
             tab.find('ul li').eq(number).addClass('action').siblings(this).removeClass('action');
             number++;
             index++;
-            if(number == length)
+            if (number == length)
                 number = 0;
-            if(index == tabNum)
+            if (index == tabNum)
                 index = 0;
-        },timing)
+        }, timing)
     };
 
     this.OnPauseButtonClick = function () {
@@ -364,10 +364,10 @@ var App = function () {
         });
     };
 
-    this.SmallElementsTab = function(index) {
+    this.SmallElementsTab = function (index) {
         var num = index - showNum + 2;
         var tWidth = -(num * tabWidth);
-        tab.find('ul li').css('float','left');
+        tab.find('ul li').css('float', 'left');
         if (tabNum > 7) {
             if (index < 6) {
                 tWidth = 0;
@@ -380,7 +380,7 @@ var App = function () {
     };
 
     this.ElementsSlide = function (number) {
-        overview.find('ul li').eq(number).css("display","block").siblings().css("display","none");
+        overview.find('ul li').eq(number).css("display", "block").siblings().css("display", "none");
         tab.find('ul li').eq(number).addClass('action').siblings(this).removeClass('action');
     };
 
@@ -390,9 +390,9 @@ var App = function () {
             number = index = tab.find('ul li').index(this);
             var num = index - showNum + 2;
             var tWidth = -(num * tabWidth);
-            tab.find('ul li').css('float','left');
+            tab.find('ul li').css('float', 'left');
             tab.find('ul li').eq(index).addClass('action').siblings(this).removeClass('action');
-            overview.find('ul li').eq(number).css("display","block").siblings().css("display","none");
+            overview.find('ul li').eq(number).css("display", "block").siblings().css("display", "none");
             if (tabNum > 7) {
                 if (index < 6) {
                     tWidth = 0;
@@ -413,22 +413,22 @@ var App = function () {
         if (index == 0) {
             index = length
         }
-        number --;
-        index --;
+        number--;
+        index--;
         this.ElementsSlide(number);
         this.SmallElementsTab(index);
     };
 
-    this.NextElement = function (){
+    this.NextElement = function () {
         if (number == length - 1) {
-            number =- 1;
+            number = -1;
         }
         if (index == length - 1) {
-            index =- 1;
+            index = -1;
         }
-        index ++;
+        index++;
         this.SmallElementsTab(index);
-        number ++;
+        number++;
         this.ElementsSlide(number);
     };
 
@@ -441,33 +441,33 @@ var App = function () {
     };
 
     this.OnAreaSelectClick = function () {
-        $('.area-select a').click(function() {
+        $('.area-select a').click(function () {
 
-            county=$(this).attr('val');
+            county = $(this).attr('val');
             app.serachDataList();
             $(this).addClass('action').siblings().removeClass('action');
         })
     };
 //获取系统当前时间的小时
-   var imagHour = function CurentTime(){
+    var imagHour = function CurentTime() {
         var now = new Date();
         now = now.addHours(1);
         var hh = now.getHours();
         var clock = "";
-        if(hh < 10)
+        if (hh < 10)
             clock += "0";
-          clock += hh + "时";
-        return(clock);
+        clock += hh + "时";
+        return (clock);
     }
 
     //获取最新分钟
-    var minute=function CurentTime(){
+    var minute = function CurentTime() {
         var now = new Date();
         var mm = now.getMinutes();
         var clock = "";
         if (mm < 10) clock += '0';
-        clock += mm+'分钟';
-        return(clock);
+        clock += mm + '分钟';
+        return (clock);
     }
 
 
@@ -476,91 +476,91 @@ var App = function () {
 
 
 // 获取当前页面的年月日时
-    var imagetime='';
+    var imagetime = '';
     var hour;
     var date;
     var Minute;
-    this.serachDataList = function(){
+    this.serachDataList = function () {
         // 获取时间日
         date = $('#calendar').val();
         // 获取时
-        hour= $('#interval-text').text();
+        hour = $('#interval-text').text();
         //获取分钟
-        if(Minute == null){
-            imagetime = date +'/'+hour;
-        }else{
-            hour= $('#broad-text').text();
-            if(productValue=='6-fen-zhong'){
+        if (Minute == null) {
+            imagetime = date + '/' + hour;
+        } else {
+            hour = $('#broad-text').text();
+            if (productValue == '6-fen-zhong') {
                 Minute = $('#interval-text6').text();
             }
-            if(productValue=='30-fen-zhong'){
+            if (productValue == '30-fen-zhong') {
                 Minute = $('#interval-text30').text();
             }
-            imagetime = date +'/'+hour +'/'+Minute;
+            imagetime = date + '/' + hour + '/' + Minute;
         }
-         this.Addimage();
+        this.Addimage();
     }
 
-    var county=''; //获取当前的地区
-    var imgHtml='';
-    var imgHtml2='';
-    var productValue='xiao-guang';
-    var categoryCodeValue='ji-guang-lei-da';
-    var imgHtml='';
-     this.OnSmallpicture = function () {
-     $(function () {
-        $.post("products/findByTime?type="+productValue+'&imagetime='+imagetime+'&county='+county+'&windValue='+windValue+'&categoryCodeValue='+categoryCodeValue, function (data){
-            $(data).each(function (index,data) {
-                imgHtml = '<li ><div>'+'<img src="'+data.url+'" class="width100">'+'</div></li>'+ imgHtml;
-                imgHtml2 = '<li ><div><div>'+'<img src="'+data.url+'">'+'</div></div></li>' + imgHtml2;
-            });
-            $('.imgeUrl2').html(imgHtml2);
-            app.Relayout();
-            length = overview.find('ul li').length;
-           // $(".imgeUrl").find(".action").trigger('click');
+    var county = ''; //获取当前的地区
+    var imgHtml = '';
+    var imgHtml2 = '';
+    var productValue = 'xiao-guang';
+    var categoryCodeValue = 'ji-guang-lei-da';
+    var imgHtml = '';
+    this.OnSmallpicture = function () {
+        $(function () {
+            $.post("products/findByTime?type=" + productValue + '&imagetime=' + imagetime + '&county=' + county + '&windValue=' + windValue + '&categoryCodeValue=' + categoryCodeValue, function (data) {
+                $(data).each(function (index, data) {
+                    imgHtml = '<li ><div>' + '<img src="' + data.url + '" class="width100">' + '</div></li>' + imgHtml;
+                    imgHtml2 = '<li ><div><div>' + '<img src="' + data.url + '">' + '</div></div></li>' + imgHtml2;
+                });
+                $('.imgeUrl2').html(imgHtml2);
+                app.Relayout();
+                length = overview.find('ul li').length;
+                // $(".imgeUrl").find(".action").trigger('click');
 
-            $('.imgeUrl').html(imgHtml);
-            //$(".imgeUrl").find(".action").trigger('click');
+                $('.imgeUrl').html(imgHtml);
+                //$(".imgeUrl").find(".action").trigger('click');
 
-            $('.bigImg').attr('src',data[0]);
-            tabNum = tab.find('ul li').length;
-            $('.imgeUrl').width(($('.imgeUrl li').length) * tabWidth);
-            $('.imgeUrl').find('li').width(tabWidth - 1);
-            $('.imgeUrl').find('li').eq(tabNum - 1).addClass("action");
-            overview.find('ul li').eq(tabNum - 1).show();
+                $('.bigImg').attr('src', data[0]);
+                tabNum = tab.find('ul li').length;
+                $('.imgeUrl').width(($('.imgeUrl li').length) * tabWidth);
+                $('.imgeUrl').find('li').width(tabWidth - 1);
+                $('.imgeUrl').find('li').eq(tabNum - 1).addClass("action");
+                overview.find('ul li').eq(tabNum - 1).show();
 
-            var num = tabNum - showNum;
-            var tWidth = -(num * tabWidth);
-            tab.find('ul').stop().animate({'left': tWidth}, 600);
-            app.ElementsTab();
-            $(".imgeUrl li.action").trigger('click');
+                var num = tabNum - showNum;
+                var tWidth = -(num * tabWidth);
+                tab.find('ul').stop().animate({'left': tWidth}, 600);
+                app.ElementsTab();
+                $(".imgeUrl li.action").trigger('click');
+            })
         })
-    })
-}
+    }
 
     this.Addimage = function () {
-         imgHtml ='';
-         imgHtml2='';
+        imgHtml = '';
+        imgHtml2 = '';
         this.OnSmallpicture();
-     }
+    }
 
     this.OnProductSelectClick = function () {
-        $('.product-select a').click(function() {
-          // 点击事件
+        $('.product-select a').click(function () {
+            // 点击事件
             $('#interval-text').html(imagHour);
             $('#broad-text').html(imagHour);
-            productValue=$(this).attr('val');
+            productValue = $(this).attr('val');
             app.serachDataList();
             $(this).addClass('action').siblings().removeClass('action');
         })
     };
-    var windValue='';
+    var windValue = '';
     this.OnDirectionSelectClick = function () {
-        $('.direction-select a').click(function() {
+        $('.direction-select a').click(function () {
             // 点击事件
             $('#interval-text').html(imagHour);
             $('#broad-text').html(imagHour);
-            windValue=$(this).attr('val');
+            windValue = $(this).attr('val');
             app.serachDataList();
             $(this).addClass('action').siblings().removeClass('action');
         })
@@ -568,19 +568,19 @@ var App = function () {
 
     var categoryCodeHtml = '';
     this.Onregion = function () {
-        $(function (){
-            $.post("ProductCategoryRegionRels/findByCategoryCode?categoryCode="+categoryCodeValue, function (data){
+        $(function () {
+            $.post("ProductCategoryRegionRels/findByCategoryCode?categoryCode=" + categoryCodeValue, function (data) {
 
-                $(data).each(function (index,data) {
-                    if(index==0){
-                        categoryCodeHtml+='<a href="javascript:;" class="action" val="'+ data.categoryCode+'">'+data.name+'</a>'
-                    }else {
-                        categoryCodeHtml+='<a href="javascript:;" val="'+ data.categoryCode+'">'+data.name+'</a>'
+                $(data).each(function (index, data) {
+                    if (index == 0) {
+                        categoryCodeHtml += '<a href="javascript:;" class="action" val="' + data.categoryCode + '">' + data.name + '</a>'
+                    } else {
+                        categoryCodeHtml += '<a href="javascript:;" val="' + data.categoryCode + '">' + data.name + '</a>'
                     }
                 });
-                  $('#Onregions').html(categoryCodeHtml);
+                $('#Onregions').html(categoryCodeHtml);
                 app.OnAreaSelectClick();
-                county= data[0].categoryCode;
+                county = data[0].categoryCode;
                 app.serachDataList();
             });
             categoryCodeHtml = '';
@@ -591,53 +591,53 @@ var App = function () {
     this.OnMenuSelect = function () {
         $('.product-select').eq(0).show();
         $('.level-radar .aside-title').click(function () {
-            categoryCodeValue="ji-guang-lei-da";
+            categoryCodeValue = "ji-guang-lei-da";
             app.Onregion();
-            productValue='xiao-guang';
-            windValue="";
+            productValue = 'xiao-guang';
+            windValue = "";
             $('#interval-text').html(imagHour);
-            Minute=null;
+            Minute = null;
             $('.product-select').eq(0).show().siblings('.product-select').hide();
             $('.product-radar a').eq(0).addClass('action').siblings().removeClass('action');
         });
         $('.level-broad .aside-title').click(function () {
-            categoryCodeValue="feng-kuo-xian";
+            categoryCodeValue = "feng-kuo-xian";
             app.Onregion();
             $('#broad-text').html(imagHour);
             $('#interval-text6').html(minute);
             $('#interval-text30').html(minute);
-            productValue='6-fen-zhong';
-            windValue='contour';
+            productValue = '6-fen-zhong';
+            windValue = 'contour';
             $('.product-select').eq(1).show().siblings('.product-select').hide();
             $('.product-broad a').eq(0).addClass('action').siblings().removeClass('action');
             $('.direction-select a').eq(0).addClass('action').siblings().removeClass('action');
         });
         $('.level-microwave .aside-title').click(function () {
-            categoryCodeValue="wei-bo-fu-she";
+            categoryCodeValue = "wei-bo-fu-she";
             app.Onregion();
-            productValue='3d-tu';
-            windValue="";
+            productValue = '3d-tu';
+            windValue = "";
             $('#interval-text').html(imagHour);
-            Minute=null;
+            Minute = null;
             $('.product-select').eq(2).show().siblings('.product-select').hide();
             $('.product-microwave a').eq(0).addClass('action').siblings().removeClass('action');
         });
         $('.level-raindrop .aside-title').click(function () {
-            categoryCodeValue="yu-di-pu";
+            categoryCodeValue = "yu-di-pu";
             app.Onregion();
-            productValue='yu-di-pu';
-            windValue="";
+            productValue = 'yu-di-pu';
+            windValue = "";
             $('#interval-text').html(imagHour);
-            Minute=null;
+            Minute = null;
             $('.product-select').eq(3).show().siblings('.product-select').hide();
         });
         $('.level-gps .aside-title').click(function () {
-            categoryCodeValue="gps/met";
+            categoryCodeValue = "gps/met";
             app.Onregion();
-            productValue='gps/met';
-            windValue="";
+            productValue = 'gps/met';
+            windValue = "";
             $('#interval-text').html(imagHour);
-            Minute=null;
+            Minute = null;
             $('.product-select').eq(4).show().siblings('.product-select').hide();
         });
     }
@@ -654,7 +654,7 @@ var App = function () {
 };
 
 var app = null;
-$(document).ready(function() {
+$(document).ready(function () {
     app = new App();
     app.Startup();
 

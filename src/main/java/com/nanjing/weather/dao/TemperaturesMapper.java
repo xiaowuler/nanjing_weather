@@ -11,7 +11,7 @@ import java.util.List;
 
 @Mapper
 public interface TemperaturesMapper {
-    List<Temperatures> findAll(Integer time,Double rainfalls);
+    List<Temperatures> findAll(Integer time, Double rainfalls);
 
     Temperatures findTemperaturesByid(String stationId);
 

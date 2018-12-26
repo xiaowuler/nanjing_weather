@@ -19,7 +19,7 @@ public class GroundTemperatureController {
      */
 
     @RequestMapping("/findAllBySomeTerm")
-    public ContourResult<GroundTemperatures> findAllBySomeTerm(String parmOne, String parmTwo, String time){
-        return groundTemperatureService.findAllBySomeTerm(parmOne,parmTwo,time);
+    public ContourResult<GroundTemperatures> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
+        return groundTemperatureService.findAllBySomeTerm(parmOne, parmTwo, time);
     }
 }

@@ -1,6 +1,5 @@
 package com.nanjing.weather.dao;
 
-import com.nanjing.weather.domain.GroundTemperatures;
 import com.nanjing.weather.entity.GroupTemperature;
 import com.nanjing.weather.entity.GroupTemperatureCenter;
 import org.apache.ibatis.annotations.Mapper;

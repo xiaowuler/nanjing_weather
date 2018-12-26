@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--客户映射 指定到dao接口 -->
 <mapper namespace="com.nanjing.weather.dao.WindsMapper">
-    
+
     <select id="findAll" resultType="com.nanjing.weather.domain.Winds">
         select * from winds;
     </select>
@@ -47,7 +47,8 @@
         </collection>
     </resultMap>
 
-    <select id="findAllBySomeTerm" parameterType="com.nanjing.weather.entity.WindCenter" resultMap="findAllBySomeTermMap">
+    <select id="findAllBySomeTerm" parameterType="com.nanjing.weather.entity.WindCenter"
+            resultMap="findAllBySomeTermMap">
         SELECT * from winds where 1 = 1
         <if test="createTime != null and routineTime != null">
             and routine_time BETWEEN #{createTime} AND #{routineTime}

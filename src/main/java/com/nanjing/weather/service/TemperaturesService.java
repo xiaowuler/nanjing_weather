@@ -1,6 +1,5 @@
 package com.nanjing.weather.service;
 
-import com.github.pagehelper.PageInfo;
 import com.nanjing.wContour.bean.ContourResult;
 import com.nanjing.weather.domain.Temperatures;
 
@@ -41,5 +40,5 @@ public interface TemperaturesService {
     /**
      * 返回ContourResult
      */
-    ContourResult<Temperatures> findAllBySomeTerm(String parmOne,String parmTwo,String time);
+    ContourResult<Temperatures> findAllBySomeTerm(String parmOne, String parmTwo, String time);
 }

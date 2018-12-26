@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @RequestMapping("/findOne")
-    public void findOne(){
+    public void findOne() {
         ApplicationContext applicationContext = SpringUtil.getApplicationContext();
         UserMapper bean = applicationContext.getBean(UserMapper.class);
         System.out.println(bean.findUserById(1).getId());

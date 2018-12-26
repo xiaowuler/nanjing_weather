@@ -9,16 +9,16 @@ var Autodetecion = function () {
         this.MapInfo.Startup();
         this.timeProcessing();
         this.clickQueryButton();
-        $("#checkbox0").on('click',this.layerInfoZeroButtonClick.bind(this));
-        $("#checkbox1").on('click',this.layerInfoOneButtonClick.bind(this));
-        $("#checkbox2").on('click',this.layerInfoTwoButtonClick.bind(this));
-        $("#checkbox4").on('click',this.layerInfoFourButtonClick.bind(this));
-        $("#checkbox3").on('click',this.layerInfoThreeButtonClick.bind(this));
-        $("#checkbox5").on('click',this.layerInfoFiveButtonClick.bind(this));
+        $("#checkbox0").on('click', this.layerInfoZeroButtonClick.bind(this));
+        $("#checkbox1").on('click', this.layerInfoOneButtonClick.bind(this));
+        $("#checkbox2").on('click', this.layerInfoTwoButtonClick.bind(this));
+        $("#checkbox4").on('click', this.layerInfoFourButtonClick.bind(this));
+        $("#checkbox3").on('click', this.layerInfoThreeButtonClick.bind(this));
+        $("#checkbox5").on('click', this.layerInfoFiveButtonClick.bind(this));
     }
 
     this.clickQueryButton = function () {
-        $(".easyui-linkbutton").on('click',function (e) {
+        $(".easyui-linkbutton").on('click', function (e) {
             //alert($(".rainfall").find(".clearfix li.action").attr("val"))
             var requestPath = $(".rainfall").find(".clearfix li.action").attr("val")
             var parmOne = null;
@@ -38,16 +38,16 @@ var Autodetecion = function () {
             } else if (requestPath == "groundTemperature") {
                 parmOne = $("input[name=radio7]:checked").attr("value");
             }
-            var time = this.timeFormat($("#date-start").val()+'/'+$("#start-text").text(),$("#date-end").val()+'/'+$("#end-text").text())
+            var time = this.timeFormat($("#date-start").val() + '/' + $("#start-text").text(), $("#date-end").val() + '/' + $("#end-text").text())
             /*alert(time)
             alert(parmOne+'  '+parmTwo)*/
-            if(time != null){
-                this.getInfoData(requestPath,parmOne,parmTwo,time)
+            if (time != null) {
+                this.getInfoData(requestPath, parmOne, parmTwo, time)
             }
         }.bind(this))
     }
 
-    this.getInfoData = function (requestPath,parmOne,parmTwo,time) {
+    this.getInfoData = function (requestPath, parmOne, parmTwo, time) {
         $.ajax({
             type: "POST",
             dataType: 'json',
@@ -85,18 +85,18 @@ var Autodetecion = function () {
                         this.MapInfo.CreateContourLayer(data.contourPolylines);
                     }
                     if ($("#checkbox0").prop('checked')) {
-                        if($("#checkbox1").prop("checked")){
+                        if ($("#checkbox1").prop("checked")) {
                             this.MapInfo.basePoltDirName(this.result.valuePoints);
                         }
-                        if($("#checkbox4").prop("checked")){
+                        if ($("#checkbox4").prop("checked")) {
                             this.MapInfo.basePlotValue(this.result.valuePoints);
                         }
                     }
                     if ($("#checkbox5").prop('checked')) {
-                        if($("#checkbox1").prop("checked")){
+                        if ($("#checkbox1").prop("checked")) {
                             this.MapInfo.encryptionPointName(this.result.valuePoints);
                         }
-                        if($("#checkbox4").prop("checked")){
+                        if ($("#checkbox4").prop("checked")) {
                             this.MapInfo.encryPlotValue(this.result.valuePoints);
                         }
                     }
@@ -108,70 +108,70 @@ var Autodetecion = function () {
     this.timeProcessing = function () {
         var myDate = new Date();
         var hour = myDate.getHours();
-        $('#start-text').text(hour+'小时')
-        if(hour == '23'){
+        $('#start-text').text(hour + '小时')
+        if (hour == '23') {
             $('#end-text').text('00小时')
-        }else {
-            $('#end-text').text((hour+1)+'小时')
+        } else {
+            $('#end-text').text((hour + 1) + '小时')
         }
     }
 
     this.checkNull = function () {
-        if(this.MapInfo.basePlotValueValue != null){
+        if (this.MapInfo.basePlotValueValue != null) {
             this.MapInfo.Map.removeLayer(this.MapInfo.basePlotValueValue);
         }
-        if(this.MapInfo.encryPlotValueValue != null){
+        if (this.MapInfo.encryPlotValueValue != null) {
             this.MapInfo.Map.removeLayer(this.MapInfo.encryPlotValueValue);
         }
-        if(this.MapInfo.basePoltDirNameValue != null){
+        if (this.MapInfo.basePoltDirNameValue != null) {
             this.MapInfo.Map.removeLayer(this.MapInfo.basePoltDirNameValue);
         }
-        if(this.MapInfo.encryptionPointNameValue != null){
+        if (this.MapInfo.encryptionPointNameValue != null) {
             this.MapInfo.Map.removeLayer(this.MapInfo.encryptionPointNameValue);
         }
-        if(this.MapInfo.ContourLayer != null){
+        if (this.MapInfo.ContourLayer != null) {
             this.MapInfo.Map.removeLayer(this.MapInfo.ContourLayer);
         }
-        if(this.MapInfo.layer != null){
+        if (this.MapInfo.layer != null) {
             this.MapInfo.Map.removeLayer(this.MapInfo.layer);
         }
         this.MapInfo.PlotColor('');
-        $("#color-unit").attr("style","display: none")
+        $("#color-unit").attr("style", "display: none")
     }
 
     this.loadClick = function (flag) {
-        if(flag){
-            $("#map-loading").attr("style","display: block")
-        }else {
-            $("#map-loading").attr("style","display: none")
+        if (flag) {
+            $("#map-loading").attr("style", "display: block")
+        } else {
+            $("#map-loading").attr("style", "display: none")
         }
     }
 
-    this.timeFormat = function (timeStart,timeEnd) {
+    this.timeFormat = function (timeStart, timeEnd) {
         var startArray = timeStart.split("/");
-        var startHour = startArray[startArray.length-1].substring(0,2);
+        var startHour = startArray[startArray.length - 1].substring(0, 2);
         var endArray = timeEnd.split("/")
-        var endHour = endArray[endArray.length-1].substring(0,2);
+        var endHour = endArray[endArray.length - 1].substring(0, 2);
         var startTime = '';
         var endTime = '';
         var startNum = '';
         var endNum = '';
-        for(var i=0;i<startArray.length-1;i++){
+        for (var i = 0; i < startArray.length - 1; i++) {
             startNum += startArray[i];
             endNum += endArray[i];
-            if(parseFloat(startNum)>parseFloat(endNum)){
+            if (parseFloat(startNum) > parseFloat(endNum)) {
                 return null;
             }
-            startTime += startArray[i]+'/';
-            endTime += endArray[i]+'/';
+            startTime += startArray[i] + '/';
+            endTime += endArray[i] + '/';
         }
-        if(parseFloat(startNum+startHour)>parseFloat(endNum+endHour)){
+        if (parseFloat(startNum + startHour) > parseFloat(endNum + endHour)) {
             alert("时间选段出错，请调整后查询！！");
             return null;
         }
-        startTime +=startHour;
-        endTime +=endHour;
-        return startTime+":"+endTime
+        startTime += startHour;
+        endTime += endHour;
+        return startTime + ":" + endTime
     }
 
     this.Drag = function () {
@@ -212,32 +212,32 @@ var Autodetecion = function () {
 
     //定义用户点击图层信息按钮
     this.layerInfoZeroButtonClick = function () {
-        if(this.result != null){
-            if($("#checkbox0").prop('checked')){
-                if($("#checkbox1").prop("checked")){
+        if (this.result != null) {
+            if ($("#checkbox0").prop('checked')) {
+                if ($("#checkbox1").prop("checked")) {
                     this.MapInfo.basePoltDirName(this.result.valuePoints);
                 }
-                if($("#checkbox4").prop("checked")){
+                if ($("#checkbox4").prop("checked")) {
                     this.MapInfo.basePlotValue(this.result.valuePoints);
                 }
                 //this.MapInfo.CreateDir(this.result.valuePoints);
-            }else {
+            } else {
                 this.MapInfo.Map.removeLayer(this.MapInfo.basePoltDirNameValue);
                 this.MapInfo.Map.removeLayer(this.MapInfo.basePlotValueValue);
             }
         }
     }
     this.layerInfoFiveButtonClick = function () {
-        if(this.result != null){
-            if($("#checkbox5").prop('checked')){
-                if($("#checkbox1").prop("checked")){
+        if (this.result != null) {
+            if ($("#checkbox5").prop('checked')) {
+                if ($("#checkbox1").prop("checked")) {
                     this.MapInfo.encryptionPointName(this.result.valuePoints);
                 }
-                if($("#checkbox4").prop("checked")){
+                if ($("#checkbox4").prop("checked")) {
                     this.MapInfo.encryPlotValue(this.result.valuePoints);
                 }
                 //this.MapInfo.CreateDir(this.result.valuePoints);
-            }else{
+            } else {
                 this.MapInfo.Map.removeLayer(this.MapInfo.encryptionPointNameValue);
                 this.MapInfo.Map.removeLayer(this.MapInfo.encryPlotValueValue);
             }
@@ -245,45 +245,45 @@ var Autodetecion = function () {
     }
 
     this.layerInfoOneButtonClick = function () {
-        if(this.result != null){
-            if($("#checkbox1").prop('checked')){
+        if (this.result != null) {
+            if ($("#checkbox1").prop('checked')) {
                 /*this.MapInfo.PlotSite(this.result.valuePoints);*/
-                if($("#checkbox0").prop('checked')){
+                if ($("#checkbox0").prop('checked')) {
                     this.MapInfo.basePoltDirName(this.result.valuePoints);
                 }
-                if($("#checkbox5").prop('checked')){
+                if ($("#checkbox5").prop('checked')) {
                     this.MapInfo.encryptionPointName(this.result.valuePoints);
                 }
                 //this.MapInfo.CreateDir(this.result.valuePoints);
-            }else {
+            } else {
                 this.MapInfo.Map.removeLayer(this.MapInfo.basePoltDirNameValue);
                 this.MapInfo.Map.removeLayer(this.MapInfo.encryptionPointNameValue);
             }
         }
     }
 
-    this.layerInfoTwoButtonClick = function(){
-        if(this.result != null){
-            if($("#checkbox2").prop('checked')){
+    this.layerInfoTwoButtonClick = function () {
+        if (this.result != null) {
+            if ($("#checkbox2").prop('checked')) {
                 this.MapInfo.CreateContourLayer(this.result.contourPolylines)
-            }else {
+            } else {
                 this.MapInfo.Map.removeLayer(this.MapInfo.ContourLayer);
             }
         }
     }
 
-    this.layerInfoFourButtonClick = function(){
-        if(this.result != null){
-            if($("#checkbox4").prop('checked')){
+    this.layerInfoFourButtonClick = function () {
+        if (this.result != null) {
+            if ($("#checkbox4").prop('checked')) {
                 /*this.MapInfo.PlotSite(this.result.valuePoints);*/
-                if($("#checkbox0").prop('checked')){
+                if ($("#checkbox0").prop('checked')) {
                     this.MapInfo.basePlotValue(this.result.valuePoints);
                 }
-                if($("#checkbox5").prop('checked')){
+                if ($("#checkbox5").prop('checked')) {
                     this.MapInfo.encryPlotValue(this.result.valuePoints);
                 }
                 //this.MapInfo.CreateDir(this.result.valuePoints);
-            }else {
+            } else {
                 this.MapInfo.Map.removeLayer(this.MapInfo.basePlotValueValue);
                 this.MapInfo.Map.removeLayer(this.MapInfo.encryPlotValueValue);
             }
@@ -291,14 +291,14 @@ var Autodetecion = function () {
     }
 
     this.layerInfoThreeButtonClick = function () {
-        if(this.result != null){
-            if($("#checkbox3").prop('checked')){
+        if (this.result != null) {
+            if ($("#checkbox3").prop('checked')) {
                 this.MapInfo.CreateSpotLayer(this.result.spotPolygons, this.result.legendLevels)
-                $("#color-unit").attr("style","display: block")
+                $("#color-unit").attr("style", "display: block")
                 this.MapInfo.PlotColor(this.result.legendLevels);
-            }else {
+            } else {
                 this.MapInfo.PlotColor('');
-                $("#color-unit").attr("style","display: none")
+                $("#color-unit").attr("style", "display: none")
                 this.MapInfo.Map.removeLayer(this.MapInfo.layer);
             }
         }

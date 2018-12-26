@@ -4,14 +4,12 @@ package com.nanjing.weather.controller;
 import com.github.pagehelper.PageInfo;
 import com.nanjing.wContour.bean.ContourResult;
 import com.nanjing.weather.domain.Humidities;
-import com.nanjing.weather.domain.Rainfalls;
 import com.nanjing.weather.entity.Result;
 import com.nanjing.weather.service.HumiditiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import java.util.List;
 
@@ -87,8 +85,8 @@ public class HumiditiesController {
      */
 
     @RequestMapping("/findAllBySomeTerm")
-    public ContourResult<Humidities> findAllBySomeTerm(String parmOne, String parmTwo, String time){
-        return humiditiesService.findAllBySomeTerm(parmOne,parmTwo,time);
+    public ContourResult<Humidities> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
+        return humiditiesService.findAllBySomeTerm(parmOne, parmTwo, time);
     }
 
 }

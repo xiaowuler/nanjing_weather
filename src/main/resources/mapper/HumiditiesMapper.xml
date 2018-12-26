@@ -37,7 +37,8 @@
         </collection>
     </resultMap>
 
-    <select id="findAllBySomeTerm" parameterType="com.nanjing.weather.entity.HumiditieCenter" resultMap="findAllBySomeTermMap">
+    <select id="findAllBySomeTerm" parameterType="com.nanjing.weather.entity.HumiditieCenter"
+            resultMap="findAllBySomeTermMap">
         SELECT * from humidities where 1 = 1
         <if test="createTime != null and routineTime != null">
             and routine_time BETWEEN #{createTime} AND #{routineTime}

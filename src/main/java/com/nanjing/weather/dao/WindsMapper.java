@@ -4,7 +4,6 @@ import com.nanjing.weather.domain.Winds;
 import com.nanjing.weather.entity.Wind;
 import com.nanjing.weather.entity.WindCenter;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

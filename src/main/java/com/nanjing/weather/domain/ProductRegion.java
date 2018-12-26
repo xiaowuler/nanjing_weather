@@ -3,6 +3,7 @@ package com.nanjing.weather.domain;
 import java.util.List;
 
 public class ProductRegion {
+    List<ProductType> productTypes;
     private String code;
     private String name;
     private String sequence;
@@ -15,8 +16,6 @@ public class ProductRegion {
     public void setDataFilePath(String dataFilePath) {
         this.dataFilePath = dataFilePath;
     }
-
-    List<ProductType> productTypes;
 
     public List<ProductType> getProductTypes() {
         return productTypes;

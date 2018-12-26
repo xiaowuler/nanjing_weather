@@ -9,15 +9,13 @@ import com.nanjing.weather.dao.StationsMapper;
 import com.nanjing.weather.domain.Stations;
 import org.springframework.context.ApplicationContext;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 public class CodeIntegration {
 
-    public static List<ValuePoint> getValuePoint(List list,String parmO,String parmT){
+    public static List<ValuePoint> getValuePoint(List list, String parmO, String parmT) {
         ApplicationContext applicationContext = SpringUtil.getApplicationContext();
         List<ValuePoint> valuePoints = new ArrayList<>();
         Method metd = null;
@@ -26,13 +24,13 @@ public class CodeIntegration {
             for (Object object : list) {
                 Class clazz = object.getClass();// 获取集合中的对象类型
                 //metd = clazz.getMethod(parmO, null);// 根据字段名找到对应的get方法，null表示无参数
-                if(Double.parseDouble(clazz.getMethod(parmT,null).invoke(object,null).toString())<10000){
-                    String name = (String)clazz.getMethod(parmO, null).invoke(object, null);// 调用该字段的get方法
+                if (Double.parseDouble(clazz.getMethod(parmT, null).invoke(object, null).toString()) < 10000) {
+                    String name = (String) clazz.getMethod(parmO, null).invoke(object, null);// 调用该字段的get方法
                     StationsMapper stationsMapper = applicationContext.getBean(StationsMapper.class);
                     Stations station = stationsMapper.findStationsByid(name);
                     ValuePoint valuePoint = new ValuePoint();
                     valuePoint.setId(station.getId());
-                    valuePoint.setValue(Double.parseDouble(clazz.getMethod(parmT,null).invoke(object,null).toString()));
+                    valuePoint.setValue(Double.parseDouble(clazz.getMethod(parmT, null).invoke(object, null).toString()));
                     valuePoint.setLatitude(Double.parseDouble(station.getLatitude() + ""));
                     valuePoint.setLongitude(Double.parseDouble(station.getLongitude() + ""));
 
@@ -48,11 +46,10 @@ public class CodeIntegration {
     }
 
     /**
-     *
      * @param type 色标图查询类型
      * @return
      */
-    public static ContourResult getResult(String type,List<ValuePoint> list,String time){
+    public static ContourResult getResult(String type, List<ValuePoint> list, String time) {
         ApplicationContext applicationContext = SpringUtil.getApplicationContext();
         LegendLevelMapper legendLevelMapper = applicationContext.getBean(LegendLevelMapper.class);
         List<LegendLevel> legendLevels = legendLevelMapper.findAll(type);

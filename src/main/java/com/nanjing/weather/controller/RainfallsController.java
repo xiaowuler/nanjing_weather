@@ -3,8 +3,6 @@ package com.nanjing.weather.controller;
 import com.github.pagehelper.PageInfo;
 import com.nanjing.wContour.bean.ContourResult;
 import com.nanjing.weather.domain.Rainfalls;
-import com.nanjing.weather.domain.Temperatures;
-import com.nanjing.weather.domain.Winds;
 import com.nanjing.weather.entity.Result;
 import com.nanjing.weather.service.impl.RainfallsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +83,7 @@ public class RainfallsController {
     //根据条件查询
 
     @RequestMapping("/findAllBySomeTerm")
-    public ContourResult<Rainfalls> findAllBySomeTerm(String parmOne, String parmTwo, String time){
-        return rainfallsService.findAllBySomeTerm(parmOne,parmTwo,time);
+    public ContourResult<Rainfalls> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
+        return rainfallsService.findAllBySomeTerm(parmOne, parmTwo, time);
     }
 }

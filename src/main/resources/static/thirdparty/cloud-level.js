@@ -8,10 +8,10 @@ var App = function () {
     };
 
     this.TabSlide = function () {
-        $('#slide ul li').click(function(){
+        $('#slide ul li').click(function () {
             $(this).addClass("action").siblings().removeClass("action");
             var index = $(this).index();
-            $('.detail-overview .detail-list').eq(index).css("display","block").siblings().css("display","none");
+            $('.detail-overview .detail-list').eq(index).css("display", "block").siblings().css("display", "none");
         })
     };
 };

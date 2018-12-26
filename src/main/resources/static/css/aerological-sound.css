@@ -1,22 +1,27 @@
-.width100{
+.width100 {
     width: 100%;
 }
-.content{
+
+.content {
     position: relative;
 }
-.aerological{
+
+.aerological {
     text-align: left;
 }
-.aerological-interval{
+
+.aerological-interval {
     margin-left: 25px;
 }
-.aerological-select{
+
+.aerological-select {
     width: 82px;
     margin-top: 10px;
     display: inline-block;
     position: relative;
 }
-.aerological-select span{
+
+.aerological-select span {
     height: 28px;
     padding-left: 10px;
     display: block;
@@ -27,7 +32,8 @@
     border: 1px solid #4287b0;
     background: #0f678f;
 }
-.aerological-select span:after{
+
+.aerological-select span:after {
     content: '';
     width: 8px;
     height: 8px;
@@ -40,10 +46,12 @@
     transition: all 0.3s ease-in-out;
     background: url(../images/select-arrow.png) no-repeat;
 }
-.aerological-select span.select-arrow:after{
+
+.aerological-select span.select-arrow:after {
     background: url(../images/select-arrow-open.png) no-repeat;
 }
-.aerological-select ul{
+
+.aerological-select ul {
     width: 82px;
     margin-top: 3px;
     display: none;
@@ -52,7 +60,8 @@
     z-index: 999;
     background: #ffffff;
 }
-.aerological-select ul li{
+
+.aerological-select ul li {
     padding-left: 15px;
     line-height: 26px;
     text-align: left;
@@ -61,27 +70,28 @@
     border-bottom: 1px solid #eeeeee;
 }
 
-.export{
+.export {
     font-family: "Microsoft YaHei" ! important;
 }
 
-.pause{
+.pause {
     font-family: "Microsoft YaHei" ! important;
 }
 
-.play{
+.play {
     font-family: "Microsoft YaHei" ! important;
 }
 
-.aerological-select{
+.aerological-select {
     font-family: "Microsoft YaHei" ! important;
 }
 
 .aerological-select ul li:hover,
-.aerological-select ul li.action{
+.aerological-select ul li.action {
     background: #e0edff;
 }
-.aerological-play{
+
+.aerological-play {
     width: 70px;
     height: 28px;
     line-height: 23px;
@@ -89,10 +99,12 @@
     margin-left: 6px;
     display: inline-block;
 }
-.aerological-pause{
+
+.aerological-pause {
     background: url("../images/icon-pause.png") no-repeat #0f678f 49px 8px;
 }
-.aerological-play button{
+
+.aerological-play button {
     width: 70px;
     height: 28px;
     text-align: left;
@@ -101,20 +113,24 @@
     color: #ffffff;
     cursor: pointer;
 }
-.aerological-play button.play{
+
+.aerological-play button.play {
     display: none;
     background: url("../images/icon-pause.png") no-repeat #0f678f 49px 8px;
 }
-.aerological-play button.pause{
+
+.aerological-play button.pause {
 
     background: url("../images/icon-play.png") no-repeat #0f678f 49px 8px;
 }
-.hour-select{
+
+.hour-select {
     width: 128px;
     position: relative;
     float: left;
 }
-.hour-select ul{
+
+.hour-select ul {
     height: 400px;
     overflow: auto;
     position: absolute;
@@ -123,97 +139,115 @@
 
 }
 
-.hour-select .interval-arrow{
+.hour-select .interval-arrow {
     width: 24px;
     height: 28px;
     border: 1px solid #4287b0;
     background: #0f678f;
 }
-.hour-select .interval-prev{
+
+.hour-select .interval-prev {
     border-right: 0;
     background: url("../images/interval-prev.png") no-repeat center center #0f678f;
 }
-.hour-select .interval-next{
+
+.hour-select .interval-next {
     border-left: 0;
     background: url("../images/interval-next.png") no-repeat center center #0f678f;
 }
-.arrow-hide{
+
+.arrow-hide {
     width: 80px;
 }
+
 .arrow-hide .interval-prev,
-.arrow-hide  .interval-next{
+.arrow-hide .interval-next {
     display: none;
 }
-.arrow-hide ul{
+
+.arrow-hide ul {
     left: 0;
 }
-.element-select{
+
+.element-select {
     width: 80px;
     float: left;
 }
-.element-select span{
+
+.element-select span {
     padding-left: 9px;
 }
+
 .minute-element,
-.minute-element30{
+.minute-element30 {
     display: none;
 }
-.broad-hour-select{
+
+.broad-hour-select {
     margin-right: 10px;
     display: none;
 }
 
-.detail{
+.detail {
     width: 79.8%;
     margin-top: 35px;
     margin-left: 35px;
 }
-.detail h2{
+
+.detail h2 {
     margin-top: 25px;
     margin-bottom: 5px;
     text-align: center;
     color: #1fb3ff;
     font-size: 18px;
 }
-.detail-overview{
+
+.detail-overview {
     width: 100%;
     height: 651px;
     overflow: hidden;
     position: relative;
 }
-.detail-overview ul{
+
+.detail-overview ul {
     position: absolute;
     left: 0;
     top: 0;
 }
-.detail-overview ul li{
+
+.detail-overview ul li {
     width: 100%;
     height: 100%;
     text-align: center;
     float: left;
     display: none;
 }
-.detail-overview ul li div{
+
+.detail-overview ul li div {
     width: 100%;
     height: 100%;
     display: table;
 }
-.detail-overview ul li div div{
+
+.detail-overview ul li div div {
     display: table-cell;
     vertical-align: middle;
 }
+
 /*.detail-overview ul li img{
     width: 100%;
     height: 100%;
 }*/
-.detail-txt{
+.detail-txt {
     position: relative;
 }
-.detail-slide{
+
+.detail-slide {
     width: 100%;
     position: relative;
 }
-.detail-tab{
+
+.detail-tab {
     width: 92%;
     height: 114px;
     margin: 20px auto 18px auto;
@@ -221,74 +255,88 @@
     position: relative;
     font-size: 0;
 }
+
 .detail-tab ul {
     position: absolute;
     left: 0;
     top: 0;
 }
-.detail-slide ul li{
+
+.detail-slide ul li {
     width: 140px;
     min-width: 100px;
     margin-left: 1px;
     display: inline-block;
     cursor: pointer;
 }
-.detail-slide ul li div{
+
+.detail-slide ul li div {
     width: 90%;
     margin: 0 auto;
 }
-.detail-tab ul li p{
+
+.detail-tab ul li p {
     line-height: 22px;
     text-align: center;
     font-size: 12px;
     border: 1px solid #26668a;
 }
-.detail-tab ul li img{
+
+.detail-tab ul li img {
     min-height: 60px;
     height: 114px;
 }
-.detail-tab ul li.action img{
+
+.detail-tab ul li.action img {
     border: 7px solid #1fb3ff;
 }
-.slide-arrow{
+
+.slide-arrow {
     width: 30px;
     height: 100%;
     position: absolute;
     top: 0;
     border: 1px solid #4287b0;
 }
-.arrow-left{
+
+.arrow-left {
     left: 0;
     background: url("../images/interval-prev.png") no-repeat center center #0f678f;
 }
-.arrow-right{
+
+.arrow-right {
     right: 0;
     background: url("../images/interval-next.png") no-repeat center center #0f678f;
 }
-.aerological-right{
+
+.aerological-right {
     width: 270px;
     height: 100%;
     position: absolute;
     top: 52px;
     right: 0;
 }
-.aerological-panel{
+
+.aerological-panel {
     width: 248px;
     margin: 20px auto 0 auto;
     position: relative;
     border: 1px solid #26668a;
 }
-.aerological-panel h2{
+
+.aerological-panel h2 {
     padding-left: 47px;
     line-height: 32px;
     font-size: 16px;
     background: url("../images/icon-aera.png") no-repeat 25px #26668a;
 }
+
 .area-select,
-.direction-select{
+.direction-select {
     padding: 24px 0 14px 24px;
 }
-.area-select a{
+
+.area-select a {
     width: 60px;
     height: 28px;
     margin-bottom: 10px;
@@ -298,51 +346,61 @@
     border: 1px solid #4287b0;
     color: #ffffff;
 }
+
 .area-select a:nth-of-type(2),
-.area-select a:nth-of-type(5){
+.area-select a:nth-of-type(5) {
     margin: 0 10px;
 }
+
 .area-select a.action,
-.area-select a:hover{
+.area-select a:hover {
     border: 1px solid #1fb3ff;
     background: #1fb3ff;
 }
-.product h2{
+
+.product h2 {
     background: url("../images/icon-product.png") no-repeat 25px #26668a;
 }
-.product-select{
+
+.product-select {
     padding: 24px 0 7px 24px;
     display: none;
 }
-.direction{
+
+.direction {
     display: none;
 }
+
 .product-select a,
-.direction-select a{
+.direction-select a {
     margin-bottom: 15px;
     padding-left: 20px;
     color: #ffffff;
     background: url("../images/radio.png") no-repeat left;
 }
+
 .product-select a.action,
-.direction-select a.action{
+.direction-select a.action {
     background: url("../images/radioed.png") no-repeat left;
 }
+
 .aside .level-radar.action .aside-title,
 .aside .level-broad.action .aside-title,
 .aside .level-microwave.action .aside-title,
 .aside .level-gps.action .aside-title,
-.aside .level-raindrop.action .aside-title{
+.aside .level-raindrop.action .aside-title {
     background: #1FB3FF;
 }
+
 .aside .level-radar .aside-title,
 .aside .level-broad .aside-title,
-.aside .level-microwave .aside-title{
+.aside .level-microwave .aside-title {
     background: none;
 }
+
 .aside .level-radar:hover .aside-title,
 .aside .level-broad:hover .aside-title,
-.aside .level-microwave:hover .aside-title{
+.aside .level-microwave:hover .aside-title {
     background: #1FB3FF;
 }
 

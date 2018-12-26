@@ -1,7 +1,6 @@
 package com.nanjing.weather.dao;
 
 import com.nanjing.weather.domain.Rainfalls;
-import com.nanjing.weather.domain.Temperatures;
 import com.nanjing.weather.entity.RainFall;
 import com.nanjing.weather.entity.RainFallCenter;
 import org.apache.ibatis.annotations.Mapper;

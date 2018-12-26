@@ -51,7 +51,7 @@ var MapInfo = function () {
 
     this.ShowLoading = function (show) {
         if (show)
-            $("#map").LoadingOverlay("show", { color: "rgba(255, 255, 255, 0.5)" });
+            $("#map").LoadingOverlay("show", {color: "rgba(255, 255, 255, 0.5)"});
         else
             $("#map").LoadingOverlay("hide", true);
     }
@@ -90,13 +90,13 @@ var MapInfo = function () {
         this.basePoltPointValue = new L.FeatureGroup();
 
         $(labels).each(function (index, value) {
-            if(value.id.substring(0,2) === '58'){
+            if (value.id.substring(0, 2) === '58') {
                 alert(true)
             }
         }.bind(this))
     }
 
-    this.CreateDir = function (labels,flagO,flagT) {
+    this.CreateDir = function (labels, flagO, flagT) {
         this.ValueLayer = new L.FeatureGroup();
 
         $(labels).each(function (index, value) {
@@ -108,9 +108,16 @@ var MapInfo = function () {
                     })
                 }).addTo(this.ValueLayer);
 
-                if (value.instantDirection >0) {
-                    var icon = L.WindBarb.icon({ lat: 40, deg: value.instantDirection, speed: value.Value, pointRadius: 5, strokeWidth: 1, strokeLength: 15 });
-                    L.marker([value.Latitude, value.Longitude], { icon: icon }).addTo(this.ValueLayer);
+                if (value.instantDirection > 0) {
+                    var icon = L.WindBarb.icon({
+                        lat: 40,
+                        deg: value.instantDirection,
+                        speed: value.Value,
+                        pointRadius: 5,
+                        strokeWidth: 1,
+                        strokeLength: 15
+                    });
+                    L.marker([value.Latitude, value.Longitude], {icon: icon}).addTo(this.ValueLayer);
                 }
             }
         }.bind(this));
@@ -118,7 +125,7 @@ var MapInfo = function () {
 
 
     this.CreateSpotLayer = function (polygons, levels) {
-        if(this.layer!=undefined){
+        if (this.layer != undefined) {
             this.Map.removeLayer(this.layer);
         }
         // Add feature group
@@ -154,13 +161,13 @@ var MapInfo = function () {
                 weight: 0,
                 opacity: 0.5,
                 fillOpacity: 0.5,
-                fillColor: this.GetFillColor(polygons[i].IsHighCenter,polygons[i].HighValue, levels)
+                fillColor: this.GetFillColor(polygons[i].IsHighCenter, polygons[i].HighValue, levels)
             }));
         }
         this.Map.addLayer(this.layer);
     };
 
-    this.GetFillColor = function (IsHighCenter,value, levels) {
+    this.GetFillColor = function (IsHighCenter, value, levels) {
         var color = levels[levels.length - 1];
         for (var i = 0; i < levels.length; i++) {
             if (value < levels[i].EndValue) {
@@ -171,8 +178,8 @@ var MapInfo = function () {
         return 'rgb(' + color + ')';
     };
 
-    this.PlotSite = function (labels,flagO,flagT) {
-        if(this.sitePoint != undefined){
+    this.PlotSite = function (labels, flagO, flagT) {
+        if (this.sitePoint != undefined) {
             this.Map.removeLayer(this.sitePoint);
         }
 
@@ -180,8 +187,8 @@ var MapInfo = function () {
         this.sitePoint = new L.FeatureGroup();
         $(labels).each(function (index, label) {
 
-            if(label.value > 0){
-                if(flagO){
+            if (label.value > 0) {
+                if (flagO) {
                     this.sitePoint.addLayer(L.marker([label.latitude, label.longitude], {
                         icon: L.divIcon({
                             className: 'name-label text-shadow',
@@ -197,7 +204,7 @@ var MapInfo = function () {
                         })
                     }));*/
 
-                    this.sitePoint.addLayer(L.circleMarker([label.latitude, label.longitude],{
+                    this.sitePoint.addLayer(L.circleMarker([label.latitude, label.longitude], {
                         opacity: 1,
                         weight: 0.5,
                         color: 'black',
@@ -215,15 +222,15 @@ var MapInfo = function () {
 
     //基本站的站名
     this.basePoltDirName = function (labels) {
-        if(this.basePoltDirNameValue != undefined){
+        if (this.basePoltDirNameValue != undefined) {
             this.Map.removeLayer(this.basePoltDirNameValue);
         }
 
         //var windBarLayer = new L.FeatureGroup();
         this.basePoltDirNameValue = new L.FeatureGroup();
         $(labels).each(function (index, label) {
-            if(label.value > 0){
-                if(label.id.substring(0,2) == '58'){
+            if (label.value > 0) {
+                if (label.id.substring(0, 2) == '58') {
                     this.basePoltDirNameValue.addLayer(L.marker([label.latitude, label.longitude], {
                         icon: L.divIcon({
                             className: 'name-label text-shadow',
@@ -236,7 +243,7 @@ var MapInfo = function () {
                             html: parseFloat(label.value)
                         })
                     }));*/
-                    this.basePoltDirNameValue.addLayer(L.circleMarker([label.latitude, label.longitude],{
+                    this.basePoltDirNameValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
                         opacity: 1,
                         weight: 0.5,
                         color: 'black',
@@ -253,7 +260,7 @@ var MapInfo = function () {
 
     //加密站的站名
     this.encryptionPointName = function (labels) {
-        if(this.encryptionPointNameValue != undefined){
+        if (this.encryptionPointNameValue != undefined) {
             this.Map.removeLayer(this.encryptionPointNameValue);
         }
 
@@ -261,8 +268,8 @@ var MapInfo = function () {
         this.encryptionPointNameValue = new L.FeatureGroup();
         $(labels).each(function (index, label) {
 
-            if(label.value > 0){
-                if(label.id.substring(0,2) != '58'){
+            if (label.value > 0) {
+                if (label.id.substring(0, 2) != '58') {
                     this.encryptionPointNameValue.addLayer(L.marker([label.latitude, label.longitude], {
                         icon: L.divIcon({
                             className: 'name-label text-shadow',
@@ -275,7 +282,7 @@ var MapInfo = function () {
                             html: parseFloat(label.value)
                         })
                     }));*/
-                    this.encryptionPointNameValue.addLayer(L.circleMarker([label.latitude, label.longitude],{
+                    this.encryptionPointNameValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
                         opacity: 1,
                         weight: 0.5,
                         color: 'black',
@@ -292,7 +299,7 @@ var MapInfo = function () {
 
 
     this.CreatePlotValue = function (labels) {
-        if(this.plotValue!=undefined){
+        if (this.plotValue != undefined) {
             this.Map.removeLayer(this.plotValue);
         }
 
@@ -320,7 +327,7 @@ var MapInfo = function () {
                 }))
             }
 
-            this.plotValue.addLayer(L.circleMarker([label.latitude, label.longitude],{
+            this.plotValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
                 opacity: 1,
                 weight: 0.5,
                 color: 'black',
@@ -335,43 +342,44 @@ var MapInfo = function () {
 
     //基本站的站值
     this.basePlotValue = function (labels) {
-        if(this.basePlotValueValue!=undefined){
+        if (this.basePlotValueValue != undefined) {
             this.Map.removeLayer(this.basePlotValueValue);
         }
         this.basePlotValueValue = new L.FeatureGroup();
         $(labels).each(function (index, label) {
-            if(label.value > 0){
-            // Add label
-            if(label.id.substring(0,2) == '58'){
-                this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
-                    icon: L.divIcon({
-                        className: 'value-label text-shadow',
-                        html: parseFloat(label.value)
-                    })
-                }));
-
-                if (label.instantDirection != null) {
+            if (label.value > 0) {
+                // Add label
+                if (label.id.substring(0, 2) == '58') {
                     this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
-                        icon: L.WindBarb.icon({
-                            lat: 40,
-                            deg: label.instantDirection,
-                            speed: label.Value,
-                            pointRadius: 5,
-                            strokeWidth: 1,
-                            strokeLength: 15
+                        icon: L.divIcon({
+                            className: 'value-label text-shadow',
+                            html: parseFloat(label.value)
                         })
+                    }));
+
+                    if (label.instantDirection != null) {
+                        this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
+                            icon: L.WindBarb.icon({
+                                lat: 40,
+                                deg: label.instantDirection,
+                                speed: label.Value,
+                                pointRadius: 5,
+                                strokeWidth: 1,
+                                strokeLength: 15
+                            })
+                        }))
+                    }
+
+                    this.basePlotValueValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
+                        opacity: 1,
+                        weight: 0.5,
+                        color: 'black',
+                        fillColor: '#fff',
+                        fillOpacity: 0.5,
+                        radius: 2.4
                     }))
                 }
-
-                this.basePlotValueValue.addLayer(L.circleMarker([label.latitude, label.longitude],{
-                    opacity: 1,
-                    weight: 0.5,
-                    color: 'black',
-                    fillColor: '#fff',
-                    fillOpacity: 0.5,
-                    radius: 2.4
-                }))
-            }}
+            }
         }.bind(this))
 
         this.Map.addLayer(this.basePlotValueValue);
@@ -379,15 +387,15 @@ var MapInfo = function () {
 
     //JM站的站值
     this.encryPlotValue = function (labels) {
-        if(this.encryPlotValueValue!=undefined){
+        if (this.encryPlotValueValue != undefined) {
             this.Map.removeLayer(this.encryPlotValueValue);
         }
 
         this.encryPlotValueValue = new L.FeatureGroup();
         $(labels).each(function (index, label) {
-            if(label.value > 0){
+            if (label.value > 0) {
                 // Add label
-                if(label.id.substring(0,2) != '58'){
+                if (label.id.substring(0, 2) != '58') {
                     this.encryPlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
                         icon: L.divIcon({
                             className: 'value-label text-shadow',
@@ -408,7 +416,7 @@ var MapInfo = function () {
                         }))
                     }
 
-                    this.encryPlotValueValue.addLayer(L.circleMarker([label.latitude, label.longitude],{
+                    this.encryPlotValueValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
                         opacity: 1,
                         weight: 0.5,
                         color: 'black',
@@ -425,41 +433,41 @@ var MapInfo = function () {
     }
 
     this.PlotColor = function (legendLevels) {
-        if(legendLevels.length<=0){
+        if (legendLevels.length <= 0) {
             $("#color-value").html('');
             $("#color-number").html('');
-        }else{
-            var colorNumber="";
-            var colorValue="";
-            for(var x=legendLevels.length-1;x>=0;x--){
-                if(x<legendLevels.length-1){
-                    colorValue+='<div><span>'+legendLevels[x].EndValue+'</span></div>'
+        } else {
+            var colorNumber = "";
+            var colorValue = "";
+            for (var x = legendLevels.length - 1; x >= 0; x--) {
+                if (x < legendLevels.length - 1) {
+                    colorValue += '<div><span>' + legendLevels[x].EndValue + '</span></div>'
                 }
-                colorNumber+='<span id="color'+x+'"></span>'
+                colorNumber += '<span id="color' + x + '"></span>'
             }
             $("#color-value").html(colorValue);
             $("#color-number").html(colorNumber);
-            if(legendLevels[0].type == 'temperatures'){
+            if (legendLevels[0].type == 'temperatures') {
                 $("#color-unit").html('<h1>单位：°c</h1>')
-            }else if(legendLevels[0].type == 'winds'){
+            } else if (legendLevels[0].type == 'winds') {
                 $("#color-unit").html('<h1>单位：m/s</h1>')
-            }else if(legendLevels[0].type == 'rainfalls'){
+            } else if (legendLevels[0].type == 'rainfalls') {
                 $("#color-unit").html('<h1>单位：mm</h1>')
-            }else if(legendLevels[0].type == 'humidities'){
+            } else if (legendLevels[0].type == 'humidities') {
                 $("#color-unit").html('<h1>单位：%</h1>')
-            }else if(legendLevels[0].type == 'pressures'){
+            } else if (legendLevels[0].type == 'pressures') {
                 $("#color-unit").html('<h1>单位：Pa</h1>')
-            }else if(legendLevels[0].type == 'groundTemperature'){
+            } else if (legendLevels[0].type == 'groundTemperature') {
                 $("#color-unit").html('<h1>单位：°c</h1>')
             }
             //$("#color-value").append('<div><span></span></div>'
             //+'<div><span>'+"mm"+'</span></div>');
 
-            for(var x=legendLevels.length-1;x>=0;x--){
-                if(x==0){
-                    this.setGradient("color"+x,'rgb('+legendLevels[x].Color+')','rgb('+legendLevels[x].Color+')')
-                }else{
-                    this.setGradient("color"+x,'rgb('+legendLevels[x].Color+')','rgb('+legendLevels[x].Color+')')
+            for (var x = legendLevels.length - 1; x >= 0; x--) {
+                if (x == 0) {
+                    this.setGradient("color" + x, 'rgb(' + legendLevels[x].Color + ')', 'rgb(' + legendLevels[x].Color + ')')
+                } else {
+                    this.setGradient("color" + x, 'rgb(' + legendLevels[x].Color + ')', 'rgb(' + legendLevels[x].Color + ')')
                 }
             }
         }
@@ -467,7 +475,7 @@ var MapInfo = function () {
 
     this.CreateContourLayer = function (polylines) {
 
-        if(this.ContourLayer!=undefined){
+        if (this.ContourLayer != undefined) {
             this.Map.removeLayer(this.ContourLayer);
         }
 
@@ -549,21 +557,26 @@ var MapInfo = function () {
         }
     })();
 
-    this.writeInfo =function(result,requestValue){
-        var htmlText ='';
-        if(requestValue!=undefined){
-            if(requestValue=="rainfalls"){
-                htmlText =result.time+"的降雨信息";
-            }else if(requestValue=="temperatures"){
-                htmlText =result.time+"的温度信息";;
-            }else if (requestValue == "winds") {
-                htmlText =result.time+"的风信息";;
-            }else if (requestValue == "humidities") {
-                htmlText =result.time+"的湿度信息";;
-            }else if (requestValue == "pressures") {
-                htmlText =result.time+"的气压信息";;
+    this.writeInfo = function (result, requestValue) {
+        var htmlText = '';
+        if (requestValue != undefined) {
+            if (requestValue == "rainfalls") {
+                htmlText = result.time + "的降雨信息";
+            } else if (requestValue == "temperatures") {
+                htmlText = result.time + "的温度信息";
+                ;
+            } else if (requestValue == "winds") {
+                htmlText = result.time + "的风信息";
+                ;
+            } else if (requestValue == "humidities") {
+                htmlText = result.time + "的湿度信息";
+                ;
+            } else if (requestValue == "pressures") {
+                htmlText = result.time + "的气压信息";
+                ;
             } else if (requestValue == "groundTemperature") {
-                htmlText +=result.time+"的地温信息";;
+                htmlText += result.time + "的地温信息";
+                ;
             }
             $("#map-info").html(htmlText)
         }

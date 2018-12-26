@@ -8,12 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import javax.swing.text.StyledEditorKit;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Transactional
@@ -24,22 +19,22 @@ public class ProductsServiceImpl implements ProductsService {
     ProductsMapper productsMapper;
 
     @Override
-    public List<Products> findByTime(String type, String startTime,  String county) {
-        List<Products> products=productsMapper.findByTime(type,startTime,county);
+    public List<Products> findByTime(String type, String startTime, String county) {
+        List<Products> products = productsMapper.findByTime(type, startTime, county);
         String path = productsMapper.findConfigPath();
-        for(int i=0;i<products.size();i++){
-            String path1= products.get(i).getUrl();
-            String paths=path+"/"+path1;
+        for (int i = 0; i < products.size(); i++) {
+            String path1 = products.get(i).getUrl();
+            String paths = path + "/" + path1;
             products.get(i).setUrl(paths);
         }
         return products;
     }
 
     @Override
-    public List<Products> findAllByTime(String type, String startTime, String county, String windValue)  {
-        List<Products> products = productsMapper.findAllByTime(type, startTime, county,windValue);
+    public List<Products> findAllByTime(String type, String startTime, String county, String windValue) {
+        List<Products> products = productsMapper.findAllByTime(type, startTime, county, windValue);
         String root = productsMapper.findConfigPath();
-        for(int i =0; i <products.size(); i++){
+        for (int i = 0; i < products.size(); i++) {
             String path = products.get(i).getUrl();
             String url = String.format("%s/%s", root, path);
             products.get(i).setUrl(url);
@@ -49,11 +44,11 @@ public class ProductsServiceImpl implements ProductsService {
 
     @Override
     public List<Products> findByhalfTime(String type, String startTime, String county, String windValue) {
-        List<Products> products= productsMapper.findByhalfTime(type, startTime, county,windValue);
+        List<Products> products = productsMapper.findByhalfTime(type, startTime, county, windValue);
         String path = productsMapper.findConfigPath();
-        for(int i=0;i<products.size();i++){
-            String path1= products.get(i).getUrl();
-            String paths=path+"/"+path1;
+        for (int i = 0; i < products.size(); i++) {
+            String path1 = products.get(i).getUrl();
+            String paths = path + "/" + path1;
             products.get(i).setUrl(paths);
         }
         /*List<Products> products1= productsMapper.findByhalfTime1(type, startTime, county,windValue);
@@ -76,23 +71,23 @@ public class ProductsServiceImpl implements ProductsService {
 
     @Override
     public List<Products> findByTiming(String type, String startTime, String county, String windValue) {
-        List<Products> products= productsMapper.findByTiming(type, startTime, county,windValue);
+        List<Products> products = productsMapper.findByTiming(type, startTime, county, windValue);
         String path = productsMapper.findConfigPath();
-        for(int i=0;i<products.size();i++){
-            String path1= products.get(i).getUrl();
-            String paths=path+"/"+path1;
+        for (int i = 0; i < products.size(); i++) {
+            String path1 = products.get(i).getUrl();
+            String paths = path + "/" + path1;
             products.get(i).setUrl(paths);
         }
         return products;
     }
 
     @Override
-    public List<Products> findByTime1(String type, String county,String categoryCodeValue ) {
-        List<Products> products= productsMapper.findByTime1(type, county,categoryCodeValue);
+    public List<Products> findByTime1(String type, String county, String categoryCodeValue) {
+        List<Products> products = productsMapper.findByTime1(type, county, categoryCodeValue);
         String path = productsMapper.findConfigPath();
-        for(int i=0;i<products.size();i++){
-            String path1= products.get(i).getUrl();
-            String paths=path+"/"+path1;
+        for (int i = 0; i < products.size(); i++) {
+            String path1 = products.get(i).getUrl();
+            String paths = path + "/" + path1;
             products.get(i).setUrl(paths);
         }
         return products;
@@ -102,33 +97,33 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     public List<ProductCategoryRegionRels> findAllByTypeAndArea() {
         String configPath = productsMapper.findConfigPath();
-        configPath +="/";
+        configPath += "/";
         List<ProductCategoryRegionRels> allGound = productsMapper.findProductCategoryRegionRels();
-        for(ProductCategoryRegionRels productCategoryRegionRels:allGound){
-            for(ProductRegion productRegion:productCategoryRegionRels.getProductRegion()){
-                for(ProductType productType:productRegion.getProductTypes()){
+        for (ProductCategoryRegionRels productCategoryRegionRels : allGound) {
+            for (ProductRegion productRegion : productCategoryRegionRels.getProductRegion()) {
+                for (ProductType productType : productRegion.getProductTypes()) {
                     ProductData productData = null;
-                    if(productCategoryRegionRels.getCategoryCode().equals("feng-kuo-xian")){
-                        if(productType.getCode().equals("30-fen-zhong")){
+                    if (productCategoryRegionRels.getCategoryCode().equals("feng-kuo-xian")) {
+                        if (productType.getCode().equals("30-fen-zhong")) {
                             productData = productsMapper.findOneByTypeAndThirty(productRegion.getCode());
-                        }else if(productType.getCode().equals("60-fen-zhong")){
+                        } else if (productType.getCode().equals("60-fen-zhong")) {
                             productData = productsMapper.findOneByTypeAndOne(productRegion.getCode());
-                        }else if(productType.getCode().equals("6-fen-zhong")){
+                        } else if (productType.getCode().equals("6-fen-zhong")) {
                             productData = productsMapper.findOneByTypeAndTwo(productRegion.getCode());
-                        }else{
+                        } else {
                             productData = productsMapper.findOneByTypeAndArea(productCategoryRegionRels.getCategoryCode(), productRegion.getCode(), productType.getCode());
                         }
-                    }else{
+                    } else {
                         productData = productsMapper.findOneByTypeAndArea(productCategoryRegionRels.getCategoryCode(), productRegion.getCode(), productType.getCode());
                     }
 
-                    if(!StringUtils.isEmpty(productData)){
-                        productData.setUrl(configPath+productData.getUrl());
-                    }else{
-                        if(productCategoryRegionRels.getCategoryCode().equals("gps/met")){
+                    if (!StringUtils.isEmpty(productData)) {
+                        productData.setUrl(configPath + productData.getUrl());
+                    } else {
+                        if (productCategoryRegionRels.getCategoryCode().equals("gps/met")) {
                             productData = new ProductData();
                             productData.setUrl("picture/GPS.png");
-                        }else {
+                        } else {
                             productData = new ProductData();
                             productData.setUrl("picture/00f860d4c0a9ff106b8dc647610a181f.jpg");
                         }

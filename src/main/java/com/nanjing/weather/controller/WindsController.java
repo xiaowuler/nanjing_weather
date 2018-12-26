@@ -83,7 +83,7 @@ public class WindsController {
 
 
     @RequestMapping("/demo")
-    public void demo (){
+    public void demo() {
         ApplicationContext applicationContext = SpringUtil.getApplicationContext();
         WindsMapper windsMapper = applicationContext.getBean(WindsMapper.class);
     }
@@ -92,7 +92,7 @@ public class WindsController {
      * 根据条件绘制色斑图
      */
     @RequestMapping("/findAllBySomeTerm")
-    public ContourResult<Winds> findAllBySomeTerm(String parmOne,String parmTwo,String time){
-        return windsService.findAllBySomeTerm(parmOne,parmTwo,time);
+    public ContourResult<Winds> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
+        return windsService.findAllBySomeTerm(parmOne, parmTwo, time);
     }
 }

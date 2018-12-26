@@ -18,7 +18,8 @@
 
     <!--根据条件查询-->
     <select id="findAllBySomeTerm" resultMap="findAllBySomeTermMap">
-        select station_id,value,value_5cm,value_10cm,value_15cm,value_20cm,value_40cm,routine_time,create_time from ground_temperatures where 1 = 1
+        select station_id,value,value_5cm,value_10cm,value_15cm,value_20cm,value_40cm,routine_time,create_time from
+        ground_temperatures where 1 = 1
         <if test="createTime != null and routineTime != null">
             and routine_time BETWEEN #{createTime} AND #{routineTime}
         </if>

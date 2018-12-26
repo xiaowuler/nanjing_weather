@@ -1,7 +1,7 @@
-var Region = function (typeName,regionId, regionImg) {
+var Region = function (typeName, regionId, regionImg) {
 
     this.name = null;
-    this.typeName = typeName.substring(0,3);
+    this.typeName = typeName.substring(0, 3);
     this.products = [];
     this.productPlayIndex = -1;
     this.regionId = regionId;
@@ -9,7 +9,7 @@ var Region = function (typeName,regionId, regionImg) {
 
     this.setProductPlayIndex = function (productIndex) {
         this.productPlayIndex = productIndex;
-        $(this.regionImg).html('<div class="theme-area-chart" style="display: block;"><div class="theme-chart {1}" style="display: block;"><img src="{0}"></div></div>'.format(this.products[this.productPlayIndex].url,this.typeName))
+        $(this.regionImg).html('<div class="theme-area-chart" style="display: block;"><div class="theme-chart {1}" style="display: block;"><img src="{0}"></div></div>'.format(this.products[this.productPlayIndex].url, this.typeName))
         this.cliclImg();
     }
 
@@ -35,7 +35,7 @@ var Region = function (typeName,regionId, regionImg) {
         }.bind(this));
 
         $(this.regionId).html(textHtml);
-        $(this.regionImg).html('<div class="theme-area-chart" style="display: block;"><div class="theme-chart {1}" style="display: block;"><img src="{0}"></div></div>'.format(this.products[this.productPlayIndex + 1].url,this.typeName))
+        $(this.regionImg).html('<div class="theme-area-chart" style="display: block;"><div class="theme-chart {1}" style="display: block;"><img src="{0}"></div></div>'.format(this.products[this.productPlayIndex + 1].url, this.typeName))
         this.cliclImg();
     }
 
@@ -47,13 +47,13 @@ var Region = function (typeName,regionId, regionImg) {
             callback();
         } else {
             $(this.regionId).parents(".theme-title").find(".theme-area-table a").eq(this.productPlayIndex).addClass("action").siblings().removeClass("action");
-            $(this.regionImg).html('<div class="theme-area-chart" style="display: block;"><div class="theme-chart {1}" style="display: block;"><img src="{0}"></div></div>'.format(this.products[this.productPlayIndex].url,this.typeName))
+            $(this.regionImg).html('<div class="theme-area-chart" style="display: block;"><div class="theme-chart {1}" style="display: block;"><img src="{0}"></div></div>'.format(this.products[this.productPlayIndex].url, this.typeName))
             this.cliclImg();
         }
     }
 
     this.cliclImg = function () {
-        $("."+this.typeName+" img").on('click', function (e) {
+        $("." + this.typeName + " img").on('click', function (e) {
             //var parmOne = $(e.target).parents(".theme-content").prev().find(".theme-area-table a.action").text();
             //var parmTwo = $(e.target).parents(".theme-content").prev().prev().find(".theme-area-table a.action").text();
             var parentValue = $(e.target).parents(".theme").find(".title h2").attr('category');

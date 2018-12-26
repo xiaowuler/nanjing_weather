@@ -1,8 +1,9 @@
 package com.nanjing.weather.dto;
 
-import java.util.List;
-import com.nanjing.weather.domain.ProductRegion;
 import com.nanjing.weather.domain.ProductCategoryRegionRels;
+import com.nanjing.weather.domain.ProductRegion;
+
+import java.util.List;
 
 public class ProductCategoryRegionRelsDTO extends ProductCategoryRegionRels {
 

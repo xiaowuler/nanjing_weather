@@ -23,26 +23,26 @@ var LeftPanel = function () {
     }
 
     this.getPicture = function () {
-        $.post(this.requestPath+"products/findAllByTypeAndArea",function (data) {
+        $.post(this.requestPath + "products/findAllByTypeAndArea", function (data) {
             this.result = data;
 
-            var laserRadar = new Category('#laserRadarArea',"#laserRadarParm","#laserRadarImg");
+            var laserRadar = new Category('#laserRadarArea', "#laserRadarParm", "#laserRadarImg");
             laserRadar.Init(data[2]);
             this.laserRadar = laserRadar;
 
-            var microwaveRadiation = new Category('#microwaveRadiationArea',"#microwaveRadiationParm","#microwaveRadiationImg");
+            var microwaveRadiation = new Category('#microwaveRadiationArea', "#microwaveRadiationParm", "#microwaveRadiationImg");
             microwaveRadiation.Init(data[3]);
             this.microwaveRadiation = microwaveRadiation;
 
-            var windProfile = new Category('#windProfileArea',"#windProfileParm","#windProfileImg");
+            var windProfile = new Category('#windProfileArea', "#windProfileParm", "#windProfileImg");
             windProfile.Init(data[0]);
             this.windProfile = windProfile;
 
-            var raindropSpectrum = new Category('#raindropSpectrumArea',"#raindropSpectrumParm","#raindropSpectrumImg");
+            var raindropSpectrum = new Category('#raindropSpectrumArea', "#raindropSpectrumParm", "#raindropSpectrumImg");
             raindropSpectrum.Init(data[4]);
             this.raindropSpectrum = raindropSpectrum;
 
-            var gpsMet = new Category('#gpsMetArea',"#gpsMetParm","#gpsMetImg");
+            var gpsMet = new Category('#gpsMetArea', "#gpsMetParm", "#gpsMetImg");
             gpsMet.Init(data[1]);
             this.gpsMet = gpsMet;
 
@@ -61,7 +61,7 @@ var LeftPanel = function () {
             this.raindropSpectrum.Play();
             this.microwaveRadiation.Play();
             this.windProfile.Play();
-        }.bind(this),5000)
+        }.bind(this), 5000)
 
         this.playWheelTime = time;
     }
@@ -74,16 +74,16 @@ var LeftPanel = function () {
                 var parentIndex = $(e.target).parents(".theme").index();
                 var index = $(e.target).index();
 
-                if(parentIndex == '0')
-                    this.laserRadar.setRegionPlayIndex(index,0);
-                else if(parentIndex == '1')
-                    this.windProfile.setRegionPlayIndex(index,0);
-                else if(parentIndex == '2')
-                    this.gpsMet.setRegionPlayIndex(index,0);
-                else if(parentIndex == '3')
-                    this.microwaveRadiation.setRegionPlayIndex(index,0);
-                else if(parentIndex == '4')
-                    this.raindropSpectrum.setRegionPlayIndex(index,0);
+                if (parentIndex == '0')
+                    this.laserRadar.setRegionPlayIndex(index, 0);
+                else if (parentIndex == '1')
+                    this.windProfile.setRegionPlayIndex(index, 0);
+                else if (parentIndex == '2')
+                    this.gpsMet.setRegionPlayIndex(index, 0);
+                else if (parentIndex == '3')
+                    this.microwaveRadiation.setRegionPlayIndex(index, 0);
+                else if (parentIndex == '4')
+                    this.raindropSpectrum.setRegionPlayIndex(index, 0);
 
             }.bind(this))
         }.bind(this))
@@ -97,28 +97,28 @@ var LeftPanel = function () {
                 var time = $(e.target).index();
                 var parentIndex = $(e.target).parents(".theme").index();
 
-                if(parentIndex == '0')
-                    this.laserRadar.setRegionPlayIndex(null,time);
-                else if(parentIndex == '1')
-                    this.windProfile.setRegionPlayIndex(null,time);
-                else if(parentIndex == '2')
-                    this.gpsMet.setRegionPlayIndex(null,time);
-                else if(parentIndex == '3')
-                    this.microwaveRadiation.setRegionPlayIndex(null,time);
-                else if(parentIndex == '4')
-                    this.raindropSpectrum.setRegionPlayIndex(null,time);
+                if (parentIndex == '0')
+                    this.laserRadar.setRegionPlayIndex(null, time);
+                else if (parentIndex == '1')
+                    this.windProfile.setRegionPlayIndex(null, time);
+                else if (parentIndex == '2')
+                    this.gpsMet.setRegionPlayIndex(null, time);
+                else if (parentIndex == '3')
+                    this.microwaveRadiation.setRegionPlayIndex(null, time);
+                else if (parentIndex == '4')
+                    this.raindropSpectrum.setRegionPlayIndex(null, time);
 
             }.bind(this))
         }.bind(this))
     };
 
-    this.autoChang = function(){
+    this.autoChang = function () {
 
         setInterval(function () {
-            if(this.playWheelTime != null)
+            if (this.playWheelTime != null)
                 clearInterval(this.playWheelTime);
             this.getPicture();
-        }.bind(this),1000*60*5)
+        }.bind(this), 1000 * 60 * 5)
 
     }
 }

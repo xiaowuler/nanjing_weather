@@ -35,7 +35,6 @@ var App = function () {
         $(".slide").width(slideWidth);
         $(".slide-tab").width(slideWidth - 155);
         $(".theme-raindrop").height(leftHeight - radarHeight * 2);
-        //$(".theme-raindrop .theme-chart img").height($(".theme-raindrop").height() - 24);
     };
 
     //获取当前时间
@@ -62,6 +61,7 @@ var App = function () {
             document.getElementById("week").innerHTML = currentWeek;
             setTimeout(Time, 500);
         }
+
         Time();
     };
 

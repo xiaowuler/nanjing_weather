@@ -4,6 +4,7 @@ import java.util.List;
 
 public class RainFall {
     private String stationId;
+    private List<RainFallCenter> rainFallCenter;
 
     public String getStationId() {
         return stationId;
@@ -20,6 +21,4 @@ public class RainFall {
     public void setRainFallCenter(List<RainFallCenter> rainFallCenter) {
         this.rainFallCenter = rainFallCenter;
     }
-
-    private List<RainFallCenter> rainFallCenter;
 }

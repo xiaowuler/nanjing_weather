@@ -19,7 +19,7 @@ var Category = function (categoryId, regionId, regionImg) {
         this.name = category.categoryCode;
 
         $(category.productRegion).each(function (index, productRegion) {
-            var region = new Region(this.name,this.regionId, this.regionImg);
+            var region = new Region(this.name, this.regionId, this.regionImg);
             region.Init(productRegion)
             this.regions.push(region);
             if (category.productRegion.length == 1) {
