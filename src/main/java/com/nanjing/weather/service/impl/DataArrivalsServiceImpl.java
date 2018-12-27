@@ -51,7 +51,12 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
     public List<List<DataState>> findState() {
         DataState ds = new DataState();
         List<List<DataState>> list = new ArrayList<>();
+        //long startTime=System.currentTimeMillis();
         List<DataState> dataStates = dataArrivalsMapper.findState();
+        //long endTime = System.currentTimeMillis();
+        //System.out.println("持久层运行时间="+(endTime-startTime));
+
+        //long start = System.currentTimeMillis();
         for (DataState dataState : dataStates) {
             for (DataArrivalLitter dataArrivalLitter : dataState.getDataArrivalLitter()) {
                 String time = proFormat(dataArrivalLitter.getRoutineTime());
@@ -73,14 +78,23 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
                 dataStates.add(dataState);
             }
         }
+        //Long end = System.currentTimeMillis();
+        //System.out.println("数据处理层运行时间"+(end-start));
+        //System.out.println("------------");
 
+        //startTime = System.currentTimeMillis();
         List<DataState> routine = dataArrivalsMapper.findRoutine();
+        //endTime = System.currentTimeMillis();
+        //System.out.println("持久层运行时间="+(endTime-startTime));
+
+        //start = System.currentTimeMillis();
         for (DataState dataState : routine) {
             for (DataArrivalLitter dataArrivalLitter : dataState.getDataArrivalLitter()) {
                 String time = proFormat(dataArrivalLitter.getRoutineTime());
                 dataArrivalLitter.setTime(time);
             }
         }
+
 
         if (routine.size() < 5) {
             List<String> notRoutineData = new ArrayList<>();
@@ -94,8 +108,16 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
                 routine.add(dataState);
             }
         }
+        /*end = System.currentTimeMillis();
+        System.out.println("数据处理层运行时间"+(end-start));
+        System.out.println("------------");
 
+        startTime = System.currentTimeMillis();*/
         List<DataState> windData = dataArrivalsMapper.findWindData();
+        /*endTime = System.currentTimeMillis();
+        System.out.println("持久层运行时间="+(endTime-startTime));*/
+
+//        start = System.currentTimeMillis();
         for (DataState dataState : windData) {
             for (DataArrivalLitter dataArrivalLitter : dataState.getDataArrivalLitter()) {
                 String time = proFormat(dataArrivalLitter.getRoutineTime());
@@ -112,10 +134,14 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
                 windData.add(dataState);
             }
         }
+        /*end = System.currentTimeMillis();
+        System.out.println("数据处理层运行时间"+(end-start));
+        System.out.println("------------");*/
 
         list.add(dataStates);
         list.add(routine);
         list.add(windData);
+
         return list;
     }
 

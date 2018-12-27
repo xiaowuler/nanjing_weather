@@ -13,7 +13,7 @@ var Region = function (typeName, regionId, regionImg) {
         this.cliclImg();
     }
 
-    this.Init = function (products) {
+    this.Init = function (callback,products) {
         var textHtml = '';
         this.name = products.name;
 
@@ -37,6 +37,7 @@ var Region = function (typeName, regionId, regionImg) {
         $(this.regionId).html(textHtml);
         $(this.regionImg).html('<div class="theme-area-chart" style="display: block;"><div class="theme-chart {1}" style="display: block;"><img src="{0}"></div></div>'.format(this.products[this.productPlayIndex + 1].url, this.typeName))
         this.cliclImg();
+        this.parmTextclick(callback);
     }
 
     this.Play = function (callback) {
@@ -64,5 +65,13 @@ var Region = function (typeName, regionId, regionImg) {
     this.OpenProductPage = function (category) {
         var url = 'aerological-sound.html?category={0}'.format(category);
         window.open(url, '_blank');
+    }
+
+    this.parmTextclick = function (callback) {
+        $('{0} a'.format(this.regionId)).on('click', function (e) {
+            $(e.target).addClass("action").siblings().removeClass("action");
+            var time = $(e.target).index();
+            callback(time);
+        }.bind(this))
     }
 }
