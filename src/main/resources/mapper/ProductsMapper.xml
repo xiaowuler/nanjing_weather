@@ -74,6 +74,22 @@
         select pcr.category_code,pcr.region_code,pcr.data_file_path,pcr.sequence pcrSequence,pr.`code`,pr.`name`,pr.sequence sequenceRegion,pt.`code` ptCode,pt.category_code ptCategoryCode,pt.`name` ptName,pt.sequence ptSequence from product_category_region_rels pcr LEFT JOIN product_regions pr on pcr.region_code = pr.code LEFT JOIN product_types pt ON pcr.category_code = pt.category_code;
     </select>
 
+    <resultMap id="findCategoryMap" type="com.nanjing.weather.dto.Category">
+        <result property="name" column="category_code" />
+        <collection property="regions" ofType="com.nanjing.weather.dto.Region">
+            <result column="code" property="code"/>
+            <result column="name" property="name"/>
+            <collection property="products" ofType="com.nanjing.weather.dto.Product">
+                <result column="ptCode" property="code"/>
+                <result column="ptName" property="name"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="findCategory" resultMap="findCategoryMap">
+        select pcr.category_code,pcr.region_code,pcr.data_file_path,pcr.sequence pcrSequence,pr.`code`,pr.`name`,pr.sequence sequenceRegion,pt.`code` ptCode,pt.category_code ptCategoryCode,pt.`name` ptName,pt.sequence ptSequence from product_category_region_rels pcr LEFT JOIN product_regions pr on pcr.region_code = pr.code LEFT JOIN product_types pt ON pcr.category_code = pt.category_code;
+    </select>
+
     <resultMap id="findProductTypeMap" type="com.nanjing.weather.domain.ProductType">
         <result column="category_code" property="categoryCode"/>
     </resultMap>

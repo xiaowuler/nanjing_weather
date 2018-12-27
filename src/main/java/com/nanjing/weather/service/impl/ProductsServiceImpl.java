@@ -2,6 +2,9 @@ package com.nanjing.weather.service.impl;
 
 import com.nanjing.weather.dao.ProductsMapper;
 import com.nanjing.weather.domain.*;
+import com.nanjing.weather.dto.Category;
+import com.nanjing.weather.dto.Product;
+import com.nanjing.weather.dto.Region;
 import com.nanjing.weather.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +19,7 @@ import java.util.List;
 public class ProductsServiceImpl implements ProductsService {
 
     @Autowired
-    ProductsMapper productsMapper;
+    private ProductsMapper productsMapper;
 
     @Override
     public List<Products> findByTime(String type, String startTime, String county) {
@@ -102,7 +105,7 @@ public class ProductsServiceImpl implements ProductsService {
         for (ProductCategoryRegionRels productCategoryRegionRels : allGound) {
             for (ProductRegion productRegion : productCategoryRegionRels.getProductRegion()) {
                 for (ProductType productType : productRegion.getProductTypes()) {
-                    ProductData productData = null;
+                    ProductData productData ;
                     if (productCategoryRegionRels.getCategoryCode().equals("feng-kuo-xian")) {
                         if (productType.getCode().equals("30-fen-zhong")) {
                             productData = productsMapper.findOneByTypeAndThirty(productRegion.getCode());
@@ -134,6 +137,51 @@ public class ProductsServiceImpl implements ProductsService {
             }
         }
         return allGound;
+    }
+
+    @Override
+    public List<Category> findCategory() {
+
+        String configPath = productsMapper.findConfigPath();
+        configPath += "/";
+        List<Category> categorys = productsMapper.findCategory();
+
+        for (Category category : categorys) {
+            for (Region region : category.getRegions()) {
+                for (Product product : region.getProducts()) {
+                    ProductData productData ;
+                    if (category.getName().equals("feng-kuo-xian")) {
+                        if (product.getCode().equals("30-fen-zhong")) {
+                            productData = productsMapper.findOneByTypeAndThirty(region.getCode());
+                        } else if (product.getCode().equals("60-fen-zhong")) {
+                            productData = productsMapper.findOneByTypeAndOne(region.getCode());
+                        } else if (product.getCode().equals("6-fen-zhong")) {
+                            productData = productsMapper.findOneByTypeAndTwo(region.getCode());
+                        } else {
+                            productData = productsMapper.findOneByTypeAndArea(category.getName(), region.getCode(), product.getCode());
+                        }
+                    } else {
+                        productData = productsMapper.findOneByTypeAndArea(category.getName(), region.getCode(), product.getCode());
+                    }
+
+                    if (!StringUtils.isEmpty(productData)) {
+                        productData.setUrl(configPath + productData.getUrl());
+                    } else {
+                        if (region.getName().equals("gps/met")) {
+                            productData = new ProductData();
+                            productData.setUrl("picture/GPS.png");
+                        } else {
+                            productData = new ProductData();
+                            productData.setUrl("picture/00f860d4c0a9ff106b8dc647610a181f.jpg");
+                        }
+                    }
+                    //productData.getUrl();
+                    product.setImageUrl(productData.getUrl());
+                }
+            }
+        }
+
+        return categorys;
     }
 
 

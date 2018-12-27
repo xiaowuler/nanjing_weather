@@ -3,6 +3,7 @@ package com.nanjing.weather.service;
 
 import com.nanjing.weather.domain.ProductCategoryRegionRels;
 import com.nanjing.weather.domain.Products;
+import com.nanjing.weather.dto.Category;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface ProductsService {
     List<Products> findByTime1(String type, String county, String categoryCodeValue);
 
     List<ProductCategoryRegionRels> findAllByTypeAndArea();
+
+    List<Category> findCategory();
 }

@@ -2,6 +2,7 @@ package com.nanjing.weather.controller;
 
 import com.nanjing.weather.domain.ProductCategoryRegionRels;
 import com.nanjing.weather.domain.Products;
+import com.nanjing.weather.dto.Category;
 import com.nanjing.weather.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,7 +79,10 @@ public class ProductsController {
         inputStream.close();
     }
 
-
+    @RequestMapping("/findCategory")
+    public List<Category> findCategory(){
+        return productsService.findCategory();
+    }
 }
 
 

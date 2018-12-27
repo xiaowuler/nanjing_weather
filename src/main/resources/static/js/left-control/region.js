@@ -37,7 +37,7 @@ var Region = function (typeName, regionId, regionImg) {
         $(this.regionId).html(textHtml);
         $(this.regionImg).html('<div class="theme-area-chart" style="display: block;"><div class="theme-chart {1}" style="display: block;"><img src="{0}"></div></div>'.format(this.products[this.productPlayIndex + 1].url, this.typeName))
         this.cliclImg();
-        this.parmTextclick(callback);
+        this.parmTextclick(callback );
     }
 
     this.Play = function (callback) {

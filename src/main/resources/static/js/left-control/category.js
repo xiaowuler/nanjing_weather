@@ -1,4 +1,5 @@
 var Category = function (categoryId, regionId, regionImg) {
+
     this.name = null;
     this.regions = [];
     this.regionPlayIndex = 0;
@@ -48,7 +49,6 @@ var Category = function (categoryId, regionId, regionImg) {
     }
 
     this.RegionPlayCompleteCallback = function () {
-
         this.regionPlayIndex++;
         if (this.regionPlayIndex > this.regions.length - 1) {
             this.regionPlayIndex = 0;

@@ -8,7 +8,6 @@ var LeftPanel = function () {
     this.microwaveRadiation = null;
     this.raindropSpectrum = null;
 
-    this.result = null;
     this.playWheelTime = null;
 
     this.Startup = function () {
@@ -24,7 +23,6 @@ var LeftPanel = function () {
 
     this.getPicture = function () {
         $.post(this.requestPath + "products/findAllByTypeAndArea", function (data) {
-            this.result = data;
 
             var laserRadar = new Category('#laserRadarArea', "#laserRadarParm", "#laserRadarImg");
             laserRadar.Init(data[2]);

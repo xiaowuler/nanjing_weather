@@ -3,6 +3,7 @@ package com.nanjing.weather.dao;
 import com.nanjing.weather.domain.ProductCategoryRegionRels;
 import com.nanjing.weather.domain.ProductData;
 import com.nanjing.weather.domain.Products;
+import com.nanjing.weather.dto.Category;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -29,6 +30,8 @@ public interface ProductsMapper {
     ProductData findOneByTypeAndArea(String categoryCode, String regionCode, String typeCode);
 
     List<ProductCategoryRegionRels> findProductCategoryRegionRels();
+
+    List<Category> findCategory();
 
     ProductData findOneByTypeAndThirty(String area);
 

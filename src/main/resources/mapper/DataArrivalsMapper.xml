@@ -55,7 +55,7 @@
     <select id="findState" resultMap="findStateMap">
         /*select * from data_arrivals WHERE routine_time BETWEEN (SELECT date_sub(NOW(),interval 1 hour)) and NOW() ORDER BY routine_time;*/
         /*select * from data_arrivals WHERE routine_time BETWEEN (SELECT date_sub((SELECT MAX(routine_time) from data_arrivals),interval 1 hour)) and (SELECT MAX(routine_time) from data_arrivals) ORDER BY routine_time;*/
-        select * from data_arrivals da LEFT JOIN product_types pt ON da.product_type_code = pt.`code` WHERE product_category_code = 'qi-xiang-liu-yao-su' AND product_type_code in ('ground_temperature','humidity','rainfall','wind','temperature,pressure') AND routine_time BETWEEN (SELECT date_sub((SELECT MAX(routine_time) from data_arrivals),interval 1 hour)) and (SELECT MAX(routine_time) from data_arrivals) ORDER BY routine_time;
+        select * from data_arrivals da LEFT JOIN product_types pt ON da.product_type_code = pt.`code` WHERE product_category_code = 'qi-xiang-liu-yao-su' AND product_type_code in ('ground_temperature','humidity','rainfall','wind','temperature','pressure') AND routine_time BETWEEN (SELECT date_sub((SELECT MAX(routine_time) from data_arrivals),interval 1 hour)) and (SELECT MAX(routine_time) from data_arrivals) ORDER BY routine_time;
     </select>
 
     <select id="findRoutine" resultMap="findStateMap">
