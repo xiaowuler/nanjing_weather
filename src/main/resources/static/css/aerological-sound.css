@@ -182,7 +182,7 @@
     position: relative;
 }
 .detail-overview ul{
-    position: absolute;
+   /* position: absolute;*/
     left: 0;
     top: 0;
 }
@@ -211,17 +211,20 @@
 }
 .detail-slide{
     width: 100%;
+    height: 136px;
     position: relative;
+    overflow: hidden;
 }
 .detail-tab{
     width: 92%;
-    height: 114px;
+    height: 140px;
     margin: 20px auto 18px auto;
     overflow: hidden;
     position: relative;
     font-size: 0;
 }
-.detail-tab ul {
+.detail-slide ul {
+    width: 40000px;
     position: absolute;
     left: 0;
     top: 0;
@@ -237,17 +240,17 @@
     width: 90%;
     margin: 0 auto;
 }
-.detail-tab ul li p{
+.detail-slide ul li p{
     line-height: 22px;
     text-align: center;
     font-size: 12px;
-    border: 1px solid #26668a;
+  /*  border: 1px solid #26668a;*/
 }
-.detail-tab ul li img{
+.detail-slide ul li img{
     min-height: 60px;
     height: 114px;
 }
-.detail-tab ul li.action img{
+.detail-slide ul li.action img{
     border: 7px solid #1fb3ff;
 }
 .slide-arrow{
@@ -258,7 +261,7 @@
     border: 1px solid #4287b0;
 }
 .arrow-left{
-    left: 0;
+    left: 0px;
     background: url("../images/interval-prev.png") no-repeat center center #0f678f;
 }
 .arrow-right{
@@ -266,7 +269,7 @@
     background: url("../images/interval-next.png") no-repeat center center #0f678f;
 }
 .aerological-right{
-    width: 270px;
+    width: 260px;
     height: 100%;
     position: absolute;
     top: 52px;

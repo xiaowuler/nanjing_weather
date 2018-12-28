@@ -5,6 +5,51 @@
     <title>Title</title>
 </head>
 <body>
-<a href="https://img04.sogoucdn.com/app/a/07/16d6ef8991a924f0a2d12bc7f05c97b5" download="">下载</a>
+<div class="box">
+    <ul id="gallary">
+        <li>
+            <a href="images/信息.png" title="信息">
+                <img src="images/信息.png" alt="">
+            </a>
+        </li>
+        <li>
+            <a href="images/浏览器.png" title="浏览器">
+                <img src="images/浏览器.png" alt="">
+            </a>
+        </li>
+        <li>
+
+            <a href="images/备份.png" title="备份">
+                <img src="images/备份.png" alt="">
+            </a>
+        </li>
+        <li>
+            <a href="images/主题.png" title="主题">
+                <img src="images/主题.png" alt="">
+            </a>
+        </li>
+    </ul>
+    <div style="clear: both;"></div>
+    <img src="" alt="" class="show" id="image">
+    <p id="des" style="text-align: center;">图片信息</p>
+</div>
+
+<script>
+    //获取所有的a标签
+    var alA=document.getElementById("gallary").getElementsByTagName("a");
+    //循环遍历所有a标签
+    for(var i=0;i<alA.length;i++){
+        //为a设置点击事件
+        alA[i].onclick=function(){
+            //把a标签中的href 中存储的图片路径给需要展示图片的标签。
+            document.getElementById("image").src=this.href;
+            //把a标签中存储的title中存储的内容给需要展示的标签。
+            document.getElementById("des").innerText=this.title;
+            //阻止a链接的默认跳转。
+            return false;
+        }
+    }
+</script>
 </body>
+
 </html>

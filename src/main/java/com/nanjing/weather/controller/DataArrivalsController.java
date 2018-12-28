@@ -1,6 +1,6 @@
 package com.nanjing.weather.controller;
 
-import com.nanjing.weather.domain.DataArrivalLitter;
+
 import com.nanjing.weather.domain.DataArrivals;
 import com.nanjing.weather.domain.DataState;
 import com.nanjing.weather.service.DataArrivalsService;
@@ -24,7 +24,6 @@ public class DataArrivalsController {
     //查询
     @RequestMapping("/findByType")
     public PageResult<DataArrivals> findByType(String startTime,String endTime, Integer page, Integer rows, String type) {
-
 
         if(type.equals("60-fen-zhong")){
             type="6-fen-zhong";

@@ -16,7 +16,7 @@
     </select>-->
 
     <select id="findByTime" resultType="com.nanjing.weather.domain.Products">
-        select * from products WHERE url !='data-miss.jpg'and type_code = #{0} and  routine_time BETWEEN (SELECT date_sub((#{1}),interval 500 hour)) and (#{1}) AND RIGHT(routine_time,5)='00:00' and region_code=#{2} GROUP BY routine_time ORDER BY routine_time desc;
+        select * from products WHERE url !='data-miss.jpg'and type_code = #{0} and  routine_time BETWEEN (SELECT date_sub((#{1}),interval 24 hour)) and (#{1}) AND RIGHT(routine_time,5)='00:00' and region_code=#{2} GROUP BY routine_time ORDER BY routine_time desc;
     </select>
 
     <select id="findAllByTime" resultType="com.nanjing.weather.domain.Products">
@@ -57,9 +57,9 @@
     <resultMap id="findProductCategoryRegionRelsMap" type="com.nanjing.weather.domain.ProductCategoryRegionRels">
         <result column="category_code" property="categoryCode"/>
         <collection property="productRegion" ofType="com.nanjing.weather.domain.ProductRegion">
-            <result column="region_code" property="code"></result>
-            <result column="name" property="name"></result>
-            <result column="sequenceRegion" property="sequence"></result>
+            <result column="region_code" property="code"/>
+            <result column="name" property="name"/>
+            <result column="sequenceRegion" property="sequence"/>
             <result column="data_file_path" property="dataFilePath"/>
             <collection property="productTypes" ofType="com.nanjing.weather.domain.ProductType">
                 <result property="code" column="ptCode"/>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.lang.model.element.NestingKind;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,7 +40,8 @@ public class ProductsController {
         } else if (categoryCodeValue.equals("gps/met")) {
             return productsService.findByTime1(type, county, categoryCodeValue);
         } else {
-            String startTime = strs[0] + "-" + strs[1] + "-" + strs[2] + " " + strs[3].substring(0, 2) + ":00:00";
+            //String startTime = strs[0] + "-" + strs[1] + "-" + strs[2] + " " + strs[3].substring(0, 2) + ":00:00";
+            String startTime = imagetime.replace('/', '-') + ":00:00";
             return productsService.findByTime(type, startTime, county);
 
 

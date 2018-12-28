@@ -2,40 +2,40 @@
  * Created by Administrator on 2018/11/22.
  */
 var App = function () {
-    var overview = $('#overview');
-    var length = overview.find('ul li').length;
-    var tab = $('#tab');
-    var dWidth = $('.detail-tab').width();
-    var tabNum = tab.find('ul li').length;
-    var tabWidth = dWidth / 7;
-    var number = 0;
-    var index = 0;
-    var showNum = 7;
-    var time;
-    var i = 1;
-    var interval = $('#interval-select li');
-    var interval6 = $('#interval-select6 li');
-    var interval30 = $('#interval-select30 li');
-    var broad = $('#broad-select li');
-    var iLength = $('#interval-select li').length;
+       var overview = $('#overview');
+       var length = overview.find('ul li').length;
+       var tab = $('#tab');
+       var dWidth = $('.detail-tab').width();
+        var tabNum = tab.find('ul li').length;
+        var tabWidth = dWidth / 7;
+         var number = 0;
+        var index = 0;
+       var showNum = 7;
+       var time;
+       var i = 1;
+       var interval = $('#interval-select li');
+       var interval6 = $('#interval-select6 li');
+       var interval30 = $('#interval-select30 li');
+       var broad = $('#broad-select li');
+       var iLength = $('#interval-select li').length;
 
 
     this.slide = $('#slide ul');
     this.slideList = this.slide.find('li');
     this.Startup = function () {
-        this.ElementsTab();
-        this.OnMenuSelect();
-        this.OnBroadClick();
-        this.On30MinuteClick();
-        this.On60MinuteClick();
-        this.CalendarControl();
-        this.OnAreaSelectClick();
-        this.OnHourElementClick();
-        this.OnProductSelectClick();
-        this.OnDirectionSelectClick();
-        this.OnLevelFirstMenuClick();
-        this.StopPropagation();
-        //this.OnexportButtonClick();
+       // this.ElementsTab();
+        // this.OnMenuSelect();
+         this.OnBroadClick();
+         this.On30MinuteClick();
+         this.On60MinuteClick();
+         this.CalendarControl();
+         this.OnAreaSelectClick();
+         this.OnHourElementClick();
+         this.OnProductSelectClick();
+         this.OnDirectionSelectClick();
+         this.OnLevelFirstMenuClick();
+         this.StopPropagation();
+
         $(document).on("click", this.DocumentHide);
         this.Onregion();
         this.current();
@@ -54,15 +54,18 @@ var App = function () {
         $('#broad-next').on('click', this.OnNextBroadIntervalSelect.bind(this));
         $('#pause').on('click', this.OnPlayButtonClick.bind(this));
         $('#play').on('click', this.OnPauseButtonClick.bind(this));
-
+      //
         $('#export').on('click', this.OnexportButtonClick.bind(this));
-        $('#prev').on('click', this.OnPrevButtonClick.bind(this));
-        $('#next').on('click', this.OnNextButtonClick.bind(this));
+      /*  $('#prev').on('click', this.OnPrevButtonClick.bind(this));
+      //   $('#next').on('click', this.OnNextButtonClick.bind(this));*/
         $('#query-button').click(function(){
-          this.serachDataList();
+            this.serachDataList();
         }.bind(this))
 
         setTimeout(this.ChangeProduct.bind(this), 500);
+
+
+       // this.OnSmallpicture();
     };
 
     this.OnexportButtonClick = function () {
@@ -79,10 +82,11 @@ var App = function () {
     this.current=function () {
         var startH= $('#interval-text').text();
         var index1=startH.split("时")
-           index=index1[0];
+        index=index1[0];
     }
 
-   this.Relayout = function () {
+    this.Relayout = function () {
+
         var windowWidth = $(window).width();
         var height = $(window).height();
         var topHeight = $('.top').height() + 10;
@@ -135,7 +139,7 @@ var App = function () {
         $('#30minute').click(function () {
             Minute= $('#interval-text30').text();
             date = $('#calendar').val();
-             hour=$('#broad-text').text();
+            hour=$('#broad-text').text();
             imagetime = date +'/'+hour+'/'+Minute;
 
             $('.direction').show();
@@ -202,7 +206,7 @@ var App = function () {
             this.BroadInterval(index);
         }
         i--;
-      this.serachDataList();
+        this.serachDataList();
     };
 
     this.OnNextBroadIntervalSelect = function () {
@@ -324,7 +328,18 @@ var App = function () {
         });
     };
     var timing=3000;
-    this.OnPlayButtonClick = function () {
+    this.OnPlayButtonClick=function () {
+        $('#play').show();
+        $('#pause').hide();
+        time=setInterval(function(){
+            var show = new ProductShow();
+            show.Init('#detail-slide');
+            show.ActiveNext();
+        },timing);
+    }
+
+
+  /*  this.OnPlayButtonClick = function () {
         $('#play').show();
         $('#pause').hide();
         time = setInterval(function () {
@@ -349,7 +364,7 @@ var App = function () {
             if(index == tabNum)
                 index = 0;
         },timing)
-    };
+    };*/
 
     this.OnPauseButtonClick = function () {
         clearInterval(time);
@@ -364,7 +379,7 @@ var App = function () {
         });
     };
 
-    this.SmallElementsTab = function(index) {
+   /* this.SmallElementsTab = function(index) {
         var num = index - showNum + 2;
         var tWidth = -(num * tabWidth);
         tab.find('ul li').css('float','left');
@@ -377,14 +392,14 @@ var App = function () {
             }
             tab.find('ul').stop().animate({'left': tWidth}, 600);
         }
-    };
+    };*/
 
-    this.ElementsSlide = function (number) {
+  /*  this.ElementsSlide = function (number) {
         overview.find('ul li').eq(number).css("display","block").siblings().css("display","none");
         tab.find('ul li').eq(number).addClass('action').siblings(this).removeClass('action');
-    };
+    };*/
 
-    this.ElementsTab = function () {
+   /* this.ElementsTab = function () {
         //小图片的点击事件
         tab.find('ul li').click(function () {
             number = index = tab.find('ul li').index(this);
@@ -393,8 +408,8 @@ var App = function () {
             tab.find('ul li').css('float','left');
             tab.find('ul li').eq(index).addClass('action').siblings(this).removeClass('action');
             overview.find('ul li').eq(number).css("display","block").siblings().css("display","none");
-            if (tabNum > 7) {
-                if (index < 6) {
+            if (tabNum > 9) {
+                if (index < 8) {
                     tWidth = 0;
                 }
                 if (index == tabNum - 1) {
@@ -404,9 +419,9 @@ var App = function () {
             }
             //app.Relayout();
         })
-    };
+    };*/
 
-    this.PrevElement = function () {
+   /* this.PrevElement = function () {
         if (number == 0) {
             number = length;
         }
@@ -417,9 +432,9 @@ var App = function () {
         index --;
         this.ElementsSlide(number);
         this.SmallElementsTab(index);
-    };
+    };*/
 
-    this.NextElement = function (){
+   /* this.NextElement = function (){
         if (number == length - 1) {
             number =- 1;
         }
@@ -431,14 +446,14 @@ var App = function () {
         number ++;
         this.ElementsSlide(number);
     };
-
-    this.OnPrevButtonClick = function () {
+*/
+ /*   this.OnPrevButtonClick = function () {
         this.PrevElement();
-    };
+    };*/
 
-    this.OnNextButtonClick = function () {
+/*    this.OnNextButtonClick = function () {
         this.NextElement();
-    };
+    };*/
 
     this.OnAreaSelectClick = function () {
         $('.area-select a').click(function() {
@@ -449,14 +464,14 @@ var App = function () {
         })
     };
 //获取系统当前时间的小时
-   var imagHour = function CurentTime(){
+    var imagHour = function CurentTime(){
         var now = new Date();
         now = now.addHours(1);
         var hh = now.getHours();
         var clock = "";
         if(hh < 10)
             clock += "0";
-          clock += hh + "时";
+        clock += hh + "时";
         return(clock);
     }
 
@@ -498,55 +513,50 @@ var App = function () {
             }
             imagetime = date +'/'+hour +'/'+Minute;
         }
-         this.Addimage();
+        this.Addimage();
     }
 
     var county=''; //获取当前的地区
-    var imgHtml='';
     var imgHtml2='';
     var productValue='xiao-guang';
     var categoryCodeValue='ji-guang-lei-da';
-    var imgHtml='';
-     this.OnSmallpicture = function () {
-     $(function () {
+
+    var imgHtml2 = '';
+    this.ActiveProductCallback = function (product) {
+        var image = product.find('img:first');
+        var url=image.attr('src');
+       // console.log(url);
+
+        imgHtml2 = '<li style="display: list-item;"><div><img class="img1" src="{0}"></div></li>'.format(url)
+         $('.imgeUrl2').html(imgHtml2);
+    }
+
+
+    this.OnSmallpicture = function () {
         $.post("products/findByTime?type="+productValue+'&imagetime='+imagetime+'&county='+county+'&windValue='+windValue+'&categoryCodeValue='+categoryCodeValue, function (data){
-            $(data).each(function (index,data) {
-                imgHtml = '<li ><div>'+'<img src="'+data.url+'" class="width100">'+'</div></li>'+ imgHtml;
-                imgHtml2 = '<li ><div><div>'+'<img src="'+data.url+'">'+'</div></div></li>' + imgHtml2;
-            });
-            $('.imgeUrl2').html(imgHtml2);
-            app.Relayout();
-            length = overview.find('ul li').length;
-           // $(".imgeUrl").find(".action").trigger('click');
+            var show = new ProductShow(this.ActiveProductCallback.bind(this));
+            show.Init('#detail-slide');
+            show.Load(data);
+        }.bind(this));
 
-            $('.imgeUrl').html(imgHtml);
-            //$(".imgeUrl").find(".action").trigger('click');
+       /* tabNum = tab.find('ul li').length;
 
-            $('.bigImg').attr('src',data[0]);
-            tabNum = tab.find('ul li').length;
-            $('.imgeUrl').width(($('.imgeUrl li').length) * tabWidth);
-            $('.imgeUrl').find('li').width(tabWidth - 1);
-            $('.imgeUrl').find('li').eq(tabNum - 1).addClass("action");
-            overview.find('ul li').eq(tabNum - 1).show();
+        overview.find('ul li').eq(tabNum - 1).show();
 
-            var num = tabNum - showNum;
-            var tWidth = -(num * tabWidth);
-            tab.find('ul').stop().animate({'left': tWidth}, 600);
-            app.ElementsTab();
-            $(".imgeUrl li.action").trigger('click');
-        })
-    })
-}
+        var num = tabNum - showNum;
+        var tWidth = -(num * tabWidth);
+        tab.find('ul').stop().animate({'left': tWidth}, 600);*/
+        //app.ElementsTab();
+    }
 
     this.Addimage = function () {
-         imgHtml ='';
-         imgHtml2='';
+        imgHtml2='';
         this.OnSmallpicture();
-     }
+    }
 
     this.OnProductSelectClick = function () {
         $('.product-select a').click(function() {
-          // 点击事件
+            // 点击事件
             $('#interval-text').html(imagHour);
             $('#broad-text').html(imagHour);
             productValue=$(this).attr('val');
@@ -578,7 +588,7 @@ var App = function () {
                         categoryCodeHtml+='<a href="javascript:;" val="'+ data.categoryCode+'">'+data.name+'</a>'
                     }
                 });
-                  $('#Onregions').html(categoryCodeHtml);
+                $('#Onregions').html(categoryCodeHtml);
                 app.OnAreaSelectClick();
                 county= data[0].categoryCode;
                 app.serachDataList();
