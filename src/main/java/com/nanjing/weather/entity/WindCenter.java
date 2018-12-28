@@ -1,7 +1,6 @@
 package com.nanjing.weather.entity;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 public class WindCenter {
     private BigDecimal speed;

@@ -1,10 +1,12 @@
-.content-monitor{
+.content-monitor {
     margin-right: 4px;
 }
-.monitor{
+
+.monitor {
     position: relative;
 }
-.monitor .rectangle{
+
+.monitor .rectangle {
     width: 90px;
     margin: 0 auto;
     padding-left: 15px;
@@ -16,175 +18,217 @@
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
-.monitor .gather{
+
+.monitor .gather {
     background: url("../images/icon-gather.png") no-repeat #3a76ff 6px;
 }
-.monitor .failure{
+
+.monitor .failure {
     background: url("../images/icon-failure.png") no-repeat #cf2a27 6px;
 }
-.monitor .success{
+
+.monitor .success {
     background: url("../images/icon-success.png") no-repeat #009e0f 6px;
 }
-.monitor .rectangle-refresh{
+
+.monitor .rectangle-refresh {
     cursor: pointer;
     background: url("../images/icon-refresh.png") no-repeat #1fb3ff 9px;
 }
-.monitor .un-click{
+
+.monitor .un-click {
     cursor: default;
     background-color: #6b9cde;
     color: #3a76ff;
 }
-.monitor .rectangle-refresh:hover{
+
+.monitor .rectangle-refresh:hover {
     background: url("../images/icon-refresh.png") no-repeat #0f678f 9px;
 }
-.monitor .datagrid-view{
+
+.monitor .datagrid-view {
     width: 100%;
     border: 1px solid #26668a;
     border-bottom: 0;
 }
+
 .monitor .datagrid-header-row,
-.monitor .datagrid-row{
+.monitor .datagrid-row {
     height: 34px;
 }
+
 .monitor .panel-body,
 .monitor .datagrid-header,
 .monitor .datagrid-header td,
-.monitor .datagrid-body td{
+.monitor .datagrid-body td {
     border: 0;
 }
-.monitor .panel{
+
+.monitor .panel {
     border-top: 0;
 }
-.monitor .datagrid-header{
+
+.monitor .datagrid-header {
     background: #0b4864;
 }
-.monitor .datagrid-header .datagrid-cell span{
+
+.monitor .datagrid-header .datagrid-cell span {
     font-size: 14px;
     color: #1fb3ff;
 }
-.monitor .datagrid-body{
+
+.monitor .datagrid-body {
     background: #0b4d6c;
 }
-.monitor .datagrid-btable{
+
+.monitor .datagrid-btable {
     width: 100%
 }
-.monitor .datagrid-row-alt{
+
+.monitor .datagrid-row-alt {
     background: #084a68;
 }
-.monitor .datagrid-cell{
+
+.monitor .datagrid-cell {
     color: #1394d0;
 }
-.monitor .datagrid-header .datagrid-cell{
+
+.monitor .datagrid-header .datagrid-cell {
     background: url("../images/line2.png") no-repeat right;
 }
-.monitor .datagrid-header td:last-child .datagrid-cell{
+
+.monitor .datagrid-header td:last-child .datagrid-cell {
     background: none;
 }
-.monitor .datagrid-header td.datagrid-header-over{
+
+.monitor .datagrid-header td.datagrid-header-over {
     background: #0b4864;
 }
+
 .monitor .datagrid-row-over,
 .monitor .datagrid-row-selected {
     background: #0f678f;
 }
-.monitor .datagrid-pager{
+
+.monitor .datagrid-pager {
     background: #0a5070;
     border-color: #26668a;
 }
-.monitor .pagination-btn-separator{
+
+.monitor .pagination-btn-separator {
     width: 2px;
     height: 20px;
     margin: 0 3px;
     border: 0;
     background: url("../images/page.png") no-repeat -60px;
 }
-.monitor .pagination-first{
+
+.monitor .pagination-first {
     width: 6px;
     height: 8px;
     left: 11px;
     top: 10px;
     background: url("../images/page.png") no-repeat 0;
 }
-.monitor .pagination-prev{
+
+.monitor .pagination-prev {
     width: 5px;
     height: 8px;
     left: 11px;
     top: 10px;
     background: url("../images/page.png") no-repeat -6px;
 }
-.monitor .pagination-next{
+
+.monitor .pagination-next {
     width: 5px;
     height: 8px;
     left: 10px;
     top: 10px;
     background: url("../images/page.png") no-repeat -37px;
 }
-.monitor .pagination-last{
+
+.monitor .pagination-last {
     width: 6px;
     height: 8px;
     left: 10px;
     top: 10px;
     background: url("../images/page.png") no-repeat -42px;
 }
-.monitor .pagination-load{
+
+.monitor .pagination-load {
     width: 10px;
     height: 10px;
     left: 10px;
     top: 10px;
     background: url("../images/page.png") no-repeat -49px;
 }
-.monitor .l-btn-disabled .pagination-first{
+
+.monitor .l-btn-disabled .pagination-first {
     background: url("../images/page.png") no-repeat -12px;
 }
-.monitor .l-btn-disabled .pagination-prev{
+
+.monitor .l-btn-disabled .pagination-prev {
     background: url("../images/page.png") no-repeat -19px;
 }
-.monitor .l-btn-disabled .pagination-next{
+
+.monitor .l-btn-disabled .pagination-next {
     background: url("../images/page.png") no-repeat -25px;
 }
-.monitor .l-btn-disabled .pagination-last{
+
+.monitor .l-btn-disabled .pagination-last {
     background: url("../images/page.png") no-repeat -30px;
 }
-.monitor .pagination span{
+
+.monitor .pagination span {
     color: #ffffff;
 }
-.monitor .pagination .pagination-num{
+
+.monitor .pagination .pagination-num {
     width: 30px;
     margin: 0 6px;
     color: #ffffff;
     border: 1px solid #4788b0;
     background: #0d6690;
 }
-.monitor .l-btn-plain:hover{
+
+.monitor .l-btn-plain:hover {
     border: 0;
     background: #0d5a7e;
 }
-.monitor .l-btn{
+
+.monitor .l-btn {
     width: 30px;
     height: 30px;
     padding: 0;
 }
-.monitor .l-btn-icon{
+
+.monitor .l-btn-icon {
     margin-top: 0;
 }
-.monitor .l-btn-disabled{
+
+.monitor .l-btn-disabled {
     opacity: 1;
 }
-.monitor .l-btn-disabled:hover{
+
+.monitor .l-btn-disabled:hover {
     background: transparent;
     cursor: default;
 }
-.monitor .pagination-info{
+
+.monitor .pagination-info {
     font-size: 12px;
     color: #fff;
 }
+
 .monitor .angle3,
-.monitor .angle4{
+.monitor .angle4 {
     bottom: 34px;
 }
-.aside .level-first-menu .aside-title{
+
+.aside .level-first-menu .aside-title {
     background: url(../images/aside-arrow.png) no-repeat 209px;
 }
-.aside .level-first-menu.action .aside-title{
+
+.aside .level-first-menu.action .aside-title {
     background: url("../images/aside-arrow-open.png") no-repeat #26668a 209px;
 }

@@ -2,15 +2,12 @@ package com.nanjing.weather.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.nanjing.wContour.ContourHelper;
 import com.nanjing.wContour.bean.ContourResult;
-import com.nanjing.wContour.bean.LegendLevel;
 import com.nanjing.wContour.bean.ValuePoint;
 import com.nanjing.weather.dao.LegendLevelMapper;
 import com.nanjing.weather.dao.PressuresMapper;
 import com.nanjing.weather.dao.StationsMapper;
 import com.nanjing.weather.domain.Pressures;
-import com.nanjing.weather.domain.Stations;
 import com.nanjing.weather.entity.Pressure;
 import com.nanjing.weather.entity.PressureCenter;
 import com.nanjing.weather.service.PressuresService;
@@ -78,39 +75,39 @@ public class PressuresServiceImpl implements PressuresService {
         List<ValuePoint> list;
         List<Pressures> pressuresList = new ArrayList<>();
         PressureCenter pressureCenter = new PressureCenter();
-        if(parmOne.equals("本站气压")){
-            if(time != null){
+        if (parmOne.equals("本站气压")) {
+            if (time != null) {
                 pressureCenter.setCreateTime(time.split(":")[0]);
                 pressureCenter.setRoutineTime(time.split(":")[1]);
             }
-        }else {
+        } else {
             pressureCenter.setRoutineTime("24");
         }
         List<Pressure> allBySomeMap = pressuresMapper.findAllBySomeTerm(pressureCenter);
-        for(Pressure pressure:allBySomeMap){
+        for (Pressure pressure : allBySomeMap) {
             double x = 0;
             double y = 0;
-            for(PressureCenter center:pressure.getPressureCenter()){
-                if(Double.parseDouble(center.getValue().toString())<9999){
+            for (PressureCenter center : pressure.getPressureCenter()) {
+                if (Double.parseDouble(center.getValue().toString()) < 9999) {
                     x += Double.parseDouble(center.getValue().toString());
                     y++;
                 }
             }
-            if(y != 0){
+            if (y != 0) {
                 Pressures pre = new Pressures();
                 pre.setStation_Id(pressure.getStationId());
-                pre.setValue(new BigDecimal(new DecimalFormat("#.00").format(x/y)));
+                pre.setValue(new BigDecimal(new DecimalFormat("#.00").format(x / y)));
                 pressuresList.add(pre);
             }
         }
 
-        if(pressuresList.size()>0){
-            list = CodeIntegration.getValuePoint(pressuresList,"getStation_Id","getValue");
-            if(list.size()>0){
-                if(time == null){
-                    return CodeIntegration.getResult("pressures",list,allBySomeMap.get(0).getPressureCenter().get(0).getRoutineTime());
-                }else {
-                    return CodeIntegration.getResult("pressures",list,time.split(":")[1]);
+        if (pressuresList.size() > 0) {
+            list = CodeIntegration.getValuePoint(pressuresList, "getStation_Id", "getValue");
+            if (list.size() > 0) {
+                if (time == null) {
+                    return CodeIntegration.getResult("pressures", list, TimeFormat.getTime(allBySomeMap.get(0).getPressureCenter().get(0).getRoutineTime()));
+                } else {
+                    return CodeIntegration.getResult("pressures", list, time.split(":")[1]);
                 }
             }
         }

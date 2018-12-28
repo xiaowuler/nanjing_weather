@@ -6,6 +6,8 @@ public class ValuePoint {
     private double Value;
     private String name;
     private String id;
+    private Double averageDirection;
+    private Double instantDirection;
 
     public String getId() {
         return id;
@@ -14,9 +16,6 @@ public class ValuePoint {
     public void setId(String id) {
         this.id = id;
     }
-
-    private Double averageDirection;
-    private Double instantDirection;
 
     public Double getAverageDirection() {
         return averageDirection;

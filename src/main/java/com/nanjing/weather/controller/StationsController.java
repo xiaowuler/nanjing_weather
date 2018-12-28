@@ -2,14 +2,12 @@ package com.nanjing.weather.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.nanjing.weather.domain.Stations;
-
 import com.nanjing.weather.entity.Result;
 import com.nanjing.weather.service.StationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import java.util.List;
 

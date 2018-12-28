@@ -9,19 +9,15 @@ import java.util.List;
 
 @Mapper
 public interface PressuresMapper {
-    public List<Pressures> findAll();
+    List<Pressures> findAll();
 
-    public Pressures findPressuresByid(String stationId);
+    Pressures findPressuresByid(String stationId);
 
-    public void add(Pressures pressures);
+    void add(Pressures pressures);
 
-    public void update(Pressures pressures);
+    void update(Pressures pressures);
 
-    public void delete(String stationIds);
-
-    List<Pressures> findAllByTerm();
-
-    Pressures findAllByAvg(String time,String id);
+    void delete(String stationIds);
 
     List<Pressure> findAllBySomeTerm(PressureCenter pressureCenter);
 }

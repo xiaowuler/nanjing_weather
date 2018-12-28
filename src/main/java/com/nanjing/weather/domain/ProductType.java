@@ -1,7 +1,5 @@
 package com.nanjing.weather.domain;
 
-import java.util.List;
-
 public class ProductType {
     private String code;
     private String categoryCode;

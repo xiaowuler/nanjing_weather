@@ -137,7 +137,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     background: url("../images/login.png") no-repeat center/cover;
 }
 
-.login{
+.login {
     width: 400px;
     margin-left: 400px;
 }
@@ -164,7 +164,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     background: url("../images/login-user.png") no-repeat left;
 }
 
-.login-password input{
+.login-password input {
     background: url("../images/login-password.png") no-repeat left;
 }
 

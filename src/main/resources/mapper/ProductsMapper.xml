@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--客户映射 指定到dao接口 -->
 <mapper namespace="com.nanjing.weather.dao.ProductsMapper">
-    <select id="findByType"  resultType="com.nanjing.weather.domain.Products">
+    <select id="findByType" resultType="com.nanjing.weather.domain.Products">
      select * from products WHERE routine_time  BETWEEN #{0} AND #{1} and region_code=#{2} and product_categoy_code = #{3}  ORDER BY routine_time asc;
 
     </select>
@@ -53,31 +53,47 @@
     <select id="findOneByTypeAndArea" resultType="com.nanjing.weather.domain.ProductData">
         select id,category_code categoryCode,region_code regionCode,type_code typeCode,url,routine_time routineTime,create_time createTime from  (select * from products where category_code = #{0} AND region_code = #{1} and type_code = #{2} AND url !='data-miss.jpg') p ORDER BY p.routine_time desc  LIMIT 0,1
     </select>
-    
+
     <resultMap id="findProductCategoryRegionRelsMap" type="com.nanjing.weather.domain.ProductCategoryRegionRels">
         <result column="category_code" property="categoryCode"/>
         <collection property="productRegion" ofType="com.nanjing.weather.domain.ProductRegion">
-            <result column="region_code" property="code"/>
-            <result column="name" property="name"/>
-            <result column="sequenceRegion" property="sequence"/>
-            <result column="data_file_path" property="dataFilePath"/>
+            <result column="region_code" property="code"></result>
+            <result column="name" property="name"></result>
+            <!--<result column="sequenceRegion" property="sequence"></result>-->
+            <!--<result column="data_file_path" property="dataFilePath"/>-->
             <collection property="productTypes" ofType="com.nanjing.weather.domain.ProductType">
                 <result property="code" column="ptCode"/>
-                <result property="categoryCode" column="ptCategoryCode"/>
+                <!--<result property="categoryCode" column="ptCategoryCode"/>-->
                 <result property="name" column="ptName"/>
-                <result property="sequence" column="ptSequence"/>
+                <!--<result property="sequence" column="ptSequence"/>-->
             </collection>
         </collection>
     </resultMap>
-    
+
     <select id="findProductCategoryRegionRels" resultMap="findProductCategoryRegionRelsMap">
+        select pcr.category_code,pcr.region_code,pcr.data_file_path,pcr.sequence pcrSequence,pr.`code`,pr.`name`,pr.sequence sequenceRegion,pt.`code` ptCode,pt.category_code ptCategoryCode,pt.`name` ptName,pt.sequence ptSequence from product_category_region_rels pcr LEFT JOIN product_regions pr on pcr.region_code = pr.code LEFT JOIN product_types pt ON pcr.category_code = pt.category_code;
+    </select>
+
+    <resultMap id="findCategoryMap" type="com.nanjing.weather.dto.Category">
+        <result property="name" column="category_code" />
+        <collection property="regions" ofType="com.nanjing.weather.dto.Region">
+            <result column="code" property="code"/>
+            <result column="name" property="name"/>
+            <collection property="products" ofType="com.nanjing.weather.dto.Product">
+                <result column="ptCode" property="code"/>
+                <result column="ptName" property="name"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="findCategory" resultMap="findCategoryMap">
         select pcr.category_code,pcr.region_code,pcr.data_file_path,pcr.sequence pcrSequence,pr.`code`,pr.`name`,pr.sequence sequenceRegion,pt.`code` ptCode,pt.category_code ptCategoryCode,pt.`name` ptName,pt.sequence ptSequence from product_category_region_rels pcr LEFT JOIN product_regions pr on pcr.region_code = pr.code LEFT JOIN product_types pt ON pcr.category_code = pt.category_code;
     </select>
 
     <resultMap id="findProductTypeMap" type="com.nanjing.weather.domain.ProductType">
         <result column="category_code" property="categoryCode"/>
     </resultMap>
-    
+
     <select id="findProductType" parameterType="String" resultType="com.nanjing.weather.domain.ProductType">
         select * from product_types where category_code = #{id};
     </select>

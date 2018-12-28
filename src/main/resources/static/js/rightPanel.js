@@ -14,91 +14,91 @@ var RightPanel = function () {
         this.getInfo();
         this.autoChang();
 
-        $("#checkbox0").on('click',this.layerInfoZeroButtonClick.bind(this));
-        $("#checkbox1").on('click',this.layerInfoOneButtonClick.bind(this));
-        $("#checkbox2").on('click',this.layerInfoTwoButtonClick.bind(this));
-        $("#checkbox4").on('click',this.layerInfoFourButtonClick.bind(this));
-        $("#checkbox3").on('click',this.layerInfoThreeButtonClick.bind(this));
-        $("#checkbox5").on('click',this.layerInfoFiveButtonClick.bind(this));
-        $("#weatherUl").on('click',this.onElementButtonClick.bind(this));
-        $("input[type='radio']").on('click',this.onOptionButtonClick.bind(this));
+        $("#checkbox0").on('click', this.layerInfoZeroButtonClick.bind(this));
+        $("#checkbox1").on('click', this.layerInfoOneButtonClick.bind(this));
+        $("#checkbox2").on('click', this.layerInfoTwoButtonClick.bind(this));
+        $("#checkbox4").on('click', this.layerInfoFourButtonClick.bind(this));
+        $("#checkbox3").on('click', this.layerInfoThreeButtonClick.bind(this));
+        $("#checkbox5").on('click', this.layerInfoFiveButtonClick.bind(this));
+        $("#weatherUl").on('click', this.onElementButtonClick.bind(this));
+        $("input[type='radio']").on('click', this.onOptionButtonClick.bind(this));
     }
 
     //定义用户点击图层信息按钮
     this.layerInfoZeroButtonClick = function () {
-        if($("#checkbox0").prop('checked')){
-            if($("#checkbox1").prop("checked")){
+        if ($("#checkbox0").prop('checked')) {
+            if ($("#checkbox1").prop("checked")) {
                 this.MapInfo.basePoltDirName(this.result.valuePoints);
             }
-            if($("#checkbox4").prop("checked")){
+            if ($("#checkbox4").prop("checked")) {
                 this.MapInfo.basePlotValue(this.result.valuePoints);
             }
             //this.MapInfo.CreateDir(this.result.valuePoints);
-        }else {
+        } else {
             this.MapInfo.Map.removeLayer(this.MapInfo.basePoltDirNameValue);
             this.MapInfo.Map.removeLayer(this.MapInfo.basePlotValueValue);
         }
     }
     this.layerInfoFiveButtonClick = function () {
-        if($("#checkbox5").prop('checked')){
-            if($("#checkbox1").prop("checked")){
+        if ($("#checkbox5").prop('checked')) {
+            if ($("#checkbox1").prop("checked")) {
                 this.MapInfo.encryptionPointName(this.result.valuePoints);
             }
-            if($("#checkbox4").prop("checked")){
+            if ($("#checkbox4").prop("checked")) {
                 this.MapInfo.encryPlotValue(this.result.valuePoints);
             }
             //this.MapInfo.CreateDir(this.result.valuePoints);
-        }else{
+        } else {
             this.MapInfo.Map.removeLayer(this.MapInfo.encryptionPointNameValue);
             this.MapInfo.Map.removeLayer(this.MapInfo.encryPlotValueValue);
         }
     }
 
     this.layerInfoOneButtonClick = function () {
-        if($("#checkbox1").prop('checked')){
+        if ($("#checkbox1").prop('checked')) {
             /*this.MapInfo.PlotSite(this.result.valuePoints);*/
-            if($("#checkbox0").prop('checked')){
+            if ($("#checkbox0").prop('checked')) {
                 this.MapInfo.basePoltDirName(this.result.valuePoints);
             }
-            if($("#checkbox5").prop('checked')){
+            if ($("#checkbox5").prop('checked')) {
                 this.MapInfo.encryptionPointName(this.result.valuePoints);
             }
             //this.MapInfo.CreateDir(this.result.valuePoints);
-        }else {
+        } else {
             this.MapInfo.Map.removeLayer(this.MapInfo.basePoltDirNameValue);
             this.MapInfo.Map.removeLayer(this.MapInfo.encryptionPointNameValue);
         }
     }
 
-    this.layerInfoTwoButtonClick = function(){
-        if($("#checkbox2").prop('checked')){
+    this.layerInfoTwoButtonClick = function () {
+        if ($("#checkbox2").prop('checked')) {
             this.MapInfo.CreateContourLayer(this.result.contourPolylines)
-        }else {
+        } else {
             this.MapInfo.Map.removeLayer(this.MapInfo.ContourLayer);
         }
     }
 
-    this.layerInfoFourButtonClick = function(){
-        if($("#checkbox4").prop('checked')){
+    this.layerInfoFourButtonClick = function () {
+        if ($("#checkbox4").prop('checked')) {
             /*this.MapInfo.PlotSite(this.result.valuePoints);*/
-            if($("#checkbox0").prop('checked')){
+            if ($("#checkbox0").prop('checked')) {
                 this.MapInfo.basePlotValue(this.result.valuePoints);
             }
-            if($("#checkbox5").prop('checked')){
+            if ($("#checkbox5").prop('checked')) {
                 this.MapInfo.encryPlotValue(this.result.valuePoints);
             }
             //this.MapInfo.CreateDir(this.result.valuePoints);
-        }else {
+        } else {
             this.MapInfo.Map.removeLayer(this.MapInfo.basePlotValueValue);
             this.MapInfo.Map.removeLayer(this.MapInfo.encryPlotValueValue);
         }
     }
 
     this.layerInfoThreeButtonClick = function () {
-        if($("#checkbox3").prop('checked')){
+        if ($("#checkbox3").prop('checked')) {
             this.MapInfo.CreateSpotLayer(this.result.spotPolygons, this.result.legendLevels)
             this.MapInfo.PlotColor(this.result.legendLevels);
-        }else {
+        } else {
             this.MapInfo.PlotColor('');
             this.MapInfo.Map.removeLayer(this.MapInfo.layer);
         }
@@ -106,17 +106,17 @@ var RightPanel = function () {
 
     this.autoChang = function () {
         setInterval(function () {
-            if(this.parmOne!=null){
+            if (this.parmOne != null) {
                 this.playCode();
             }
-        }.bind(this),1000*60*60)
+        }.bind(this), 1000 * 60 * 60)
     }
 
     this.loadClick = function (flag) {
-        if(flag){
-            $("#map-loading").attr("style","display: block")
-        }else {
-            $("#map-loading").attr("style","display: none")
+        if (flag) {
+            $("#map-loading").attr("style", "display: block")
+        } else {
+            $("#map-loading").attr("style", "display: none")
         }
     }
 
@@ -158,29 +158,29 @@ var RightPanel = function () {
                         this.MapInfo.CreateContourLayer(data.contourPolylines);
                     }
                     if ($("#checkbox0").prop('checked')) {
-                        if($("#checkbox1").attr("checked")){
+                        if ($("#checkbox1").attr("checked")) {
                             this.MapInfo.basePoltDirName(this.result.valuePoints);
                         }
-                        if($("#checkbox4").prop("checked")){
+                        if ($("#checkbox4").prop("checked")) {
                             this.MapInfo.basePlotValue(this.result.valuePoints);
                         }
                     }
                     if ($("#checkbox5").prop('checked')) {
-                        if($("#checkbox1").prop("checked")){
+                        if ($("#checkbox1").prop("checked")) {
                             this.MapInfo.encryptionPointName(this.result.valuePoints);
                         }
-                        if($("#checkbox4").prop("checked")){
+                        if ($("#checkbox4").prop("checked")) {
                             this.MapInfo.encryPlotValue(this.result.valuePoints);
                         }
                     }
-                    this.MapInfo.writeInfo(this.result,this.requestValue);
+                    this.MapInfo.writeInfo(this.result, this.requestValue);
                 }
             }.bind(this)
         });
     }
 
-    this.playCode = function(){
-        if(this.flag){
+    this.playCode = function () {
+        if (this.flag) {
             $.ajax({
                 type: "POST",
                 dataType: 'json',
@@ -208,7 +208,7 @@ var RightPanel = function () {
                     } else {
                         this.result = null;
                         this.result = data;
-                        $("#color-unit").attr("style","display: block")
+                        $("#color-unit").attr("style", "display: block")
                         if ($("#checkbox3").prop('checked')) {
                             this.MapInfo.CreateSpotLayer(data.spotPolygons, data.legendLevels)
                             this.MapInfo.PlotColor(data.legendLevels);
@@ -217,51 +217,51 @@ var RightPanel = function () {
                             this.MapInfo.CreateContourLayer(data.contourPolylines);
                         }
                         if ($("#checkbox0").prop('checked')) {
-                            if($("#checkbox1").attr("checked")){
+                            if ($("#checkbox1").attr("checked")) {
                                 this.MapInfo.basePoltDirName(this.result.valuePoints);
                             }
-                            if($("#checkbox4").prop("checked")){
+                            if ($("#checkbox4").prop("checked")) {
                                 this.MapInfo.basePlotValue(this.result.valuePoints);
                             }
                         }
                         if ($("#checkbox5").prop('checked')) {
-                            if($("#checkbox1").prop("checked")){
+                            if ($("#checkbox1").prop("checked")) {
                                 this.MapInfo.encryptionPointName(this.result.valuePoints);
                             }
-                            if($("#checkbox4").prop("checked")){
+                            if ($("#checkbox4").prop("checked")) {
                                 this.MapInfo.encryPlotValue(this.result.valuePoints);
                             }
                         }
-                        this.MapInfo.writeInfo(this.result,this.requestValue);
+                        this.MapInfo.writeInfo(this.result, this.requestValue);
                     }
                 }.bind(this)
             });
-        }else{
+        } else {
 
         }
     }
 
     this.checkNull = function () {
-        if(this.MapInfo.basePlotValueValue != null){
+        if (this.MapInfo.basePlotValueValue != null) {
             this.MapInfo.Map.removeLayer(this.MapInfo.basePlotValueValue);
         }
-        if(this.MapInfo.encryPlotValueValue != null){
+        if (this.MapInfo.encryPlotValueValue != null) {
             this.MapInfo.Map.removeLayer(this.MapInfo.encryPlotValueValue);
         }
-        if(this.MapInfo.basePoltDirNameValue != null){
+        if (this.MapInfo.basePoltDirNameValue != null) {
             this.MapInfo.Map.removeLayer(this.MapInfo.basePoltDirNameValue);
         }
-        if(this.MapInfo.encryptionPointNameValue != null){
+        if (this.MapInfo.encryptionPointNameValue != null) {
             this.MapInfo.Map.removeLayer(this.MapInfo.encryptionPointNameValue);
         }
-        if(this.MapInfo.ContourLayer != null){
+        if (this.MapInfo.ContourLayer != null) {
             this.MapInfo.Map.removeLayer(this.MapInfo.ContourLayer);
         }
-        if(this.MapInfo.layer != null){
+        if (this.MapInfo.layer != null) {
             this.MapInfo.Map.removeLayer(this.MapInfo.layer);
         }
         this.MapInfo.PlotColor('');
-        $("#color-unit").attr("style","display: none")
+        $("#color-unit").attr("style", "display: none")
     }
 
     this.onElementButtonClick = function () {

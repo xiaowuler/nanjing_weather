@@ -1,10 +1,8 @@
 package com.nanjing.weather.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.nanjing.wContour.bean.ContourResult;
 import com.nanjing.weather.domain.Temperatures;
 import com.nanjing.weather.entity.Result;
-
 import com.nanjing.weather.service.TemperaturesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -75,7 +73,7 @@ public class TemperaturesController {
     //根据条件查询
 
     @RequestMapping("/findAllBySomeTerm")
-    public ContourResult<Temperatures> findAllBySomeTerm(String parmOne,String parmTwo,String time){
-        return temperaturesService.findAllBySomeTerm(parmOne,parmTwo,time);
+    public ContourResult<Temperatures> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
+        return temperaturesService.findAllBySomeTerm(parmOne, parmTwo, time);
     }
 }

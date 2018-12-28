@@ -1,13 +1,10 @@
 package com.nanjing.weather.service.impl;
 
-import com.nanjing.wContour.ContourHelper;
 import com.nanjing.wContour.bean.ContourResult;
-import com.nanjing.wContour.bean.LegendLevel;
 import com.nanjing.wContour.bean.ValuePoint;
 import com.nanjing.weather.dao.LegendLevelMapper;
 import com.nanjing.weather.dao.StationsMapper;
 import com.nanjing.weather.dao.TemperaturesMapper;
-import com.nanjing.weather.domain.Stations;
 import com.nanjing.weather.domain.Temperatures;
 import com.nanjing.weather.entity.Temperature;
 import com.nanjing.weather.entity.TemperatureCenter;
@@ -36,7 +33,7 @@ public class TemperaturesServiceImpl implements TemperaturesService {
 
 
     @Override
-    public ContourResult findAll(Integer time,Double railfalls) {
+    public ContourResult findAll(Integer time, Double railfalls) {
         return null;
     }
 
@@ -66,67 +63,67 @@ public class TemperaturesServiceImpl implements TemperaturesService {
         List<Temperatures> temperatures = new ArrayList<>();
         List<Temperature> temperatureList = new ArrayList<>();
         Integer num = Integer.parseInt(parmTwo.substring(1));
-        if(parmOne.equals("温度")){
-            String numParm = parmTwo.substring(0,1);
-            if(numParm.equals("≥")){
+        if (parmOne.equals("温度")) {
+            String numParm = parmTwo.substring(0, 1);
+            if (numParm.equals("≥")) {
                 TemperatureCenter temperatureCenter = new TemperatureCenter();
                 temperatureCenter.setValue(new BigDecimal(parmTwo.substring(1)));
-                if(time != null){
+                if (time != null) {
                     temperatureCenter.setCreateTime(time.split(":")[0]);
                     temperatureCenter.setRoutineTime(time.split(":")[1]);
                 }
                 temperatureList = temperaturesMapper.findAllBySomeDataHH(temperatureCenter);
-            }else{
+            } else {
                 TemperatureCenter temperatureCenter = new TemperatureCenter();
                 temperatureCenter.setValue(new BigDecimal(parmTwo.substring(1)));
-                if(time != null){
+                if (time != null) {
                     temperatureCenter.setCreateTime(time.split(":")[0]);
                     temperatureCenter.setRoutineTime(time.split(":")[1]);
                 }
                 temperatureList = temperaturesMapper.findAllBySomeDataHh(temperatureCenter);
             }
-            if(temperatureList.size()>0){
-                for(Temperature temperature:temperatureList){
+            if (temperatureList.size() > 0) {
+                for (Temperature temperature : temperatureList) {
                     double x = 0;
                     double y = 0;
-                    for(TemperatureCenter center:temperature.getTemperatureCenter()){
-                        if(Double.parseDouble(center.getValue().toString())<999){
+                    for (TemperatureCenter center : temperature.getTemperatureCenter()) {
+                        if (Double.parseDouble(center.getValue().toString()) < 999) {
                             x += Double.parseDouble(center.getValue().toString());
                             y++;
                         }
                     }
-                    if(y != 0){
+                    if (y != 0) {
                         Temperatures tempera = new Temperatures();
                         tempera.setStation_Id(temperature.getStationId());
-                        tempera.setValue(new BigDecimal(new DecimalFormat("#.00").format(x/y)));
+                        tempera.setValue(new BigDecimal(new DecimalFormat("#.00").format(x / y)));
                         temperatures.add(tempera);
                     }
                 }
             }
-        }else if(parmOne.equals("最高温度")){
-            if(num >= 0){
+        } else if (parmOne.equals("最高温度")) {
+            if (num >= 0) {
                 TemperatureNinMax temperatureNinMax = new TemperatureNinMax();
                 temperatureNinMax.setMaxValue(new BigDecimal(parmTwo.substring(1)));
-                if(time != null){
+                if (time != null) {
                     temperatureNinMax.setCreateTime(time.split(":")[0]);
                     temperatureNinMax.setRoutineTime(time.split(":")[1]);
                 }
                 temperatureList = temperaturesMapper.findAllBySomeDatahh(temperatureNinMax);
-            }else{
+            } else {
                 TemperatureNinMax temperatureNinMax = new TemperatureNinMax();
                 temperatureNinMax.setMaxValue(new BigDecimal(parmTwo.substring(1)));
-                if(time != null){
+                if (time != null) {
                     temperatureNinMax.setCreateTime(time.split(":")[0]);
                     temperatureNinMax.setRoutineTime(time.split(":")[1]);
                 }
                 temperatureList = temperaturesMapper.findAllBySomeDatahH(temperatureNinMax);
             }
-            if(temperatureList.size()>0){
-                for(Temperature temperature:temperatureList){
+            if (temperatureList.size() > 0) {
+                for (Temperature temperature : temperatureList) {
                     double x = 0;
-                    for(TemperatureNinMax temperatureNinMax:temperature.getTemperatureNinMaxe()){
-                        if(Double.parseDouble(temperatureNinMax.getMaxValue().toString())<999){
-                            if(Double.parseDouble(temperatureNinMax.getMaxValue().toString())>x){
+                    for (TemperatureNinMax temperatureNinMax : temperature.getTemperatureNinMaxe()) {
+                        if (Double.parseDouble(temperatureNinMax.getMaxValue().toString()) < 999) {
+                            if (Double.parseDouble(temperatureNinMax.getMaxValue().toString()) > x) {
                                 x = Double.parseDouble(temperatureNinMax.getMaxValue().toString());
                             }
                         }
@@ -137,30 +134,30 @@ public class TemperaturesServiceImpl implements TemperaturesService {
                     temperatures.add(tempera);
                 }
             }
-        }else if(parmOne.equals("最低温度")){
-            if(num >= 0){
+        } else if (parmOne.equals("最低温度")) {
+            if (num >= 0) {
                 TemperatureNinMax temperatureNinMax = new TemperatureNinMax();
                 temperatureNinMax.setMinValue(new BigDecimal(parmTwo.substring(1)));
-                if(time != null){
+                if (time != null) {
                     temperatureNinMax.setCreateTime(time.split(":")[0]);
                     temperatureNinMax.setRoutineTime(time.split(":")[1]);
                 }
                 temperatureList = temperaturesMapper.findAllBySomeDatahh(temperatureNinMax);
-            }else{
+            } else {
                 TemperatureNinMax temperatureNinMax = new TemperatureNinMax();
                 temperatureNinMax.setMinValue(new BigDecimal(parmTwo.substring(1)));
-                if(time != null){
+                if (time != null) {
                     temperatureNinMax.setCreateTime(time.split(":")[0]);
                     temperatureNinMax.setRoutineTime(time.split(":")[1]);
                 }
                 temperatureList = temperaturesMapper.findAllBySomeDatahH(temperatureNinMax);
             }
-            if(temperatureList.size()>0){
-                for(Temperature temperature:temperatureList){
+            if (temperatureList.size() > 0) {
+                for (Temperature temperature : temperatureList) {
                     double x = 0;
-                    for(TemperatureNinMax temperatureNinMax:temperature.getTemperatureNinMaxe()){
-                        if(Double.parseDouble(temperatureNinMax.getMinValue().toString())<999){
-                            if(Double.parseDouble(temperatureNinMax.getMinValue().toString())<x){
+                    for (TemperatureNinMax temperatureNinMax : temperature.getTemperatureNinMaxe()) {
+                        if (Double.parseDouble(temperatureNinMax.getMinValue().toString()) < 999) {
+                            if (Double.parseDouble(temperatureNinMax.getMinValue().toString()) < x) {
                                 x = Double.parseDouble(temperatureNinMax.getMinValue().toString());
                             }
                         }
@@ -171,45 +168,45 @@ public class TemperaturesServiceImpl implements TemperaturesService {
                     temperatures.add(tempera);
                 }
             }
-        }else if(parmOne.equals("24小时变温")){
-            String numParm = parmTwo.substring(0,1);
-            if(numParm.equals("≥")){
+        } else if (parmOne.equals("24小时变温")) {
+            String numParm = parmTwo.substring(0, 1);
+            if (numParm.equals("≥")) {
                 TemperatureCenter temperatureCenter = new TemperatureCenter();
                 temperatureCenter.setValue(new BigDecimal(parmTwo.substring(1)));
                 temperatureCenter.setRoutineTime("24");
                 temperatureList = temperaturesMapper.findAllBySomeDataHH(temperatureCenter);
-            }else{
+            } else {
                 TemperatureCenter temperatureCenter = new TemperatureCenter();
                 temperatureCenter.setValue(new BigDecimal(parmTwo.substring(1)));
                 temperatureCenter.setRoutineTime("24");
                 temperatureList = temperaturesMapper.findAllBySomeDataHh(temperatureCenter);
             }
-            if(temperatureList.size()>0){
-                for(Temperature temperature:temperatureList){
+            if (temperatureList.size() > 0) {
+                for (Temperature temperature : temperatureList) {
                     double x = 0;
                     double y = 0;
-                    for(TemperatureCenter center:temperature.getTemperatureCenter()){
-                        if(Double.parseDouble(center.getValue().toString())<999){
+                    for (TemperatureCenter center : temperature.getTemperatureCenter()) {
+                        if (Double.parseDouble(center.getValue().toString()) < 999) {
                             x += Double.parseDouble(center.getValue().toString());
                             y++;
                         }
                     }
-                    if(y != 0){
+                    if (y != 0) {
                         Temperatures tempera = new Temperatures();
                         tempera.setStation_Id(temperature.getStationId());
-                        tempera.setValue(new BigDecimal(new DecimalFormat("#.00").format(x/y)));
+                        tempera.setValue(new BigDecimal(new DecimalFormat("#.00").format(x / y)));
                         temperatures.add(tempera);
                     }
                 }
             }
         }
-        if(temperatures.size()>0){
-            list = CodeIntegration.getValuePoint(temperatures,"getStation_Id","getValue");
-            if(list.size()>0){
-                if(time != null){
-                    return CodeIntegration.getResult("temperatures",list,time.split(":")[1]);
-                }else {
-                    return CodeIntegration.getResult("temperatures",list,temperatureList.get(0).getTemperatureCenter().get(0).getRoutineTime());
+        if (temperatures.size() > 0) {
+            list = CodeIntegration.getValuePoint(temperatures, "getStation_Id", "getValue");
+            if (list.size() > 0) {
+                if (time != null) {
+                    return CodeIntegration.getResult("temperatures", list, time.split(":")[1]);
+                } else {
+                    return CodeIntegration.getResult("temperatures", list, TimeFormat.getTime(temperatureList.get(0).getTemperatureCenter().get(0).getRoutineTime()));
                 }
             }
         }

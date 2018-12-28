@@ -2,9 +2,7 @@ package com.nanjing.weather.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.nanjing.wContour.ContourHelper;
 import com.nanjing.wContour.bean.ContourResult;
-import com.nanjing.wContour.bean.LegendLevel;
 import com.nanjing.wContour.bean.ValuePoint;
 import com.nanjing.weather.dao.LegendLevelMapper;
 import com.nanjing.weather.dao.StationsMapper;
@@ -80,31 +78,31 @@ public class WindsServiceImpl implements WindsService {
         //判断前端查询条件
         WindCenter windCenter = new WindCenter();
         windCenter.setSpeed(new BigDecimal(num));
-        if(time != null){
+        if (time != null) {
             windCenter.setCreateTime(time.split(":")[0]);
             windCenter.setRoutineTime(time.split(":")[1]);
         }
-        winds =WindsMapper.findAllBySomeTerm(windCenter);
-        if(winds.size() > 0){
-            for(Wind wind:winds){
+        winds = WindsMapper.findAllBySomeTerm(windCenter);
+        if (winds.size() > 0) {
+            for (Wind wind : winds) {
                 double x = 0;
                 double z = 0;
                 double y = 0;
-                for(WindCenter windCenters:wind.getWindCenter()){
-                    if(parmsOne.equals("平均风")){
-                        if(Double.parseDouble(windCenters.getSpeed().toString())<9999 && Double.parseDouble(windCenters.getDirection().toString())<9999){
+                for (WindCenter windCenters : wind.getWindCenter()) {
+                    if (parmsOne.equals("平均风")) {
+                        if (Double.parseDouble(windCenters.getSpeed().toString()) < 9999 && Double.parseDouble(windCenters.getDirection().toString()) < 9999) {
                             x += Double.parseDouble(windCenters.getSpeed().toString());
                             z += Double.parseDouble(windCenters.getDirection().toString());
                             y++;
                         }
-                    }else if(parmsOne.equals("2分钟风向风速")){
-                        if(Double.parseDouble(windCenters.getSpeedTwoMin().toString())<9999 && Double.parseDouble(windCenters.getDirectionTwoMin().toString())<9999){
+                    } else if (parmsOne.equals("2分钟风向风速")) {
+                        if (Double.parseDouble(windCenters.getSpeedTwoMin().toString()) < 9999 && Double.parseDouble(windCenters.getDirectionTwoMin().toString()) < 9999) {
                             x += Double.parseDouble(windCenters.getSpeedTwoMin().toString());
                             z += Double.parseDouble(windCenters.getDirectionTwoMin().toString());
                             y++;
                         }
-                    }else{
-                        if(Double.parseDouble(windCenters.getSpeedTenMin().toString())<9999 && Double.parseDouble(windCenters.getDirectionTenMin().toString())<9999){
+                    } else {
+                        if (Double.parseDouble(windCenters.getSpeedTenMin().toString()) < 9999 && Double.parseDouble(windCenters.getDirectionTenMin().toString()) < 9999) {
                             x += Double.parseDouble(windCenters.getSpeedTenMin().toString());
                             z += Double.parseDouble(windCenters.getDirectionTenMin().toString());
                             y++;
@@ -112,9 +110,9 @@ public class WindsServiceImpl implements WindsService {
                     }
                 }
                 Winds windOne = new Winds();
-                if(y != 0){
-                    windOne.setAvg_Speed(new BigDecimal(new DecimalFormat("#.00").format(x/y)));
-                    windOne.setAvg_Speed_Direction(new BigDecimal(new DecimalFormat("#.00").format(z/y)));
+                if (y != 0) {
+                    windOne.setAvg_Speed(new BigDecimal(new DecimalFormat("#.00").format(x / y)));
+                    windOne.setAvg_Speed_Direction(new BigDecimal(new DecimalFormat("#.00").format(z / y)));
                     //windOne.setAvg_Speed(new BigDecimal(x/y));
                     //windOne.setAvg_Speed_Direction(new BigDecimal(z/y));
                     windOne.setStation_Id(wind.getStationId());
@@ -125,10 +123,10 @@ public class WindsServiceImpl implements WindsService {
         }
 
         //判断查询数据是否可用
-        if(windsList.size()>0){
+        if (windsList.size() > 0) {
             //list = CodeIntegration.getValuePoint(winds,"getStation_Id","getAvg_Speed");
-            for(Winds wind:windsList){
-                if(Double.parseDouble(wind.getAvg_Speed().toString())<999 && Double.parseDouble(wind.getAvg_Speed_Direction().toString())<999){
+            for (Winds wind : windsList) {
+                if (Double.parseDouble(wind.getAvg_Speed().toString()) < 999 && Double.parseDouble(wind.getAvg_Speed_Direction().toString()) < 999) {
                     Stations stations = stationsMapper.findStationsByid(wind.getStation_Id());
                     ValuePoint valuePoint = new ValuePoint();
                     valuePoint.setName(stations.getName());
@@ -141,11 +139,11 @@ public class WindsServiceImpl implements WindsService {
                 }
 
             }
-            if(list.size()>0){
-                if(time != null){
+            if (list.size() > 0) {
+                if (time != null) {
                     return CodeIntegration.getResult("winds", list, time.split(":")[1]);
-                }else{
-                    return CodeIntegration.getResult("winds", list, winds.get(0).getWindCenter().get(0).getRoutineTime());
+                } else {
+                    return CodeIntegration.getResult("winds", list, TimeFormat.getTime(winds.get(0).getWindCenter().get(0).getRoutineTime()));
                 }
             }
         }

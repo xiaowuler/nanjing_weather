@@ -6,6 +6,7 @@ import java.util.List;
 public class DataArrivalLitter {
     private Timestamp routineTime;
     private String time;
+    private List<CenterDataArrival> centerDataArrival;
 
     public String getTime() {
         return time;
@@ -14,8 +15,6 @@ public class DataArrivalLitter {
     public void setTime(String time) {
         this.time = time;
     }
-
-    private List<CenterDataArrival> centerDataArrival;
 
     public Timestamp getRoutineTime() {
         return routineTime;

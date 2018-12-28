@@ -11,32 +11,22 @@ import java.util.List;
 
 @Mapper
 public interface TemperaturesMapper {
-    public List<Temperatures> findAll(Integer time,Double rainfalls);
+    List<Temperatures> findAll(Integer time, Double rainfalls);
 
-    public Temperatures findTemperaturesByid(String stationId);
+    Temperatures findTemperaturesByid(String stationId);
 
-    public void add(Temperatures temperatures);
+    void add(Temperatures temperatures);
 
-    public void update(Temperatures temperatures);
+    void update(Temperatures temperatures);
 
-    public void delete(String stationIds);
-
-    List<Temperatures> findAllByTemHigh(Integer parm);
-
-    List<Temperatures> findAllByTemLow(Integer parm);
-    List<Temperatures> findAllByTemHHigh(Integer parm);
-
-    List<Temperatures> findAllByTemHLow(Integer parm);
-    List<Temperatures> findAllByTemLHigh(Integer parm);
-
-    List<Temperatures> findAllByTemLLow(Integer parm);
-    List<Temperatures> findAllByTemTHigh(Integer parm1,Integer parm2);
-
-    List<Temperatures> findAllByTemTLow(Integer parm1,Integer parm2);
+    void delete(String stationIds);
 
     List<Temperature> findAllBySomeDataHH(TemperatureCenter temperatureCenter);
+
     List<Temperature> findAllBySomeDataHh(TemperatureCenter temperatureCenter);
+
     List<Temperature> findAllBySomeDatahh(TemperatureNinMax temperatureNinMax);
+
     List<Temperature> findAllBySomeDatahH(TemperatureNinMax temperatureNinMax);
 
 }

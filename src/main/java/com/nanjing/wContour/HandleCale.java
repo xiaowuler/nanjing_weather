@@ -13,7 +13,7 @@ public class HandleCale {
     @Autowired
     private StationsMapper stationsMapper;
 
-    public ValuePoint handlerCale(String id){
+    public ValuePoint handlerCale(String id) {
         Stations station = stationsMapper.findStationsByid(id);
         ValuePoint valuePoint = new ValuePoint();
         valuePoint.setLatitude(Double.parseDouble(station.getLatitude() + ""));

@@ -1,10 +1,10 @@
 package com.nanjing.weather.entity;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * 自定义响应结构
@@ -23,24 +23,8 @@ public class Result implements Serializable {
     // 响应中的数据
     private Object data;
 
-    public static Result build(Boolean status, String message, Object data) {
-        return new Result(status, message, data);
-    }
-
-    public static Result ok(Object data) {
-        return new Result(data);
-    }
-
-    public static Result ok() {
-        return new Result(null);
-    }
-
     public Result() {
 
-    }
-
-    public static Result build(Boolean status, String message) {
-        return new Result(status, message, null);
     }
 
     public Result(Boolean status, String message, Object data) {
@@ -61,28 +45,20 @@ public class Result implements Serializable {
         this.data = data;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public static Result build(Boolean status, String message, Object data) {
+        return new Result(status, message, data);
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public static Result ok(Object data) {
+        return new Result(data);
     }
 
-    public String getMessage() {
-        return message;
+    public static Result ok() {
+        return new Result(null);
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
+    public static Result build(Boolean status, String message) {
+        return new Result(status, message, null);
     }
 
     /**
@@ -148,6 +124,30 @@ public class Result implements Serializable {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
     }
 
 }

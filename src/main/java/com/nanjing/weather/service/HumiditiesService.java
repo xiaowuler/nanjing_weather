@@ -3,7 +3,6 @@ package com.nanjing.weather.service;
 import com.github.pagehelper.PageInfo;
 import com.nanjing.wContour.bean.ContourResult;
 import com.nanjing.weather.domain.Humidities;
-import com.nanjing.weather.domain.Rainfalls;
 
 import java.util.List;
 

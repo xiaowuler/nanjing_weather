@@ -6,7 +6,7 @@ public class DataArrivals {
     private Timestamp routine_Time;//资料时间
     private String product_type_code;//采集的要素
     private String timeliness_code;//采集结果
-    private String  description;//备注插入的条数
+    private String description;//备注插入的条数
     private Timestamp begin_sync_time;//开始时间
     private Timestamp end_sync_time;//结束时间
     private String routine;

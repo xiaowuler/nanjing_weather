@@ -1,6 +1,6 @@
 L.TileLayer.ChinaProvider = L.TileLayer.extend({
 
-    initialize: function(type, options) { // (type, Object)
+    initialize: function (type, options) { // (type, Object)
         var providers = L.TileLayer.ChinaProvider.providers;
 
         var parts = type.split('.');
@@ -68,6 +68,6 @@ L.TileLayer.ChinaProvider.providers = {
     }
 };
 
-L.tileLayer.chinaProvider = function(type, options) {
+L.tileLayer.chinaProvider = function (type, options) {
     return new L.TileLayer.ChinaProvider(type, options);
 };

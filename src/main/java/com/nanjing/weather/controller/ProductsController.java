@@ -2,6 +2,7 @@ package com.nanjing.weather.controller;
 
 import com.nanjing.weather.domain.ProductCategoryRegionRels;
 import com.nanjing.weather.domain.Products;
+import com.nanjing.weather.dto.Category;
 import com.nanjing.weather.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +12,10 @@ import javax.lang.model.element.NestingKind;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -70,14 +74,17 @@ public class ProductsController {
 
         byte[] bytes = new byte[1024];
         InputStream inputStream = new FileInputStream(file);
-        while((inputStream.read(bytes) > 0))
+        while ((inputStream.read(bytes) > 0))
             outputStream.write(bytes);
 
         outputStream.close();
         inputStream.close();
     }
 
-
+    @RequestMapping("/findCategory")
+    public List<Category> findCategory(){
+        return productsService.findCategory();
+    }
 }
 
 

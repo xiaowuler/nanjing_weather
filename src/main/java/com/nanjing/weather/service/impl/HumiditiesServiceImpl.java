@@ -2,16 +2,12 @@ package com.nanjing.weather.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.nanjing.wContour.ContourHelper;
 import com.nanjing.wContour.bean.ContourResult;
-import com.nanjing.wContour.bean.LegendLevel;
 import com.nanjing.wContour.bean.ValuePoint;
 import com.nanjing.weather.dao.HumiditiesMapper;
 import com.nanjing.weather.dao.LegendLevelMapper;
 import com.nanjing.weather.dao.StationsMapper;
 import com.nanjing.weather.domain.Humidities;
-import com.nanjing.weather.domain.Stations;
-import com.nanjing.weather.domain.Winds;
 import com.nanjing.weather.entity.Humiditie;
 import com.nanjing.weather.entity.HumiditieCenter;
 import com.nanjing.weather.service.HumiditiesService;
@@ -76,35 +72,35 @@ public class HumiditiesServiceImpl implements HumiditiesService {
         List<Humidities> humiditiesList = new ArrayList<>();
         HumiditieCenter humiditieCenter = new HumiditieCenter();
         humiditieCenter.setValue(new BigDecimal(parmOne.substring(1)));
-        if(time != null){
+        if (time != null) {
             humiditieCenter.setCreateTime(time.split(":")[0]);
             humiditieCenter.setRoutineTime(time.split(":")[1]);
         }
         List<Humiditie> allBySomeTerm = humiditiesMapper.findAllBySomeTerm(humiditieCenter);
-        for(Humiditie humiditie:allBySomeTerm){
+        for (Humiditie humiditie : allBySomeTerm) {
             double x = 0;
             double y = 0;
-            for(HumiditieCenter center:humiditie.getHumiditieCenter()){
-                if(Double.parseDouble(center.getValue().toString())<999){
+            for (HumiditieCenter center : humiditie.getHumiditieCenter()) {
+                if (Double.parseDouble(center.getValue().toString()) < 999) {
                     x += Double.parseDouble(center.getValue().toString());
                     y++;
                 }
             }
-            if(y != 0){
+            if (y != 0) {
                 Humidities hum = new Humidities();
                 hum.setStation_Id(humiditie.getStationId());
-                hum.setValue(new BigDecimal(new DecimalFormat("#.00").format(x/y)));
+                hum.setValue(new BigDecimal(new DecimalFormat("#.00").format(x / y)));
                 humiditiesList.add(hum);
             }
         }
 
-        if(humiditiesList.size()>0){
-            list = CodeIntegration.getValuePoint(humiditiesList,"getStation_Id","getValue");
-            if(list.size()>0){
-                if(time != null){
-                    return CodeIntegration.getResult("humidities",list,time.split(":")[1]);
-                }else {
-                    return CodeIntegration.getResult("humidities",list,allBySomeTerm.get(0).getHumiditieCenter().get(0).getRoutineTime());
+        if (humiditiesList.size() > 0) {
+            list = CodeIntegration.getValuePoint(humiditiesList, "getStation_Id", "getValue");
+            if (list.size() > 0) {
+                if (time != null) {
+                    return CodeIntegration.getResult("humidities", list, time.split(":")[1]);
+                } else {
+                    return CodeIntegration.getResult("humidities", list, TimeFormat.getTime(allBySomeTerm.get(0).getHumiditieCenter().get(0).getRoutineTime()));
                 }
             }
         }

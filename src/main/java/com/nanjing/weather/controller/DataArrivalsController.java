@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -23,65 +22,65 @@ public class DataArrivalsController {
 
     //查询
     @RequestMapping("/findByType")
-    public PageResult<DataArrivals> findByType(String startTime,String endTime, Integer page, Integer rows, String type) {
+    public PageResult<DataArrivals> findByType(String startTime, String endTime, Integer page, Integer rows, String type) {
 
-        if(type.equals("60-fen-zhong")){
-            type="6-fen-zhong";
-            if(startTime.equals("") && endTime.equals("")){
+        if (type.equals("60-fen-zhong")) {
+            type = "6-fen-zhong";
+            if (startTime.equals("") && endTime.equals("")) {
                 PageResult<DataArrivals> pageResult = dataArrivalsService.findByTiming(page, rows, type);
                 List<DataArrivals> rowsList = getDataArrivals(pageResult);
                 pageResult.setRows(rowsList);
                 return pageResult;
-            }else{
+            } else {
                 String[] strs = startTime.split("/");
                 String[] strs2 = endTime.split("/");
                 String string1 = "";
                 String string2 = "";
-                string1+=strs[0]+"-"+strs[1]+"-"+strs[2]+" "+strs[3].substring(0,2);
-                string2+=strs2[0]+"-"+strs2[1]+"-"+strs2[2]+" "+strs2[3].substring(0,2);
+                string1 += strs[0] + "-" + strs[1] + "-" + strs[2] + " " + strs[3].substring(0, 2);
+                string2 += strs2[0] + "-" + strs2[1] + "-" + strs2[2] + " " + strs2[3].substring(0, 2);
 
-                PageResult<DataArrivals> pageResult = dataArrivalsService.findByType1(string1,string2,page, rows, type);
+                PageResult<DataArrivals> pageResult = dataArrivalsService.findByType1(string1, string2, page, rows, type);
                 List<DataArrivals> rowsList = getDataArrivals(pageResult);
                 pageResult.setRows(rowsList);
                 return pageResult;
             }
 
-        }else if(type.equals("30-fen-zhong")){
-            type="6-fen-zhong";
-            if(startTime.equals("") && endTime.equals("")){
+        } else if (type.equals("30-fen-zhong")) {
+            type = "6-fen-zhong";
+            if (startTime.equals("") && endTime.equals("")) {
                 PageResult<DataArrivals> pageResult = dataArrivalsService.findByHalfTime(page, rows, type);
                 List<DataArrivals> rowsList = getDataArrivals(pageResult);
                 pageResult.setRows(rowsList);
                 return pageResult;
-            }else{
+            } else {
                 String[] strs = startTime.split("/");
                 String[] strs2 = endTime.split("/");
                 String string1 = "";
                 String string2 = "";
-                string1+=strs[0]+"-"+strs[1]+"-"+strs[2]+" "+strs[3].substring(0,2);
-                string2+=strs2[0]+"-"+strs2[1]+"-"+strs2[2]+" "+strs2[3].substring(0,2);
+                string1 += strs[0] + "-" + strs[1] + "-" + strs[2] + " " + strs[3].substring(0, 2);
+                string2 += strs2[0] + "-" + strs2[1] + "-" + strs2[2] + " " + strs2[3].substring(0, 2);
 
-                PageResult<DataArrivals> pageResult = dataArrivalsService.findByType1(string1,string2,page, rows, type);
+                PageResult<DataArrivals> pageResult = dataArrivalsService.findByType1(string1, string2, page, rows, type);
                 List<DataArrivals> rowsList = getDataArrivals(pageResult);
                 pageResult.setRows(rowsList);
                 return pageResult;
             }
-        }else{
+        } else {
             if (startTime.equals("") && endTime.equals("")) {
                 PageResult<DataArrivals> pageResult = dataArrivalsService.findByType(page, rows, type);
                 List<DataArrivals> rowsList = getDataArrivals(pageResult);
                 pageResult.setRows(rowsList);
                 return pageResult;
-            }else{
+            } else {
                 //2018/12/03/00时+"/00/00"  "2018-11-10 10:20:00" 定义规范时间方法
                 String[] strs = startTime.split("/");
                 String[] strs2 = endTime.split("/");
                 String string1 = "";
                 String string2 = "";
-                string1+=strs[0]+"-"+strs[1]+"-"+strs[2]+" "+strs[3].substring(0,2);
-                string2+=strs2[0]+"-"+strs2[1]+"-"+strs2[2]+" "+strs2[3].substring(0,2);
+                string1 += strs[0] + "-" + strs[1] + "-" + strs[2] + " " + strs[3].substring(0, 2);
+                string2 += strs2[0] + "-" + strs2[1] + "-" + strs2[2] + " " + strs2[3].substring(0, 2);
 
-                PageResult<DataArrivals> pageResult = dataArrivalsService.findByType1(string1,string2,page, rows, type);
+                PageResult<DataArrivals> pageResult = dataArrivalsService.findByType1(string1, string2, page, rows, type);
                 List<DataArrivals> rowsList = getDataArrivals(pageResult);
                 pageResult.setRows(rowsList);
                 return pageResult;
@@ -96,7 +95,7 @@ public class DataArrivalsController {
             Timestamp end_time = dataArrivals.getEnd_sync_time();
             Timestamp routine_time = dataArrivals.getRoutine_Time();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            SimpleDateFormat sdf1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             dataArrivals.setBegin(sdf1.format(begin_time));
             dataArrivals.setEnd(sdf1.format(end_time));
             dataArrivals.setRoutine(sdf.format(routine_time));
@@ -105,7 +104,7 @@ public class DataArrivalsController {
     }
 
     @RequestMapping("/findState")
-    public List<List<DataState>> findState(){
+    public List<List<DataState>> findState() {
         return dataArrivalsService.findState();
     }
 

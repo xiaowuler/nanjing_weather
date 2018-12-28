@@ -1,10 +1,8 @@
 package com.nanjing.wContour.bean;
 
 
-import com.nanjing.weather.domain.Stations;
 import wContour.Global.PolyLine;
 import wContour.Global.Polygon;
-
 
 import java.util.List;
 
@@ -13,6 +11,9 @@ public class ContourResult<T> {
     public List<Polygon> spotPolygons;
     public List<PolyLine> contourPolylines;
     public List<LegendLevel> legendLevels;
+    public double[] levelArray;
+    public String time;
+    public Object reserved3;
 
     public List<LegendLevel> getLegendLevels() {
         return legendLevels;
@@ -22,8 +23,6 @@ public class ContourResult<T> {
         this.legendLevels = legendLevels;
     }
 
-    public double[] levelArray;
-
     public String getTime() {
         return time;
     }
@@ -31,9 +30,6 @@ public class ContourResult<T> {
     public void setTime(String time) {
         this.time = time;
     }
-
-    public String time;
-    public Object reserved3;
 
     public List<ValuePoint> getValuePoints() {
         return valuePoints;
