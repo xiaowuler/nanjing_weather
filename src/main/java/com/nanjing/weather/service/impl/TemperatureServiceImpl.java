@@ -2,14 +2,12 @@ package com.nanjing.weather.service.impl;
 
 import com.nanjing.wContour.bean.ContourResult;
 import com.nanjing.wContour.bean.ValuePoint;
-import com.nanjing.weather.dao.LegendLevelMapper;
-import com.nanjing.weather.dao.StationsMapper;
-import com.nanjing.weather.dao.TemperaturesMapper;
+import com.nanjing.weather.dao.TemperatureMapper;
 import com.nanjing.weather.domain.Temperatures;
 import com.nanjing.weather.entity.Temperature;
 import com.nanjing.weather.entity.TemperatureCenter;
 import com.nanjing.weather.entity.TemperatureNinMax;
-import com.nanjing.weather.service.TemperaturesService;
+import com.nanjing.weather.service.TemperatureService;
 import com.nanjing.weather.utils.CodeIntegration;
 import com.nanjing.weather.utils.TimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,39 +21,10 @@ import java.util.List;
 
 @Service
 @Transactional
-public class TemperaturesServiceImpl implements TemperaturesService {
+public class TemperatureServiceImpl implements TemperatureService {
+
     @Autowired
-    private TemperaturesMapper temperaturesMapper;
-    @Autowired
-    private StationsMapper stationsMapper;
-    @Autowired
-    private LegendLevelMapper legendLevelMapper;
-
-
-    @Override
-    public ContourResult findAll(Integer time, Double railfalls) {
-        return null;
-    }
-
-    @Override
-    public Temperatures findTemperaturesByid(String stationId) {
-        return temperaturesMapper.findTemperaturesByid(stationId);
-    }
-
-    @Override
-    public void add(Temperatures temperatures) {
-
-    }
-
-    @Override
-    public void update(Temperatures temperatures) {
-
-    }
-
-    @Override
-    public void delete(String[] stationIds) {
-
-    }
+    private TemperatureMapper temperaturesMapper;
 
     @Override
     public ContourResult<Temperatures> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
@@ -206,6 +175,8 @@ public class TemperaturesServiceImpl implements TemperaturesService {
                 if (time != null) {
                     return CodeIntegration.getResult("temperatures", list, time.split(":")[1]);
                 } else {
+                    if(parmOne.equals("最低温度") || parmOne.equals("最高温度"))
+                        return CodeIntegration.getResult("temperatures", list, TimeFormat.getTime(temperatureList.get(0).getTemperatureNinMaxe().get(0).getRoutineTime()));
                     return CodeIntegration.getResult("temperatures", list, TimeFormat.getTime(temperatureList.get(0).getTemperatureCenter().get(0).getRoutineTime()));
                 }
             }

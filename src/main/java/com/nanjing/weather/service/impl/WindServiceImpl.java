@@ -11,7 +11,7 @@ import com.nanjing.weather.domain.Stations;
 import com.nanjing.weather.domain.Winds;
 import com.nanjing.weather.entity.Wind;
 import com.nanjing.weather.entity.WindCenter;
-import com.nanjing.weather.service.WindsService;
+import com.nanjing.weather.service.WindService;
 import com.nanjing.weather.utils.CodeIntegration;
 import com.nanjing.weather.utils.TimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,48 +25,13 @@ import java.util.List;
 
 @Service
 @Transactional
-public class WindsServiceImpl implements WindsService {
+public class WindServiceImpl implements WindService {
     @Autowired
     private WindsMapper WindsMapper;
 
     @Autowired
     private StationsMapper stationsMapper;
 
-    @Autowired
-    private LegendLevelMapper legendLevelMapper;
-
-    @Override
-    public List<Winds> findAll() {
-        return WindsMapper.findAll();
-    }
-
-    @Override
-    public Winds findWindsByid(String stationId) {
-        return WindsMapper.findWindsByid(stationId);
-    }
-
-    @Override
-    public void add(Winds winds) {
-
-    }
-
-    @Override
-    public void update(Winds inds) {
-
-    }
-
-    @Override
-    public void delete(String[] stationIds) {
-
-    }
-
-    @Override
-    public PageInfo<Winds> findAll(int page, int pageSize) {
-        PageHelper.startPage(page, pageSize);
-        List<Winds> all = WindsMapper.findAll();
-        PageInfo<Winds> info = new PageInfo<Winds>(all);
-        return info;
-    }
 
     @Override
     public ContourResult<Winds> findAllBySomeTerm(String parmsOne, String parmsTwo, String time) {

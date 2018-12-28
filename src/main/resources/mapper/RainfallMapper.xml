@@ -1,29 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--客户映射 指定到dao接口 -->
-<mapper namespace="com.nanjing.weather.dao.RainfallsMapper">
-    <select id="findAll" resultType="com.nanjing.weather.domain.Rainfalls">
-        select * from rainfalls;
-
-    </select>
-
-    <select id="findRainfallsByid" parameterType="String" resultType="com.nanjing.weather.domain.Rainfalls">
-        select  * from rainfalls where  station_id=#{id};
-
-    </select>
-
-    <insert id="add" parameterType="com.nanjing.weather.domain.Rainfalls">
-       INSERT INTO `rainfalls` (`station_id`, `value`, `routine_time`, `create_time`) VALUES (#{id},#{value}, #{routine_time}, #{create_time});
-    </insert>
-
-    <delete id="delete" parameterType="String">
-      delete  from `rainfalls`where  station_id=#{id};
-    </delete>
-
-    <update id="update" parameterType="com.nanjing.weather.domain.Rainfalls">
-       UPDATE `rainfalls` SET `station_id`=#{id}, `value`=#{value}, `data_time`=#{routine_time}, `create_time`=#{create_time} WHERE station_id=#{id} ;
-
-    </update>
+<mapper namespace="com.nanjing.weather.dao.RainfallMapper">
 
     <resultMap id="findAllBySomeMap" type="com.nanjing.weather.entity.RainFall">
         <result column="station_id" property="stationId"/>

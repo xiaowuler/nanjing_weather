@@ -1,16 +1,12 @@
 package com.nanjing.weather.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.nanjing.wContour.bean.ContourResult;
 import com.nanjing.wContour.bean.ValuePoint;
-import com.nanjing.weather.dao.LegendLevelMapper;
-import com.nanjing.weather.dao.PressuresMapper;
-import com.nanjing.weather.dao.StationsMapper;
+import com.nanjing.weather.dao.PressureMapper;
 import com.nanjing.weather.domain.Pressures;
 import com.nanjing.weather.entity.Pressure;
 import com.nanjing.weather.entity.PressureCenter;
-import com.nanjing.weather.service.PressuresService;
+import com.nanjing.weather.service.PressureService;
 import com.nanjing.weather.utils.CodeIntegration;
 import com.nanjing.weather.utils.TimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,50 +21,11 @@ import java.util.List;
 
 @Service
 @Transactional
-public class PressuresServiceImpl implements PressuresService {
+public class PressureServiceImpl implements PressureService {
 
 
     @Autowired
-    private PressuresMapper pressuresMapper;
-
-    @Autowired
-    private StationsMapper stationsMapper;
-
-    @Autowired
-    private LegendLevelMapper legendLevelMapper;
-
-    @Override
-    public List<Pressures> findAll() {
-        return pressuresMapper.findAll();
-    }
-
-    @Override
-    public Pressures findPressuresByid(String stationId) {
-        return pressuresMapper.findPressuresByid(stationId);
-    }
-
-    @Override
-    public void add(Pressures pressures) {
-
-    }
-
-    @Override
-    public void update(Pressures pressures) {
-
-    }
-
-    @Override
-    public void delete(String[] stationIds) {
-
-    }
-
-    @Override
-    public PageInfo<Pressures> findAll(int page, int pageSize) {
-        PageHelper.startPage(page, pageSize);
-        List<Pressures> all = pressuresMapper.findAll();
-        PageInfo<Pressures> info = new PageInfo<Pressures>(all);
-        return info;
-    }
+    private PressureMapper pressuresMapper;
 
     @Override
     public ContourResult<Pressures> findAllBySomeTerm(String parmOne, String parmTwo, String time) {

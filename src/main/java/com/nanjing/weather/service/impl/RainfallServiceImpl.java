@@ -1,17 +1,12 @@
 package com.nanjing.weather.service.impl;
 
-
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.nanjing.wContour.bean.ContourResult;
 import com.nanjing.wContour.bean.ValuePoint;
-import com.nanjing.weather.dao.LegendLevelMapper;
-import com.nanjing.weather.dao.RainfallsMapper;
-import com.nanjing.weather.dao.StationsMapper;
+import com.nanjing.weather.dao.RainfallMapper;
 import com.nanjing.weather.domain.Rainfalls;
 import com.nanjing.weather.entity.RainFall;
 import com.nanjing.weather.entity.RainFallCenter;
-import com.nanjing.weather.service.RainfallsService;
+import com.nanjing.weather.service.RainfallService;
 import com.nanjing.weather.utils.CodeIntegration;
 import com.nanjing.weather.utils.TimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,50 +20,10 @@ import java.util.List;
 
 @Service
 @Transactional
-public class RainfallsServiceImpl implements RainfallsService {
+public class RainfallServiceImpl implements RainfallService {
 
     @Autowired
-    private RainfallsMapper rainfallsMapper;
-
-    @Autowired
-    private StationsMapper stationsMapper;
-
-    @Autowired
-    private LegendLevelMapper legendLevelMapper;
-
-
-    @Override
-    public List<Rainfalls> findAll() {
-        return rainfallsMapper.findAll();
-    }
-
-    @Override
-    public Rainfalls findRainfallsByid(String stationId) {
-        return rainfallsMapper.findRainfallsByid(stationId);
-    }
-
-    @Override
-    public void add(Rainfalls rainfalls) {
-
-    }
-
-    @Override
-    public void update(Rainfalls rainfalls) {
-
-    }
-
-    @Override
-    public void delete(String[] stationIds) {
-
-    }
-
-    @Override
-    public PageInfo<Rainfalls> findAll(int page, int pageSize) {
-        PageHelper.startPage(page, pageSize);
-        List<Rainfalls> all = rainfallsMapper.findAll();
-        PageInfo<Rainfalls> info = new PageInfo<Rainfalls>(all);
-        return info;
-    }
+    private RainfallMapper rainfallsMapper;
 
     @Override
     public ContourResult<Rainfalls> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
@@ -112,6 +67,11 @@ public class RainfallsServiceImpl implements RainfallsService {
                 }
             }
         }
+        return null;
+    }
+
+    @Override
+    public ContourResult<Rainfalls> findSomeByTerm(String parmOne, String parmTwo, String time) {
         return null;
     }
 }

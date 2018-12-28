@@ -1,16 +1,12 @@
 package com.nanjing.weather.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.nanjing.wContour.bean.ContourResult;
 import com.nanjing.wContour.bean.ValuePoint;
-import com.nanjing.weather.dao.HumiditiesMapper;
-import com.nanjing.weather.dao.LegendLevelMapper;
-import com.nanjing.weather.dao.StationsMapper;
+import com.nanjing.weather.dao.HumidityMapper;
 import com.nanjing.weather.domain.Humidities;
 import com.nanjing.weather.entity.Humiditie;
 import com.nanjing.weather.entity.HumiditieCenter;
-import com.nanjing.weather.service.HumiditiesService;
+import com.nanjing.weather.service.HumidityService;
 import com.nanjing.weather.utils.CodeIntegration;
 import com.nanjing.weather.utils.TimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,47 +20,10 @@ import java.util.List;
 
 @Service
 @Transactional
-public class HumiditiesServiceImpl implements HumiditiesService {
+public class HumidityServiceImpl implements HumidityService {
+
     @Autowired
-    private HumiditiesMapper humiditiesMapper;
-    @Autowired
-    private StationsMapper stationsMapper;
-    @Autowired
-    private LegendLevelMapper legendLevelMapper;
-
-    @Override
-    public List<Humidities> findAll() {
-        return humiditiesMapper.findAll();
-    }
-
-
-    @Override
-    public Humidities findHumiditiesByid(String stationId) {
-        return humiditiesMapper.findHumiditiesByid(stationId);
-    }
-
-    @Override
-    public void add(Humidities humidities) {
-
-    }
-
-    @Override
-    public void update(Humidities humidities) {
-
-    }
-
-    @Override
-    public void delete(String[] stationIds) {
-
-    }
-
-    @Override
-    public PageInfo<Humidities> findAll(int page, int pageSize) {
-        PageHelper.startPage(page, pageSize);
-        List<Humidities> all = humiditiesMapper.findAll();
-        PageInfo<Humidities> info = new PageInfo<Humidities>(all);
-        return info;
-    }
+    private HumidityMapper humiditiesMapper;
 
     @Override
     public ContourResult<Humidities> findAllBySomeTerm(String parmOne, String parmTwo, String time) {

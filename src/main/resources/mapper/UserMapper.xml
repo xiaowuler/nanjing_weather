@@ -8,7 +8,7 @@
 
     <select id="findUserList" resultType="com.nanjing.weather.domain.User">
     SELECT * from `sys_user`
-</select>
+    </select>
 
     <insert id="add" parameterType="com.nanjing.weather.domain.User">
           INSERT INTO `sys_user` (

@@ -1,28 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--客户映射 指定到dao接口 -->
-<mapper namespace="com.nanjing.weather.dao.TemperaturesMapper">
-
-    <select id="findAll" resultType="com.nanjing.weather.domain.Temperatures">
-        SELECT * from temperatures where routine_time = (SELECT max(routine_time) FROM `temperatures`) and create_time BETWEEN (SELECT date_sub(NOW(),interval #{0} hour)) and NOW() and value >= #{1};
-    </select>
-
-    <select id="findTemperaturesByid" parameterType="String" resultType="com.nanjing.weather.domain.Temperatures">
-        select  * from temperatures where  station_id=#{id};
-    </select>
-
-    <insert id="add" parameterType="com.nanjing.weather.domain.Temperatures">
-       INSERT INTO `temperatures` (`station_id`, `value`, `routine_time`, `create_time`) VALUES (#{id},#{value}, #{routine_time}, #{create_time});
-    </insert>
-
-    <delete id="delete" parameterType="String">
-      delete  from `temperatures`where  station_id=#{id};
-</delete>
-
-    <update id="update" parameterType="com.nanjing.weather.domain.Temperatures">
-       UPDATE `temperatures` SET `station_id`=#{id}, `value`=#{value}, `data_time`=#{routine_time}, `create_time`=#{create_time} WHERE station_id=#{id} ;
-
-    </update>
+<mapper namespace="com.nanjing.weather.dao.TemperatureMapper">
 
     <resultMap id="findAllBySomeDataHHMap" type="com.nanjing.weather.entity.Temperature">
         <result column="station_id" property="stationId"/>

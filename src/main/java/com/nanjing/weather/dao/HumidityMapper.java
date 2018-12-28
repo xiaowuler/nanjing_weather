@@ -8,16 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface HumiditiesMapper {
-    List<Humidities> findAll();
-
-    Humidities findHumiditiesByid(String stationId);
-
-    void add(Humidities humidities);
-
-    void update(Humidities humidities);
-
-    void delete(String stationIds);
+public interface HumidityMapper {
 
     /**
      * 根据条件查询
