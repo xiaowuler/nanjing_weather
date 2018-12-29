@@ -6,6 +6,7 @@ import com.nanjing.weather.dao.HumidityMapper;
 import com.nanjing.weather.domain.Humidities;
 import com.nanjing.weather.entity.Humiditie;
 import com.nanjing.weather.entity.HumiditieCenter;
+import com.nanjing.weather.entitys.Humidity;
 import com.nanjing.weather.service.HumidityService;
 import com.nanjing.weather.utils.CodeIntegration;
 import com.nanjing.weather.utils.TimeFormat;
@@ -26,9 +27,9 @@ public class HumidityServiceImpl implements HumidityService {
     private HumidityMapper humiditiesMapper;
 
     @Override
-    public ContourResult<Humidities> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
+    public ContourResult<Humidity> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
         List<ValuePoint> list;
-        List<Humidities> humiditiesList = new ArrayList<>();
+        List<Humidity> humiditiesList;
         HumiditieCenter humiditieCenter = new HumiditieCenter();
         humiditieCenter.setValue(new BigDecimal(parmOne.substring(1)));
         if (time != null) {
@@ -36,34 +37,14 @@ public class HumidityServiceImpl implements HumidityService {
             humiditieCenter.setRoutineTime(time.split(":")[1]);
         }
         List<Humiditie> allBySomeTerm = humiditiesMapper.findAllBySomeTerm(humiditieCenter);
-        for (Humiditie humiditie : allBySomeTerm) {
-            double x = 0;
-            double y = 0;
-            for (HumiditieCenter center : humiditie.getHumiditieCenter()) {
-                if (Double.parseDouble(center.getValue().toString()) < 999) {
-                    x += Double.parseDouble(center.getValue().toString());
-                    y++;
-                }
-            }
-            if (y != 0) {
-                Humidities hum = new Humidities();
-                hum.setStation_Id(humiditie.getStationId());
-                hum.setValue(new BigDecimal(new DecimalFormat("#.00").format(x / y)));
-                humiditiesList.add(hum);
-            }
-        }
+        humiditiesList = CodeIntegration.caleAvg(allBySomeTerm,"getHumiditieCenter","getValue","com.nanjing.weather.entitys.Humidity","setValue");
 
-        if (humiditiesList.size() > 0) {
-            list = CodeIntegration.getValuePoint(humiditiesList, "getStation_Id", "getValue");
-            if (list.size() > 0) {
-                if (time != null) {
-                    return CodeIntegration.getResult("humidities", list, time.split(":")[1]);
-                } else {
-                    return CodeIntegration.getResult("humidities", list, TimeFormat.getTime(allBySomeTerm.get(0).getHumiditieCenter().get(0).getRoutineTime()));
-                }
-            }
-        }
-        return null;
+        list = CodeIntegration.getValuePoint(humiditiesList, "getStationId", "getValue");
+
+        if (time != null)
+            return CodeIntegration.getResult("humidities", list, time.split(":")[1]);
+        return CodeIntegration.getResult("humidities", list, TimeFormat.getTime(allBySomeTerm.get(0).getHumiditieCenter().get(0).getRoutineTime()));
+
     }
 
 

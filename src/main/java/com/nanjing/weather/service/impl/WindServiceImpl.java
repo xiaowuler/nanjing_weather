@@ -1,10 +1,7 @@
 package com.nanjing.weather.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.nanjing.wContour.bean.ContourResult;
 import com.nanjing.wContour.bean.ValuePoint;
-import com.nanjing.weather.dao.LegendLevelMapper;
 import com.nanjing.weather.dao.StationsMapper;
 import com.nanjing.weather.dao.WindsMapper;
 import com.nanjing.weather.domain.Stations;
@@ -102,17 +99,12 @@ public class WindServiceImpl implements WindService {
                     valuePoint.setInstantDirection(Double.parseDouble(wind.getAvg_Speed_Direction().toString()));
                     list.add(valuePoint);
                 }
+            }
 
-            }
-            if (list.size() > 0) {
-                if (time != null) {
-                    return CodeIntegration.getResult("winds", list, time.split(":")[1]);
-                } else {
-                    return CodeIntegration.getResult("winds", list, TimeFormat.getTime(winds.get(0).getWindCenter().get(0).getRoutineTime()));
-                }
-            }
+            if (time != null)
+                return CodeIntegration.getResult("winds", list, time.split(":")[1]);
+            return CodeIntegration.getResult("winds", list, TimeFormat.getTime(winds.get(0).getWindCenter().get(0).getRoutineTime()));
         }
-
         return null;
     }
 }

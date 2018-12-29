@@ -8,9 +8,9 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    public User findUserById(Integer id);
+    User findUserById(Integer id);
 
-    public List<User> findUserList();
+    List<User> findUserList();
 
-    public void add(User user);
+    void add(User user);
 }

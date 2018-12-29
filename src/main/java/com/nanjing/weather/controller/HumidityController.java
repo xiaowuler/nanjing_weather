@@ -2,6 +2,7 @@ package com.nanjing.weather.controller;
 
 import com.nanjing.wContour.bean.ContourResult;
 import com.nanjing.weather.domain.Humidities;
+import com.nanjing.weather.entitys.Humidity;
 import com.nanjing.weather.service.HumidityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ public class HumidityController {
      */
 
     @RequestMapping("/findAllBySomeTerm")
-    public ContourResult<Humidities> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
+    public ContourResult<Humidity> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
         return humiditiesService.findAllBySomeTerm(parmOne, parmTwo, time);
     }
 

@@ -4,7 +4,7 @@ import com.nanjing.wContour.bean.ContourResult;
 import com.nanjing.wContour.bean.ValuePoint;
 import com.nanjing.weather.dao.TemperatureMapper;
 import com.nanjing.weather.domain.Temperatures;
-import com.nanjing.weather.entity.Temperature;
+import com.nanjing.weather.entitys.Temperature;
 import com.nanjing.weather.entity.TemperatureCenter;
 import com.nanjing.weather.entity.TemperatureNinMax;
 import com.nanjing.weather.service.TemperatureService;
@@ -27,10 +27,10 @@ public class TemperatureServiceImpl implements TemperatureService {
     private TemperatureMapper temperaturesMapper;
 
     @Override
-    public ContourResult<Temperatures> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
+    public ContourResult<Temperature> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
         List<ValuePoint> list;
-        List<Temperatures> temperatures = new ArrayList<>();
-        List<Temperature> temperatureList = new ArrayList<>();
+        List<Temperature> temperatures = new ArrayList<>();
+        List<com.nanjing.weather.entity.Temperature> temperatureList = new ArrayList<>();
         Integer num = Integer.parseInt(parmTwo.substring(1));
         if (parmOne.equals("温度")) {
             String numParm = parmTwo.substring(0, 1);
@@ -51,24 +51,8 @@ public class TemperatureServiceImpl implements TemperatureService {
                 }
                 temperatureList = temperaturesMapper.findAllBySomeDataHh(temperatureCenter);
             }
-            if (temperatureList.size() > 0) {
-                for (Temperature temperature : temperatureList) {
-                    double x = 0;
-                    double y = 0;
-                    for (TemperatureCenter center : temperature.getTemperatureCenter()) {
-                        if (Double.parseDouble(center.getValue().toString()) < 999) {
-                            x += Double.parseDouble(center.getValue().toString());
-                            y++;
-                        }
-                    }
-                    if (y != 0) {
-                        Temperatures tempera = new Temperatures();
-                        tempera.setStation_Id(temperature.getStationId());
-                        tempera.setValue(new BigDecimal(new DecimalFormat("#.00").format(x / y)));
-                        temperatures.add(tempera);
-                    }
-                }
-            }
+            temperatures = CodeIntegration.caleAvg(temperatureList,"getTemperatureCenter","getValue","com.nanjing.weather.entitys.Temperature","setValue");
+
         } else if (parmOne.equals("最高温度")) {
             if (num >= 0) {
                 TemperatureNinMax temperatureNinMax = new TemperatureNinMax();
@@ -87,22 +71,9 @@ public class TemperatureServiceImpl implements TemperatureService {
                 }
                 temperatureList = temperaturesMapper.findAllBySomeDatahH(temperatureNinMax);
             }
-            if (temperatureList.size() > 0) {
-                for (Temperature temperature : temperatureList) {
-                    double x = 0;
-                    for (TemperatureNinMax temperatureNinMax : temperature.getTemperatureNinMaxe()) {
-                        if (Double.parseDouble(temperatureNinMax.getMaxValue().toString()) < 999) {
-                            if (Double.parseDouble(temperatureNinMax.getMaxValue().toString()) > x) {
-                                x = Double.parseDouble(temperatureNinMax.getMaxValue().toString());
-                            }
-                        }
-                    }
-                    Temperatures tempera = new Temperatures();
-                    tempera.setStation_Id(temperature.getStationId());
-                    tempera.setValue(new BigDecimal(x));
-                    temperatures.add(tempera);
-                }
-            }
+
+            temperatures = CodeIntegration.caleAvg(temperatureList,"getTemperatureNinMaxe","getMaxValue","com.nanjing.weather.entitys.Temperature","setValue");
+
         } else if (parmOne.equals("最低温度")) {
             if (num >= 0) {
                 TemperatureNinMax temperatureNinMax = new TemperatureNinMax();
@@ -121,22 +92,8 @@ public class TemperatureServiceImpl implements TemperatureService {
                 }
                 temperatureList = temperaturesMapper.findAllBySomeDatahH(temperatureNinMax);
             }
-            if (temperatureList.size() > 0) {
-                for (Temperature temperature : temperatureList) {
-                    double x = 0;
-                    for (TemperatureNinMax temperatureNinMax : temperature.getTemperatureNinMaxe()) {
-                        if (Double.parseDouble(temperatureNinMax.getMinValue().toString()) < 999) {
-                            if (Double.parseDouble(temperatureNinMax.getMinValue().toString()) < x) {
-                                x = Double.parseDouble(temperatureNinMax.getMinValue().toString());
-                            }
-                        }
-                    }
-                    Temperatures tempera = new Temperatures();
-                    tempera.setStation_Id(temperature.getStationId());
-                    tempera.setValue(new BigDecimal(x));
-                    temperatures.add(tempera);
-                }
-            }
+
+            temperatures = CodeIntegration.caleAvg(temperatureList,"getTemperatureNinMaxe","getMinValue","com.nanjing.weather.entitys.Temperature","setValue");
         } else if (parmOne.equals("24小时变温")) {
             String numParm = parmTwo.substring(0, 1);
             if (numParm.equals("≥")) {
@@ -150,37 +107,15 @@ public class TemperatureServiceImpl implements TemperatureService {
                 temperatureCenter.setRoutineTime("24");
                 temperatureList = temperaturesMapper.findAllBySomeDataHh(temperatureCenter);
             }
-            if (temperatureList.size() > 0) {
-                for (Temperature temperature : temperatureList) {
-                    double x = 0;
-                    double y = 0;
-                    for (TemperatureCenter center : temperature.getTemperatureCenter()) {
-                        if (Double.parseDouble(center.getValue().toString()) < 999) {
-                            x += Double.parseDouble(center.getValue().toString());
-                            y++;
-                        }
-                    }
-                    if (y != 0) {
-                        Temperatures tempera = new Temperatures();
-                        tempera.setStation_Id(temperature.getStationId());
-                        tempera.setValue(new BigDecimal(new DecimalFormat("#.00").format(x / y)));
-                        temperatures.add(tempera);
-                    }
-                }
-            }
+            temperatures = CodeIntegration.caleAvg(temperatureList, "getTemperatureCenter", "getValue", "com.nanjing.weather.entitys.Temperature", "setValue");
         }
-        if (temperatures.size() > 0) {
-            list = CodeIntegration.getValuePoint(temperatures, "getStation_Id", "getValue");
-            if (list.size() > 0) {
-                if (time != null) {
-                    return CodeIntegration.getResult("temperatures", list, time.split(":")[1]);
-                } else {
-                    if(parmOne.equals("最低温度") || parmOne.equals("最高温度"))
-                        return CodeIntegration.getResult("temperatures", list, TimeFormat.getTime(temperatureList.get(0).getTemperatureNinMaxe().get(0).getRoutineTime()));
-                    return CodeIntegration.getResult("temperatures", list, TimeFormat.getTime(temperatureList.get(0).getTemperatureCenter().get(0).getRoutineTime()));
-                }
-            }
+        list = CodeIntegration.getValuePoint(temperatures, "getStationId", "getValue");
+        if (time != null) {
+            return CodeIntegration.getResult("temperatures", list, time.split(":")[1]);
+        } else {
+            if(parmOne.equals("最低温度") || parmOne.equals("最高温度"))
+                return CodeIntegration.getResult("temperatures", list, TimeFormat.getTime(temperatureList.get(0).getTemperatureNinMaxe().get(0).getRoutineTime()));
+            return CodeIntegration.getResult("temperatures", list, TimeFormat.getTime(temperatureList.get(0).getTemperatureCenter().get(0).getRoutineTime()));
         }
-        return null;
     }
 }

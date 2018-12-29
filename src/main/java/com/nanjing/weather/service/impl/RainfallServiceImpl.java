@@ -6,6 +6,7 @@ import com.nanjing.weather.dao.RainfallMapper;
 import com.nanjing.weather.domain.Rainfalls;
 import com.nanjing.weather.entity.RainFall;
 import com.nanjing.weather.entity.RainFallCenter;
+import com.nanjing.weather.entitys.Rainfall;
 import com.nanjing.weather.service.RainfallService;
 import com.nanjing.weather.utils.CodeIntegration;
 import com.nanjing.weather.utils.TimeFormat;
@@ -16,7 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -26,9 +29,9 @@ public class RainfallServiceImpl implements RainfallService {
     private RainfallMapper rainfallsMapper;
 
     @Override
-    public ContourResult<Rainfalls> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
+    public ContourResult<Rainfall> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
         List<ValuePoint> list;
-        List<Rainfalls> rainfallsList = new ArrayList<>();
+        List<Rainfalls> rainfallsList;
         RainFallCenter rainFallCenter = new RainFallCenter();
         if (time != null) {
             rainFallCenter.setValue(new BigDecimal(parmOne.substring(1)));
@@ -39,25 +42,27 @@ public class RainfallServiceImpl implements RainfallService {
             rainFallCenter.setRoutineTime(parmOne);
         }
         List<RainFall> rainFalls = rainfallsMapper.findAllBySomeTerm(rainFallCenter);
+        rainfallsList = CodeIntegration.caleAvg(rainFalls,"getRainFallCenter","getValue","com.nanjing.weather.entitys.Rainfall","setValue");
+
+        list = CodeIntegration.getValuePoint(rainfallsList, "getStationId", "getValue");
+        if (time != null)
+            return CodeIntegration.getResult("rainfalls", list, time.split(":")[1]);
+        return CodeIntegration.getResult("rainfalls", list, TimeFormat.getTime(rainFalls.get(0).getRainFallCenter().get(0).getRoutineTime()));
+
+    }
+
+    @Override
+    public ContourResult<Rainfall> findSomeByTerm(String parmOne, String parmTwo, String time) {
+        List<ValuePoint> list;
+        List<Rainfalls> rainfallsList;
+        RainFallCenter rainFallCenter = new RainFallCenter();
+
+        rainFallCenter.setValue(new BigDecimal(0));
+        rainFallCenter.setRoutineTime("1");
+
+        List<RainFall> rainFalls = rainfallsMapper.findAllBySomeTerm(rainFallCenter);
         if (rainFalls.size() > 0) {
-            for (RainFall rainFall : rainFalls) {
-                double x = 0;
-                double y = 0;
-                for (RainFallCenter center : rainFall.getRainFallCenter()) {
-                    if (Double.parseDouble(center.getValue().toString()) < 999) {
-                        x += Double.parseDouble(center.getValue().toString());
-                        y++;
-                    }
-                }
-
-                if (y != 0) {
-                    Rainfalls rain = new Rainfalls();
-                    rain.setStation_Id(rainFall.getStationId());
-                    rain.setValue(new BigDecimal(new DecimalFormat("#.00").format(x / y)));
-                    rainfallsList.add(rain);
-                }
-
-            }
+            rainfallsList = CodeIntegration.caleAvg(rainFalls,"getRainFallCenter","getValue","com.nanjing.weather.entitys.Rainfall","setValue");
             list = CodeIntegration.getValuePoint(rainfallsList, "getStation_Id", "getValue");
             if (rainfallsList.size() > 0) {
                 if (time != null) {
@@ -67,11 +72,6 @@ public class RainfallServiceImpl implements RainfallService {
                 }
             }
         }
-        return null;
-    }
-
-    @Override
-    public ContourResult<Rainfalls> findSomeByTerm(String parmOne, String parmTwo, String time) {
         return null;
     }
 }
