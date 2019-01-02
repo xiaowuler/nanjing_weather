@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="thirdparty/later/later.min.js" type="text/javascript"></script>
+</head>
+<body>
+
+</body>
+<script>
+
+    function logTime() {
+        console.log(new Date());
+    }
+    window.onload = function () {
+        var textSched = later.parse.text('every 5 mins on the 0 sec');
+        var timer2 = later.setInterval(logTime, textSched);
+    }
+
+</script>
+</html>

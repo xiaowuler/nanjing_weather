@@ -23,7 +23,7 @@ import java.util.Map;
 public class CodeIntegration {
 
     public static List<ValuePoint> getValuePoint(List list, String parmO, String parmT) {
-        if(list.size() > 0){
+        if(list != null && list.size() > 0){
             ApplicationContext applicationContext = SpringUtil.getApplicationContext();
             List<ValuePoint> valuePoints = new ArrayList<>();
             Method metd = null;
@@ -60,7 +60,7 @@ public class CodeIntegration {
      * @return
      */
     public static ContourResult getResult(String type, List<ValuePoint> list, String time) {
-        if(list.size() > 0){
+        if(list != null && list.size() > 0){
             ApplicationContext applicationContext = SpringUtil.getApplicationContext();
             LegendLevelMapper legendLevelMapper = applicationContext.getBean(LegendLevelMapper.class);
             List<LegendLevel> legendLevels = legendLevelMapper.findAll(type);

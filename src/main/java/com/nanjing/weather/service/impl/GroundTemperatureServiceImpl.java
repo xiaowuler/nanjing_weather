@@ -54,8 +54,11 @@ public class GroundTemperatureServiceImpl implements GroundTemperatureService {
 
         list = CodeIntegration.getValuePoint(groundTemperatures, "getStationId", "getValue");
 
-        if (time != null)
-            return CodeIntegration.getResult("groundTemperature", list, time.split(":")[1]);
-        return CodeIntegration.getResult("groundTemperature", list, TimeFormat.getTime(groundTemperature.get(0).getGroupTemperatureCenter().get(0).getRoutineTime()));
+        if(groundTemperature != null && groundTemperature.size()>0){
+            if (time != null)
+                return CodeIntegration.getResult("groundTemperature", list, time.split(":")[1]);
+            return CodeIntegration.getResult("groundTemperature", list, TimeFormat.getTime(groundTemperature.get(0).getGroupTemperatureCenter().get(0).getRoutineTime()));
+        }
+        return null;
     }
 }

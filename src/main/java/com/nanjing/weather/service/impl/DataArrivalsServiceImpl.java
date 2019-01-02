@@ -12,10 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 @Transactional
@@ -52,7 +50,21 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
         DataState ds = new DataState();
         List<List<DataState>> list = new ArrayList<>();
 
-        List<DataState> dataStates = dataArrivalsMapper.findState();
+        Date date = new Date();
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+        String maxTime = dateFormat.format(date);
+
+        Long start = System.currentTimeMillis();
+        List<DataState> routineData = dataArrivalsMapper.findRoutineData(maxTime);
+        long end = System.currentTimeMillis();
+        System.out.println(end-start);
+
+        /*Map map = new HashMap();
+        map.put("productCategoryCode","qi-xiang-liu-yao-su");
+        map.put("productTypeCode","temperature");*/
+
+
+        List<DataState> dataStates = dataArrivalsMapper.findState(maxTime);
 
         for (DataState dataState : dataStates) {
             for (DataArrivalLitter dataArrivalLitter : dataState.getDataArrivalLitter()) {
@@ -76,6 +88,10 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
             }
         }
 
+        //long startTime = System.currentTimeMillis();
+
+        //long endTime = System.currentTimeMillis();
+        //System.out.println("kkkkk"+(endTime-startTime));
         List<DataState> routine = dataArrivalsMapper.findRoutine();
 
         for (DataState dataState : routine) {

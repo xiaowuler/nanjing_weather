@@ -1,6 +1,7 @@
 package com.nanjing.weather.domain;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class CenterDataArrival {
     private String productRegionCode;
@@ -8,6 +9,15 @@ public class CenterDataArrival {
     private String description;
     private Timestamp beginSyncTime;
     private Timestamp endSyncTime;
+    private List<LastDataArrival> lastDataArrivals;
+
+    public List<LastDataArrival> getLastDataArrivals() {
+        return lastDataArrivals;
+    }
+
+    public void setLastDataArrivals(List<LastDataArrival> lastDataArrivals) {
+        this.lastDataArrivals = lastDataArrivals;
+    }
 
     public String getProductRegionCode() {
         return productRegionCode;

@@ -42,9 +42,11 @@ public class PressureServiceImpl implements PressureService {
 
         list = CodeIntegration.getValuePoint(pressuresList, "getStationId", "getValue");
 
-        if (time == null)
-            return CodeIntegration.getResult("pressures", list, TimeFormat.getTime(allBySomeMap.get(0).getPressureCenter().get(0).getRoutineTime()));
-        return CodeIntegration.getResult("pressures", list, time.split(":")[1]);
-
+        if(allBySomeMap != null && allBySomeMap.size()>0){
+            if (time == null)
+                return CodeIntegration.getResult("pressures", list, TimeFormat.getTime(allBySomeMap.get(0).getPressureCenter().get(0).getRoutineTime()));
+            return CodeIntegration.getResult("pressures", list, time.split(":")[1]);
+        }
+        return null;
     }
 }

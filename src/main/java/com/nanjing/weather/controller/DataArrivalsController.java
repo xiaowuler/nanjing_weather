@@ -32,16 +32,6 @@ public class DataArrivalsController {
                 pageResult.setRows(rowsList);
                 return pageResult;
             } else {
-                /*String[] strs = startTime.split("/");
-                String[] strs2 = endTime.split("/");
-                String string1 = "";
-                String string2 = "";
-                string1 += strs[0] + "-" + strs[1] + "-" + strs[2] + " " + strs[3].substring(0, 2);
-                string2 += strs2[0] + "-" + strs2[1] + "-" + strs2[2] + " " + strs2[3].substring(0, 2);
-
-                PageResult<DataArrivals> pageResult = dataArrivalsService.findByType1(string1, string2, page, rows, type);
-                List<DataArrivals> rowsList = getDataArrivals(pageResult);
-                pageResult.setRows(rowsList);*/
                 PageResult pageResult = getPageResult(startTime, endTime, page, rows, type);
                 return pageResult;
             }
@@ -54,16 +44,6 @@ public class DataArrivalsController {
                 pageResult.setRows(rowsList);
                 return pageResult;
             } else {
-                /*String[] strs = startTime.split("/");
-                String[] strs2 = endTime.split("/");
-                String string1 = "";
-                String string2 = "";
-                string1 += strs[0] + "-" + strs[1] + "-" + strs[2] + " " + strs[3].substring(0, 2);
-                string2 += strs2[0] + "-" + strs2[1] + "-" + strs2[2] + " " + strs2[3].substring(0, 2);
-
-                PageResult<DataArrivals> pageResult = dataArrivalsService.findByType1(string1, string2, page, rows, type);
-                List<DataArrivals> rowsList = getDataArrivals(pageResult);
-                pageResult.setRows(rowsList);*/
                 PageResult pageResult = getPageResult(startTime, endTime, page, rows, type);
                 return pageResult;
             }
@@ -74,17 +54,6 @@ public class DataArrivalsController {
                 pageResult.setRows(rowsList);
                 return pageResult;
             } else {
-                //2018/12/03/00时+"/00/00"  "2018-11-10 10:20:00" 定义规范时间方法
-                /*String[] strs = startTime.split("/");
-                String[] strs2 = endTime.split("/");
-                String string1 = "";
-                String string2 = "";
-                string1 += strs[0] + "-" + strs[1] + "-" + strs[2] + " " + strs[3].substring(0, 2);
-                string2 += strs2[0] + "-" + strs2[1] + "-" + strs2[2] + " " + strs2[3].substring(0, 2);
-
-                PageResult<DataArrivals> pageResult = dataArrivalsService.findByType1(string1, string2, page, rows, type);
-                List<DataArrivals> rowsList = getDataArrivals(pageResult);
-                pageResult.setRows(rowsList);*/
                 PageResult pageResult = getPageResult(startTime, endTime, page, rows, type);
                 return pageResult;
             }
@@ -109,10 +78,10 @@ public class DataArrivalsController {
     private PageResult getPageResult(String startTime,String endTime,Integer page, Integer rows, String type){
         String[] strs = startTime.split("/");
         String[] strs2 = endTime.split("/");
-        String string1 = "";
-        String string2 = "";
-        string1 += strs[0] + "-" + strs[1] + "-" + strs[2] + " " + strs[3].substring(0, 2);
-        string2 += strs2[0] + "-" + strs2[1] + "-" + strs2[2] + " " + strs2[3].substring(0, 2);
+        //string1 += strs[0] + "-" + strs[1] + "-" + strs[2] + " " + strs[3].substring(0, 2);
+        //string2 += strs2[0] + "-" + strs2[1] + "-" + strs2[2] + " " + strs2[3].substring(0, 2);
+        String string1 =String.format("%s-%s-%s %s",strs[0],strs[1],strs[2],strs[3].substring(0, 2));
+        String string2 =String.format("%s-%s-%s %s",strs2[0],strs2[1],strs2[2],strs2[3].substring(0, 2));
 
         PageResult<DataArrivals> pageResult = dataArrivalsService.findByType1(string1, string2, page, rows, type);
         List<DataArrivals> rowsList = getDataArrivals(pageResult);

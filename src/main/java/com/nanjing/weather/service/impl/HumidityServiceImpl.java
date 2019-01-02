@@ -41,10 +41,12 @@ public class HumidityServiceImpl implements HumidityService {
 
         list = CodeIntegration.getValuePoint(humiditiesList, "getStationId", "getValue");
 
-        if (time != null)
-            return CodeIntegration.getResult("humidities", list, time.split(":")[1]);
-        return CodeIntegration.getResult("humidities", list, TimeFormat.getTime(allBySomeTerm.get(0).getHumiditieCenter().get(0).getRoutineTime()));
-
+        if(allBySomeTerm != null && allBySomeTerm.size()>0){
+            if (time != null)
+                return CodeIntegration.getResult("humidities", list, time.split(":")[1]);
+            return CodeIntegration.getResult("humidities", list, TimeFormat.getTime(allBySomeTerm.get(0).getHumiditieCenter().get(0).getRoutineTime()));
+        }
+        return null;
     }
 
 

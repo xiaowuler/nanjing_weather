@@ -581,4 +581,5 @@ var MapInfo = function () {
             $("#map-info").html(htmlText)
         }
     }
+
 }

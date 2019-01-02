@@ -3,7 +3,6 @@ package com.nanjing.weather.service.impl;
 import com.nanjing.wContour.bean.ContourResult;
 import com.nanjing.wContour.bean.ValuePoint;
 import com.nanjing.weather.dao.TemperatureMapper;
-import com.nanjing.weather.domain.Temperatures;
 import com.nanjing.weather.entitys.Temperature;
 import com.nanjing.weather.entity.TemperatureCenter;
 import com.nanjing.weather.entity.TemperatureNinMax;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,9 +111,12 @@ public class TemperatureServiceImpl implements TemperatureService {
         if (time != null) {
             return CodeIntegration.getResult("temperatures", list, time.split(":")[1]);
         } else {
-            if(parmOne.equals("最低温度") || parmOne.equals("最高温度"))
-                return CodeIntegration.getResult("temperatures", list, TimeFormat.getTime(temperatureList.get(0).getTemperatureNinMaxe().get(0).getRoutineTime()));
-            return CodeIntegration.getResult("temperatures", list, TimeFormat.getTime(temperatureList.get(0).getTemperatureCenter().get(0).getRoutineTime()));
+            if(temperatureList != null && temperatureList.size()>0){
+                if(parmOne.equals("最低温度") || parmOne.equals("最高温度"))
+                    return CodeIntegration.getResult("temperatures", list, TimeFormat.getTime(temperatureList.get(0).getTemperatureNinMaxe().get(0).getRoutineTime()));
+                return CodeIntegration.getResult("temperatures", list, TimeFormat.getTime(temperatureList.get(0).getTemperatureCenter().get(0).getRoutineTime()));
+            }
+            return null;
         }
     }
 }

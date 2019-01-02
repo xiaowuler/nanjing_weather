@@ -37,6 +37,16 @@
         ORDER BY routine_time DESC limit #{begin},#{pageSize};
     </select>
 
+    <select id="findMaxTime" resultType="java.sql.Timestamp" >
+        SELECT MAX(routine_time) from data_arrivals WHERE 1 = 1
+        <if test="productCategoryCode != null">
+            and product_category_code = #{productCategoryCode}
+        </if>
+        <if test="productTypeCode != null">
+            and product_type_code = #{productTypeCode}
+        </if>
+    </select>
+
     <resultMap id="findStateMap" type="com.nanjing.weather.domain.DataState">
         <result column="product_category_code" property="productCategoryCode"/>
         <result column="name" property="productTypeCode"/>
@@ -52,10 +62,21 @@
         </collection>
     </resultMap>
 
-    <select id="findState" resultMap="findStateMap">
+    <select id="findState" parameterType="String" resultMap="findStateMap">
         /*select * from data_arrivals WHERE routine_time BETWEEN (SELECT date_sub(NOW(),interval 1 hour)) and NOW() ORDER BY routine_time;*/
         /*select * from data_arrivals WHERE routine_time BETWEEN (SELECT date_sub((SELECT MAX(routine_time) from data_arrivals),interval 1 hour)) and (SELECT MAX(routine_time) from data_arrivals) ORDER BY routine_time;*/
-        select * from data_arrivals da LEFT JOIN product_types pt ON da.product_type_code = pt.`code` WHERE product_category_code = 'qi-xiang-liu-yao-su' AND product_type_code in ('ground_temperature','humidity','rainfall','wind','temperature','pressure') AND routine_time BETWEEN (SELECT date_sub((SELECT MAX(routine_time) from data_arrivals),interval 1 hour)) and (SELECT MAX(routine_time) from data_arrivals) ORDER BY routine_time;
+        SELECT
+            *
+        FROM
+            data_arrivals da
+            LEFT JOIN product_types pt ON da.product_type_code = pt.`code`
+        WHERE
+            product_category_code = 'qi-xiang-liu-yao-su'
+            AND product_type_code IN ( 'ground_temperature', 'humidity', 'rainfall', 'wind', 'temperature', 'pressure' )
+            AND routine_time BETWEEN ( SELECT date_sub( #{0}, INTERVAL 1 HOUR ) )
+            AND #{0}
+        ORDER BY
+	        routine_time;
     </select>
 
     <select id="findRoutine" resultMap="findStateMap">
@@ -66,4 +87,38 @@
         SELECT * from data_arrivals da LEFT JOIN product_categories pc ON da.product_category_code = pc.`code` where product_category_code = 'feng-kuo-xian' AND product_region_code = 'gao-chun'  ORDER BY routine_time DESC limit 0,12
     </select>
 
+    <resultMap id="findRoutineMap" type="com.nanjing.weather.domain.DataState">
+        <result column="product_category_code" property="productCategoryCode"/>
+        <collection property="dataArrivalLitter" ofType="com.nanjing.weather.domain.DataArrivalLitter">
+            <result column="routine_time" property="routineTime"/>
+            <collection property="centerDataArrival" ofType="com.nanjing.weather.domain.CenterDataArrival">
+                <result column="product_region_code" property="productRegionCode"/>
+                <collection property="lastDataArrivals" ofType="com.nanjing.weather.domain.LastDataArrival">
+                    <result column="timeliness_code" property="timelinessCode"/>
+                    <result column="description" property="description"/>
+                </collection>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="findRoutineData" resultMap="findRoutineMap">
+        SELECT
+            routine_time,
+            product_category_code,
+            product_region_code,
+            product_type_code,
+            timeliness_code,
+            `code`,
+            `name`,
+            sequence
+        FROM
+            data_arrivals da
+            LEFT JOIN product_categories pc ON da.product_category_code = pc.`code`
+        WHERE
+            routine_time BETWEEN ( SELECT date_sub( #{0}, INTERVAL 1 HOUR ) )
+            AND #{0}
+            AND product_category_code IN ( 'gps/met', 'ji-guang-lei-da', 'wei-bo-fu-she', 'yu-di-pu' )
+        ORDER BY
+            routine_time
+    </select>
 </mapper>

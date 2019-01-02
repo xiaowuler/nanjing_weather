@@ -15,11 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional
@@ -28,6 +24,13 @@ public class RainfallServiceImpl implements RainfallService {
     @Autowired
     private RainfallMapper rainfallsMapper;
 
+    /**
+     *
+     * @param parmOne
+     * @param parmTwo
+     * @param time 时间选段参数
+     * @return 绘图数据
+     */
     @Override
     public ContourResult<Rainfall> findAllBySomeTerm(String parmOne, String parmTwo, String time) {
         List<ValuePoint> list;
