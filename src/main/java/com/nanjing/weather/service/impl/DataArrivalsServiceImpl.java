@@ -5,6 +5,7 @@ import com.nanjing.weather.domain.CenterDataArrival;
 import com.nanjing.weather.domain.DataArrivalLitter;
 import com.nanjing.weather.domain.DataArrivals;
 import com.nanjing.weather.domain.DataState;
+import com.nanjing.weather.entity.DataArrival;
 import com.nanjing.weather.service.DataArrivalsService;
 import com.nanjing.weather.utils.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,29 +50,37 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
     public List<List<DataState>> findState() {
         DataState ds = new DataState();
         List<List<DataState>> list = new ArrayList<>();
+        List<DataState> routine = null;
+        List<DataState> windData = null;
 
         Date date = new Date();
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
         String maxTime = dateFormat.format(date);
 
-        Long start = System.currentTimeMillis();
-        List<DataState> routineData = dataArrivalsMapper.findRoutineData(maxTime);
-        long end = System.currentTimeMillis();
-        System.out.println(end-start);
-
-        /*Map map = new HashMap();
-        map.put("productCategoryCode","qi-xiang-liu-yao-su");
-        map.put("productTypeCode","temperature");*/
-
-
+        //根据当前时间获取数据
         List<DataState> dataStates = dataArrivalsMapper.findState(maxTime);
+        int size = getSize(dataStates);
+        if(size <= 5){
+            List<DataArrival> maxList = dataArrivalsMapper.findMaxTime();
+            for(DataArrival dataArrival:maxList){
+               if(dataArrival.getProductTypeCode().equals("humidity")){
+                   dataStates = dataArrivalsMapper.findState(dataArrival.getRoutineTime().toString());
+                   dataStates = getHandleTime(dataStates);
+               }
 
-        for (DataState dataState : dataStates) {
-            for (DataArrivalLitter dataArrivalLitter : dataState.getDataArrivalLitter()) {
-                String time = proFormat(dataArrivalLitter.getRoutineTime());
-                dataArrivalLitter.setTime(time);
+               if(dataArrival.getProductTypeCode().equals("2d-tu")){
+                   List<DataState> notRoutine = dataArrivalsMapper.findNotRoutine(dataArrival.getRoutineTime().toString());
+                   routine = getHandleTime(notRoutine);
+               }
+
+               if(dataArrival.getProductTypeCode().equals("6-fen-zhong")){
+                   windData = dataArrivalsMapper.findWindData(dataArrival.getRoutineTime().toString());
+                   windData = getHandleTime(windData);
+               }
             }
         }
+
+        dataStates = getHandleTime(dataStates);
 
         if (dataStates.size() < 6) {
             List<String> notRoutineData = new ArrayList<>();
@@ -88,26 +97,38 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
             }
         }
 
-        //long startTime = System.currentTimeMillis();
+        if(routine == null){
+            routine = dataArrivalsMapper.findRoutineData(maxTime);
+            routine = getHandleTime(routine);
+            size = getSize(routine);
+            if(size < 15){
+                List<DataArrival> maxList = dataArrivalsMapper.findMaxTime();
+                for(DataArrival dataArrival:maxList){
 
-        //long endTime = System.currentTimeMillis();
-        //System.out.println("kkkkk"+(endTime-startTime));
-        List<DataState> routine = dataArrivalsMapper.findRoutine();
+                    if(dataArrival.getProductTypeCode().equals("2d-tu")){
+                        List<DataState> notRoutine = dataArrivalsMapper.findNotRoutine(dataArrival.getRoutineTime().toString());
+                        routine = getHandleTime(notRoutine);
+                    }
 
-        for (DataState dataState : routine) {
-            for (DataArrivalLitter dataArrivalLitter : dataState.getDataArrivalLitter()) {
-                String time = proFormat(dataArrivalLitter.getRoutineTime());
-                dataArrivalLitter.setTime(time);
+                    if(dataArrival.getProductTypeCode().equals("6-fen-zhong")){
+                        windData = dataArrivalsMapper.findWindData(dataArrival.getRoutineTime().toString());
+                        windData = getHandleTime(windData);
+                    }
+                }
             }
         }
 
+        //定义一个flag
+        boolean flag = false;
 
         if (routine.size() < 5) {
+            flag = true;
             List<String> notRoutineData = new ArrayList<>();
             notRoutineData.add("雨滴谱");
             notRoutineData.add("激光雷达");
             notRoutineData.add("微波辐射");
             notRoutineData.add("GPS/MET");
+            notRoutineData.add("风廓线");
             List<String> strings = getFlag(notRoutineData, routine);
             for (String name : strings) {
                 DataState dataState = addData(ds, name);
@@ -115,28 +136,27 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
             }
         }
 
-        List<DataState> windData = dataArrivalsMapper.findWindData();
-
-        for (DataState dataState : windData) {
-            for (DataArrivalLitter dataArrivalLitter : dataState.getDataArrivalLitter()) {
-                String time = proFormat(dataArrivalLitter.getRoutineTime());
-                dataArrivalLitter.setTime(time);
-            }
+        if(!flag){
+            windData = dataArrivalsMapper.findWindData(maxTime);
+            windData = getHandleTime(windData);
         }
 
-        if (windData.size() < 5) {
-            List<String> notRoutineData = new ArrayList<>();
-            notRoutineData.add("风廓线");
-            List<String> strings = getFlag(notRoutineData, windData);
-            for (String name : strings) {
-                DataState dataState = addData(ds, name);
-                windData.add(dataState);
+        for(DataState dataState:dataStates){
+            for(DataArrivalLitter dataArrivalLitter:dataState.getDataArrivalLitter()){
+                for(CenterDataArrival centerDataArrival:dataArrivalLitter.getCenterDataArrival()){
+                    String num = centerDataArrival.getDescription().replaceAll("[^0-9\\-]", "");
+                    centerDataArrival.setDescription(num);
+                }
             }
         }
 
         list.add(dataStates);
+        routine = getUpArea(routine);
         list.add(routine);
-        list.add(windData);
+        if(windData != null){
+            windData = getUpArea(windData);
+            list.add(windData);
+        }
 
         return list;
     }
@@ -161,6 +181,46 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
         return dataArrivalsPageResult;
     }
 
+    private List<DataState> getHandleTime(List<DataState> dataStates){
+        for (DataState dataState : dataStates) {
+            for (DataArrivalLitter dataArrivalLitter : dataState.getDataArrivalLitter()) {
+                String time = proFormat(dataArrivalLitter.getRoutineTime());
+                dataArrivalLitter.setTime(time);
+            }
+        }
+        return dataStates;
+    }
+
+    //处理地区首字母
+    private List<DataState> getUpArea(List<DataState> dataStates){
+        for(DataState dataState:dataStates){
+            if(dataState.getDataArrivalLitter().get(0).getCenterDataArrival().get(0).getProductRegionCode() != null){
+                for(DataArrivalLitter dataArrivalLitter:dataState.getDataArrivalLitter()){
+                    for(CenterDataArrival centerDataArrival:dataArrivalLitter.getCenterDataArrival()){
+                        String[] string = centerDataArrival.getProductRegionCode().split("-");
+                        String area = "";
+                        for(String str :string){
+                            area += str.substring(0,1).toUpperCase();
+                        }
+                        centerDataArrival.setProductRegionCode(area);
+                    }
+                }
+            }
+        }
+        return dataStates;
+    }
+
+    //判断使用当前时间获取的数据是否可用
+    private int getSize(List<DataState> dataStates){
+        int size = 100 ;
+        for(DataState dataState:dataStates){
+            if(dataState.getDataArrivalLitter().size() < size){
+                size = dataState.getDataArrivalLitter().size();
+            }
+        }
+        return size;
+    }
+
     //处理时间格式
     private String proFormat(Timestamp time) {
         String changTime = time.toString().split(" ")[1].split(":")[0] + ":" + time.toString().split(" ")[1].split(":")[1];
@@ -168,21 +228,21 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
     }
 
     //处理数据缺失
-    private List<String> getFlag(List<String> list, List<DataState> list1) {
-        List<String> list2 = new ArrayList<>();
+    private List<String> getFlag(List<String> list, List<DataState> dataStates) {
+        List<String> strings = new ArrayList<>();
         for (String str : list) {
             boolean flag = false;
-            for (DataState dataState : list1) {
+            for (DataState dataState : dataStates) {
                 if (dataState.getProductTypeCode().equals(str)) {
                     flag = true;
                     break;
                 }
             }
             if (!flag) {
-                list2.add(str);
+                strings.add(str);
             }
         }
-        return list2;
+        return strings;
     }
 
     //添加数据

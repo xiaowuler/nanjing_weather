@@ -2,6 +2,7 @@ package com.nanjing.weather.dao;
 
 import com.nanjing.weather.domain.DataArrivals;
 import com.nanjing.weather.domain.DataState;
+import com.nanjing.weather.entity.DataArrival;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.sql.Timestamp;
@@ -27,12 +28,12 @@ public interface DataArrivalsMapper {
 
     List<DataState> findState(String maxTime);
 
-    List<DataState> findRoutine();
+    List<DataState> findNotRoutine(String maxTime);
 
     List<DataState> findRoutineData(String maxTime);
 
-    List<DataState> findWindData();
+    List<DataState> findWindData(String maxTime);
 
-    Timestamp findMaxTime(Map map);
+    List<DataArrival> findMaxTime();
 
 }

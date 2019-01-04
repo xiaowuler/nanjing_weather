@@ -35,3 +35,6 @@ pagehelper:
     support-methods-arguments: true
     params: count==countSql
     page-size-zero: true
+#logging:
+#  level:
+#    com.nanjing.weather.dao: debug

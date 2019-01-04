@@ -37,14 +37,8 @@
         ORDER BY routine_time DESC limit #{begin},#{pageSize};
     </select>
 
-    <select id="findMaxTime" resultType="java.sql.Timestamp" >
-        SELECT MAX(routine_time) from data_arrivals WHERE 1 = 1
-        <if test="productCategoryCode != null">
-            and product_category_code = #{productCategoryCode}
-        </if>
-        <if test="productTypeCode != null">
-            and product_type_code = #{productTypeCode}
-        </if>
+    <select id="findMaxTime" resultType="com.nanjing.weather.entity.DataArrival" >
+        SELECT product_type_code AS productTypeCode,MAX(routine_time) routineTime FROM data_arrivals GROUP BY product_type_code;
     </select>
 
     <resultMap id="findStateMap" type="com.nanjing.weather.domain.DataState">
@@ -79,16 +73,9 @@
 	        routine_time;
     </select>
 
-    <select id="findRoutine" resultMap="findStateMap">
-        (SELECT routine_time,product_category_code,product_region_code,product_type_code,timeliness_code,`code`,`name`,sequence from data_arrivals da LEFT JOIN product_categories pc ON da.product_category_code = pc.`code` where product_category_code = 'yu-di-pu' AND product_region_code = 'gao-chun' ORDER BY routine_time DESC LIMIT 0,12) UNION (SELECT routine_time,product_category_code,product_region_code,product_type_code,timeliness_code,`code`,`name`,sequence from data_arrivals da LEFT JOIN product_categories pc ON da.product_category_code = pc.`code` where product_category_code = 'gps/met' ORDER BY routine_time DESC LIMIT 0,12) UNION (SELECT routine_time,product_category_code,product_region_code,product_type_code,timeliness_code,`code`,`name`,sequence from data_arrivals da LEFT JOIN product_categories pc ON da.product_category_code = pc.`code` where product_category_code = 'ji-guang-lei-da' AND product_type_code = 'tui-pian' AND product_region_code = 'jiang-ning' ORDER BY routine_time DESC LIMIT 0,12) UNION (SELECT routine_time,product_category_code,product_region_code,product_type_code,timeliness_code,`code`,`name`,sequence from data_arrivals da LEFT JOIN product_categories pc ON da.product_category_code = pc.`code` where product_category_code = 'wei-bo-fu-she' AND product_type_code = '3d-tu' AND product_region_code = 'jiang-ning' ORDER BY routine_time DESC LIMIT 0,12)
-    </select>
-
-    <select id="findWindData" resultMap="findStateMap">
-        SELECT * from data_arrivals da LEFT JOIN product_categories pc ON da.product_category_code = pc.`code` where product_category_code = 'feng-kuo-xian' AND product_region_code = 'gao-chun'  ORDER BY routine_time DESC limit 0,12
-    </select>
-
     <resultMap id="findRoutineMap" type="com.nanjing.weather.domain.DataState">
         <result column="product_category_code" property="productCategoryCode"/>
+        <result column="name" property="productTypeCode"/>
         <collection property="dataArrivalLitter" ofType="com.nanjing.weather.domain.DataArrivalLitter">
             <result column="routine_time" property="routineTime"/>
             <collection property="centerDataArrival" ofType="com.nanjing.weather.domain.CenterDataArrival">
@@ -115,9 +102,51 @@
             data_arrivals da
             LEFT JOIN product_categories pc ON da.product_category_code = pc.`code`
         WHERE
+            routine_time BETWEEN ( SELECT date_sub( #{0}, INTERVAL 2 HOUR ) )
+            AND #{0}
+            AND product_category_code IN ( 'gps/met', 'ji-guang-lei-da', 'wei-bo-fu-she', 'yu-di-pu' , 'feng-kuo-xian')
+        ORDER BY
+            routine_time
+    </select>
+
+    <select id="findNotRoutine" resultMap="findRoutineMap">
+        SELECT
+            routine_time,
+            product_category_code,
+            product_region_code,
+            product_type_code,
+            timeliness_code,
+            `code`,
+            `name`,
+            sequence
+        FROM
+            data_arrivals da
+            LEFT JOIN product_categories pc ON da.product_category_code = pc.`code`
+        WHERE
             routine_time BETWEEN ( SELECT date_sub( #{0}, INTERVAL 1 HOUR ) )
             AND #{0}
-            AND product_category_code IN ( 'gps/met', 'ji-guang-lei-da', 'wei-bo-fu-she', 'yu-di-pu' )
+            AND product_category_code IN ( 'gps/met', 'ji-guang-lei-da', 'wei-bo-fu-she', 'yu-di-pu')
+        ORDER BY
+            routine_time
+    </select>
+
+    <select id="findWindData" resultMap="findRoutineMap">
+        SELECT
+            routine_time,
+            product_category_code,
+            product_region_code,
+            product_type_code,
+            timeliness_code,
+            `code`,
+            `name`,
+            sequence
+        FROM
+            data_arrivals da
+            LEFT JOIN product_categories pc ON da.product_category_code = pc.`code`
+        WHERE
+            routine_time BETWEEN ( SELECT date_sub( #{0}, INTERVAL 2 HOUR ) )
+            AND #{0}
+            AND product_category_code = 'feng-kuo-xian'
         ORDER BY
             routine_time
     </select>

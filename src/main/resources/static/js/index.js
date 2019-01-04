@@ -3,190 +3,194 @@
  */
 var App = function () {
 
+    this.title = $('.title h2');
     this.BottomPanel = new BottomPanel(this);
-    this.RightPanel = new RightPanel(this);
+    //this.RightPanel = new RightPanel(this);
     this.LeftPanel = new LeftPanel(this);
 
     this.Startup = function () {
-        this.LocalTime();
-        this.OnRefreshButton();
-        this.Tab();
-        this.Date();
-        this.Drag();
-        this.DragTitle();
-        this.CreateThreshold();
+
         this.Relayout();
-        this.RightPanel.Startup();
-        this.BottomPanel.Startup();
+        this.LocalTime();
+        this.WindSelect();
+        this.RightScroll();
+        this.IntervalSelect();
+        this.HumiditySelect();
+        this.VariableSelect();
+        this.OnRefreshButton();
+        this.LayerTextSelect();
+        this.GeothermalSelect();
+        this.MillimeterSelect();
+        this.AirPressureSelect();
+        this.TemperatureSelect();
+        this.Slide();
+        this.OnShrinkLeftButton();
+        this.OnShrinkRightButton();
+        this.OnShrinkBottomButton();
         this.LeftPanel.Startup();
+        this.BottomPanel.Startup();
         window.onresize = this.Relayout.bind(this);
+        //$('#shrink-left').on('click', this.OnShrinkLeftButton.bind(this));
+        //$('#shrink-right').on('click', this.OnShrinkRightButton.bind(this));
+        //$('#shrink-bottom').on('click', this.OnShrinkBottomButton.bind(this));
     };
 
     this.Relayout = function () {
         var width = $(window).width();
         var height = $(window).height();
-        var bottomWidth = (width - 20);
-        var slideWidth = (bottomWidth / 2) - 5;
-        var leftHeight = $(".left").height();
-        var radarHeight = $(".theme-radar").height();
+        var slideWidth = width / 2;
+        var timeHeight = $('.time').height();
+        var layerHeight = $('.layer').height();
+        var typeHeight = $('.theme').height();
+        var bottomHeight = $('.bottom').height();
         $(".map-wrapper").width(width);
-        $(".map-wrapper,.main").height(height - 58);
-        $(".bottom").width(bottomWidth);
+        $(".map-wrapper,.main").height(height - 50);
         $(".slide").width(slideWidth);
-        $(".slide-tab").width(slideWidth - 155);
-        $(".theme-raindrop").height(leftHeight - radarHeight * 2);
+        $(".slide-tab").width(slideWidth - 160);
+        $('.left,.right').height(height - bottomHeight - 50);
+        $('#element,#Yscrollouter').height(height - bottomHeight - timeHeight - layerHeight - 65);
+
+        this.title.css({
+            'width': typeHeight,
+            'height': '30px',
+            'left': -(typeHeight / 2) + 17,
+            'top': typeHeight / 2 - 15
+        });
     };
 
-    //获取当前时间
     this.LocalTime = function () {
         function Time() {
             var date = new Date();
-            var year = date.getFullYear();
-            var month = date.getMonth() + 1;
-            var day = date.getDate();
             var hour = date.getHours();
             var minutes = date.getMinutes();
+            var nextMinute = minutes + 5;
             var second = date.getSeconds();
-            var currentDay = date.getDay();
-            var week = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
 
             hour = (hour < 10) ? "0" + hour : hour;
             minutes = (minutes < 10) ? "0" + minutes : minutes;
+            nextMinute = (minutes < 10) ? "0" + nextMinute : nextMinute;
             second = (second < 10) ? "0" + second : second;
-            var currentDate = year + "/" + month + "/" + day;
-            var currentTime = hour + ":" + minutes + ":" + second;
-            var currentWeek = week[currentDay];
-            document.getElementById("date").innerHTML = currentDate;
-            document.getElementById("current").innerHTML = currentTime;
-            document.getElementById("week").innerHTML = currentWeek;
+            var LastTime = hour + ":" + minutes + ":" + second;
+            var nextTime = hour + ":" + nextMinute + ":" + second;
+            document.getElementById("last-time").innerHTML = LastTime;
+            document.getElementById("next-time").innerHTML = nextTime;
             setTimeout(Time, 500);
         }
-
         Time();
     };
 
-    //刷新按钮
     this.OnRefreshButton = function () {
         $('.refresh a').click(function () {
-            $(this).parent().toggleClass('refresh-off');
+            $(this).parent().toggleClass('refresh-on');
         });
     };
 
-    //tab切换
-    this.Tab = function () {
-        $(".rainfall-tab ul li").click(function () {
+    this.OnShrinkLeftButton = function () {
+        var shrinkLeft = $('#shrink-left');
+        shrinkLeft.click(function () {
+            $('.left').toggleClass('left-toggle');
+        });
+        shrinkLeft.hover(function () {
+            $(this).toggleClass('shrink-lefted');
+            $('.left').toggleClass('left-line');
+        });
+    };
+
+    this.OnShrinkRightButton = function () {
+        var shrinkRight = $('#shrink-right');
+        shrinkRight.click(function () {
+            $('.right').toggleClass('right-toggle');
+        });
+        shrinkRight.hover(function () {
+            $(this).toggleClass('shrink-righted');
+            $('.right').toggleClass('right-line');
+        });
+    };
+
+    this.OnShrinkBottomButton = function () {
+        var shrinkBottom = $('#shrink-bottom');
+        shrinkBottom.click(function () {
+            $('.bottom').toggleClass('bottom-toggle');
+        });
+        shrinkBottom.hover(function () {
+            $(this).toggleClass('shrink-bottomed');
+            $('.bottom').toggleClass('bottom-line');
+        });
+    };
+
+    this.IntervalSelect = function () {
+        $(".interval-select a").click(function () {
             $(this).addClass("action").siblings().removeClass("action");
-            var index = $(this).index();
-            $(".rainfall-content .rainfall-information").eq(index).css("display", "block").siblings().css("display", "none");
-        });
-        $(".theme").each(function () {
-            var tab = $(this).find(".title-tab li");
-            var content = tab.parents(".title").next().find(".theme-chart");
-            tab.click(function () {
-                $(this).addClass("action").siblings().removeClass("action");
-                var index = $(this).index();
-                content.eq(index).css("display", "block").siblings().css("display", "none");
-            })
-        })
-    };
-
-    //开始时间和结束时间
-    this.Date = function () {
-        $("#date-start").datebox({
-            onSelect: function (beginDate) {
-                $('#ate-end').datebox({disabled: false});
-                $('#date-end').datebox().datebox('calendar').calendar({
-                    validator: function (date) {
-                        //return beginDate<date;
-                        var d1 = new Date(beginDate.getFullYear(), beginDate.getMonth(), beginDate.getDate());
-                        var d2 = new Date(beginDate.getFullYear(), beginDate.getMonth(), beginDate.getDate());
-                        d2.setMonth(d1.getMonth() + 1);
-                        return d1 <= date && date <= d2;
-                    }
-                });
-            }
         });
     };
 
-    //创建阈值
-    this.CreateThreshold = function () {
-        $('#threshold').numberspinner({
-            min: 0,
-            editable: false
+    this.MillimeterSelect = function () {
+        $('.millimeter-select a').click(function () {
+            $(this).addClass("action").siblings().removeClass("action");
         });
     };
 
-    this.Drag = function () {
-        var oDiv = document.getElementById("drag");
-        var disX = 0;
-        var disY = 0;
-        oDiv.onmousedown = function () {
-            var e = e || window.event;
-            disX = e.clientX - oDiv.offsetLeft;
-            disY = e.clientY - oDiv.offsetTop;
+    this.VariableSelect = function () {
+        $('.variable-select a').click(function () {
+            $(this).addClass("action").siblings().removeClass("action");
+        });
+    };
 
-            document.onmousemove = function (e) {
-                var e = e || window.event;
-                var leftX = e.clientX - disX;
-                var topY = e.clientY - disY;
+    this.TemperatureSelect = function () {
+        $('.temperature-select a').click(function () {
+            $(this).addClass("action").siblings().removeClass("action");
+        });
+    };
 
-                if (leftX < 0) {
-                    leftX = 0;
-                }
-                else if (leftX > document.documentElement.clientWidth - oDiv.offsetWidth) {
-                    leftX = document.document.documentElement.clientWidth - oDiv.offsetWidth;
-                }
+    this.WindSelect = function () {
+        $('.wind-select a').click(function () {
+            $(this).addClass("action").siblings().removeClass("action");
+        });
+    };
 
-                if (topY < 0) {
-                    topY = 0;
-                } else if (topY > document.documentElement.clientHeight - oDiv.offsetHeight) {
-                    topY = document.documentElement.clientHeight - oDiv.offsetHeight;
-                }
-                oDiv.style.left = leftX + "px";
-                oDiv.style.top = topY + "px";
-            };
-            document.onmouseup = function () {
-                document.onmousemove = null;
-                document.onmouseup = null;
-            }
-        }
-    }
+    this.GeothermalSelect = function () {
+        $('.geothermal-select a').click(function () {
+            $(this).addClass("action").siblings().removeClass("action");
+        });
+    };
 
-    this.DragTitle = function () {
-        var oDiv = document.getElementById("map-info");
-        var disX = 0;
-        var disY = 0;
-        oDiv.onmousedown = function () {
-            var e = e || window.event;
-            disX = e.clientX - oDiv.offsetLeft;
-            disY = e.clientY - oDiv.offsetTop;
+    this.AirPressureSelect = function () {
+        $('.air-pressure-select a').click(function () {
+            $(this).addClass("action").siblings().removeClass("action");
+        });
+    };
 
-            document.onmousemove = function (e) {
-                var e = e || window.event;
-                var leftX = e.clientX - disX;
-                var topY = e.clientY - disY;
+    this.HumiditySelect = function () {
+        $('.humidity-select a').click(function () {
+            $(this).addClass("action").siblings().removeClass("action");
+        });
+    };
 
-                if (leftX < 0) {
-                    leftX = 0;
-                }
-                else if (leftX > document.documentElement.clientWidth - oDiv.offsetWidth) {
-                    leftX = document.document.documentElement.clientWidth - oDiv.offsetWidth;
-                }
+    this.LayerTextSelect = function () {
+        $('.layer-text a').click(function () {
+            $(this).addClass("action").siblings().removeClass("action");
+        });
+    };
 
-                if (topY < 0) {
-                    topY = 0;
-                } else if (topY > document.documentElement.clientHeight - oDiv.offsetHeight) {
-                    topY = document.documentElement.clientHeight - oDiv.offsetHeight;
-                }
-                oDiv.style.left = leftX + "px";
-                oDiv.style.top = topY + "px";
-            };
-            document.onmouseup = function () {
-                document.onmousemove = null;
-                document.onmouseup = null;
-            }
-        }
-    }
+    this.RightScroll = function () {
+        $("#element").niceScroll({cursorborder:"",cursorcolor:"#d5d5d5",boxzoom:true});
+    };
+
+    this.Slide = function () {
+        var swiper = new Swiper('.swiper-left', {
+            slidesPerView: 5,
+            loop: true,
+            nextButton: '.swiper-next-left',
+            prevButton: '.swiper-prev-left'
+        });
+        var swiper = new Swiper('.swiper-right', {
+            slidesPerView: 5,
+            loop: true,
+            nextButton: '.swiper-next-right',
+            prevButton: '.swiper-prev-right'
+        });
+    };
+
 };
 
 $(function () {
