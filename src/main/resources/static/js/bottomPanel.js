@@ -15,10 +15,11 @@ var BottomPanel = function () {
             routineData.writeHtml();
 
             var notRoutineData = new NotRoutineData();
-            if(data.size() == 3)
+            if(data.length == 3)
                 notRoutineData.init(data[1],data[2]);
             else
                 notRoutineData.init(data[1],null);
+            notRoutineData.writeHtml();
 
         }.bind(this))
     }.bind(this)

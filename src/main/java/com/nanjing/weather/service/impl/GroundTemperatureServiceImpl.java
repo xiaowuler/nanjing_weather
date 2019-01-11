@@ -3,9 +3,6 @@ package com.nanjing.weather.service.impl;
 import com.nanjing.wContour.bean.ContourResult;
 import com.nanjing.wContour.bean.ValuePoint;
 import com.nanjing.weather.dao.GroundTemperatureMapper;
-import com.nanjing.weather.dao.LegendLevelMapper;
-import com.nanjing.weather.dao.StationsMapper;
-import com.nanjing.weather.domain.GroundTemperatures;
 import com.nanjing.weather.entity.GroupTemperature;
 import com.nanjing.weather.entity.GroupTemperatureCenter;
 import com.nanjing.weather.entitys.GroundTemperature;
@@ -16,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,15 +37,15 @@ public class GroundTemperatureServiceImpl implements GroundTemperatureService {
         if (parmOne.equals("0"))
             groundTemperatures = CodeIntegration.caleAvg(groundTemperature,"getGroupTemperatureCenter","getValue","com.nanjing.weather.entitys.GroundTemperature","setValue");
         else if (parmOne.equals("5"))
-            groundTemperatures = CodeIntegration.caleAvg(groundTemperature,"getGroupTemperatureCenter","getValue5Cm","com.nanjing.weather.entitys.GroundTemperature","setValue");
+            groundTemperatures = CodeIntegration.caleAvg(groundTemperature,"getGroupTemperatureCenter","getValueFivecm","com.nanjing.weather.entitys.GroundTemperature","setValue");
         else if (parmOne.equals("10"))
-            groundTemperatures = CodeIntegration.caleAvg(groundTemperature,"getGroupTemperatureCenter","getValue10Cm","com.nanjing.weather.entitys.GroundTemperature","setValue");
+            groundTemperatures = CodeIntegration.caleAvg(groundTemperature,"getGroupTemperatureCenter","getValueTencm","com.nanjing.weather.entitys.GroundTemperature","setValue");
         else if (parmOne.equals("15"))
-            groundTemperatures = CodeIntegration.caleAvg(groundTemperature,"getGroupTemperatureCenter","getValue15Cm","com.nanjing.weather.entitys.GroundTemperature","setValue");
+            groundTemperatures = CodeIntegration.caleAvg(groundTemperature,"getGroupTemperatureCenter","getValueFifcm","com.nanjing.weather.entitys.GroundTemperature","setValue");
         else if (parmOne.equals("20"))
-            groundTemperatures = CodeIntegration.caleAvg(groundTemperature,"getGroupTemperatureCenter","getValue20Cm","com.nanjing.weather.entitys.GroundTemperature","setValue");
+            groundTemperatures = CodeIntegration.caleAvg(groundTemperature,"getGroupTemperatureCenter","getValueTwecm","com.nanjing.weather.entitys.GroundTemperature","setValue");
         else if (parmOne.equals("40"))
-            groundTemperatures = CodeIntegration.caleAvg(groundTemperature,"getGroupTemperatureCenter","getValue40Cm","com.nanjing.weather.entitys.GroundTemperature","setValue");
+            groundTemperatures = CodeIntegration.caleAvg(groundTemperature,"getGroupTemperatureCenter","getValueForcm","com.nanjing.weather.entitys.GroundTemperature","setValue");
 
         list = CodeIntegration.getValuePoint(groundTemperatures, "getStationId", "getValue");
 

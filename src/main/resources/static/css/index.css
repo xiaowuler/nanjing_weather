@@ -466,6 +466,81 @@
     background: url("../images/air-pressure-bg.png") repeat-x;
 }
 
+.date-select{
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 117px;
+}
+
+.date-select .time-select .textbox{
+    width: 68px!important;
+    margin-bottom: 11px;
+    border-left: 0;
+    -webkit-border-radius: 0 3px 3px 0;
+    -moz-border-radius: 0 3px 3px 0;
+    border-radius: 0 3px 3px 0;
+}
+
+.date-select .time-select .textbox:after{
+    content: '';
+    width: 2px;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url("../images/block-line.png") no-repeat;
+}
+
+.date-select .time-select .textbox .textbox-text{
+    width: 40px!important;
+    padding: 0 0 0 10px;
+}
+
+.date-content{
+    padding: 18px 0 10px 22px;
+    background: url("../images/date-bg.png") repeat-x;
+}
+
+.date-control{
+    float: left;
+    margin-right: 0;
+}
+
+.date-control .textbox{
+    border-right: 0;
+    -webkit-border-radius: 3px 0 0 3px;
+    -moz-border-radius: 3px 0 0 3px;
+    border-radius: 3px 0 0 3px;
+}
+
+.date-control .textbox-label{
+    width: 36px;
+}
+
+.date-select .time-select{
+    float: left;
+}
+
+.date-btn{
+    margin-left: 35px;
+    width: 199px;
+}
+
+.date-btn button{
+    width: 100%;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    color: #fefefe;
+    font-size: 14px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background: url("../images/block-bged.png") repeat-x;
+}
+
 .layer{
     width: 100%;
     position: absolute;
@@ -519,7 +594,7 @@
 }
 
 .layer-text{
-    width: 115px;
+    /*width: 115px;*/
     position: absolute;
     left: 20px;
     bottom: 20px;
@@ -977,7 +1052,7 @@
     line-height: 22px;
 }
 
-.color-wrapper {
+/*.color-wrapper {
     width: 80px;
     position: absolute;
     right: 300px;
@@ -1010,14 +1085,14 @@
     height: 12px;
     margin-bottom: 6px;
     display: block;
-    /*border: 1px solid #333333;*/
+    !*border: 1px solid #333333;*!
     border-top: 0;
     transform: rotate(90deg);
     -ms-transform: rotate(90deg);
     -moz-transform: rotate(90deg);
     -webkit-transform: rotate(90deg);
     -o-transform: rotate(90deg);
-}
+}*/
 
 .district-name-label {
     width: 100px !important;
@@ -1039,7 +1114,7 @@
 }
 
 .value-label {
-    width: 60px !important;
+    /*width: 60px !important;*/
     color: #010205 !important;
     font-size: 12px !important;
     font-weight: bold !important;
@@ -1058,4 +1133,145 @@
 
 .dataHeight {
     line-height: 20px !important;
+}
+
+.element-txt{
+    line-height: 20px;
+    text-align: center;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    position: absolute;
+    left: 610px;
+    top: 60px;
+    z-index: 1000;
+    overflow: hidden;
+    -webkit-box-shadow: 2px 0px 10px #eaeaea;
+    -moz-box-shadow: 2px 0px 10px #eaeaea;
+    box-shadow: 2px 0px 10px #eaeaea;
+    -webkit-transition: all 0.5s ease;
+}
+
+.element-txt span{
+    width: 34px;
+    float: left;
+    color: #ffffff;
+    font-size: 12px;
+    background: #ff5f5f;
+}
+
+.element-txt span:nth-of-type(2){
+    background: #ff9853;
+}
+
+.element-txt span:nth-of-type(3){
+    background: #f5c840;
+}
+
+.element-txt span:nth-of-type(4){
+    background: #c3cf42;
+}
+
+.element-txt span:nth-of-type(5){
+    background: #85c53a;
+}
+
+.element-txt span:nth-of-type(6){
+    background: #38cfca;
+}
+
+.element-value{
+    margin: 0 auto;
+    text-align: center;
+    border-top: 1px solid #dadada;
+    border-right: 1px solid #d5d5d5;
+    border-bottom: 1px solid #d8d8d8;
+    border-left: 1px solid #d5d5d5;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    position: absolute;
+    left: 610px;
+    top: 90px;
+    z-index: 1000;
+    -webkit-box-shadow: 0 0 6px #eaeaea;
+    -moz-box-shadow: 0 0 6px #eaeaea;
+    box-shadow: 0 0 6px #eaeaea;
+    -webkit-transition: all 0.5s ease;
+    background: url("../images/element-value-bg.png") repeat-x;
+}
+
+.element-value span{
+    padding: 0 5px;
+    line-height: 20px;
+    float: left;
+    color: #dd0404;
+    font-weight: normal;
+    background: url("../images/divider.png") no-repeat left;
+}
+
+.element-value span:first-child{
+    background: none;
+}
+
+.element-value .rainfalls{
+    color: #ff5f5f;
+    background: none;
+}
+
+.element-value .temperatures{
+    color: #ff9853;
+}
+
+.element-value .winds{
+    color: #f5c840;
+}
+
+.element-value .humidities{
+    color: #c3cf42;
+}
+
+.element-value .pressures{
+    color: #85c53a;
+}
+
+.element-value .groundTemperature{
+    color: #38cfca;
+}
+
+.element-value:before{
+    content: '';
+    width: 10px;
+    height: 7px;
+    margin-left: -4px;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 20px;
+    background: url("../images/element-triangle.png") no-repeat;
+}
+
+.element-txt-toggle,
+.element-value-toggle{
+    left: 14px;
+    -webkit-box-shadow: 2px 0px 10px #eaeaea;
+    -moz-box-shadow: 2px 0px 10px #eaeaea;
+    box-shadow: 2px 0px 10px #eaeaea;
+    -webkit-transition: all 0.5s ease;
+}
+
+.mapdiv{
+    position: static;
+    width: fit-content;
+}
+
+.mapinfo{
+    width: 500px;
+    margin-left: -250px;
+}
+
+.mapinfo .element-value {
+    position: relative;
+    left: 9px;
+    top: -16px;
 }

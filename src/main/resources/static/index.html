@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/leaflet.css">
+    <link rel="stylesheet" type="text/css" href="css/color-control.css">
     <script src="js/helper.js"></script>
 </head>
 
@@ -16,22 +17,51 @@
     <div class="map" id="map">
     </div>
 </div>
+<div class="element-txt clearfix">
+    <span>降雨</span>
+    <span>温度</span>
+    <span>风</span>
+    <span>湿度</span>
+    <span>气压</span>
+    <span>地温</span>
+</div>
+<div class="element-value clearfix">
+    <span class="rainfalls">100</span>
+    <span class="temperatures">22</span>
+    <span class="winds">10</span>
+    <span class="humidities">15</span>
+    <span class="pressures">40</span>
+    <span class="groundTemperature">10</span>
+</div>
 <div class="map-title" id="map-info">
 </div>
 <div class="map-loading" id="map-loading" style="display: none">
-    <!--<img src="picture/loading.gif" class="load-img"/>-->
+    <img src="picture/loading.gif" class="load-img"/>
 </div>
 <div class="map-loading-info" id="map-loading-info" style="display: none">
     <h1>点击过快，请稍后点击！</h1>
 </div>
-<div class="color-wrapper clearfix" id="drag">
+
+<div class="color-control" id="drag" style="display: none">
+    <div class="color-content clearfix">
+        <div class="color-unit">
+            <div class="color-align" id="color-text">
+                <p>温度(单位: ℃)</p>
+            </div>
+        </div>
+        <div class="color-gradient" id="color-gradient"></div>
+        <div class="color-value" id="color-value"></div>
+    </div>
+</div>
+
+<!--<div class="color-wrapper clearfix" id="drag">
     <div id="color-unit">
     </div>
     <div class="color-gradient fl" id="color-number">
     </div>
     <div class="color-value fl" id="color-value">
     </div>
-</div>
+</div>-->
 <div class="box">
     <div class="top clearfix">
         <div class="logo fl">
@@ -42,7 +72,7 @@
                 <ul class="clearfix">
                     <li class="nav-monitor action"><a href="javascript:;">实况监控</a></li>
                     <li class="nav-high-detect"><a href="aerological-sound.html?category=ji-guang-lei-da">高空探测</a></li>
-                    <li class="nav-ground-detect"><a href="home.html">地面探测</a></li>
+                    <li class="nav-ground-detect"><a href="ground-location.html">地面探测</a></li>
                     <li class="nav-material"><a href="data-monitor.html">资料监控</a></li>
                 </ul>
             </div>
@@ -512,7 +542,7 @@
                     上次更新：<span id="last-time"></span><br>
                     下次更新：<span id="next-time"></span>
                 </div>
-                <div class="refresh">
+                <div class="refresh refresh-on">
                     自动刷新<a href="javascript:;"></a>
                 </div>
             </div>
@@ -524,20 +554,20 @@
                         </div>
                         <div class="element-text">
                             <div class="element-block interval-select clearfix">
-                                <a href="javascript:;" class="action">1小时</a>
-                                <a href="javascript:;">3小时</a>
-                                <a href="javascript:;">6小时</a>
-                                <a href="javascript:;">12小时</a>
-                                <a href="javascript:;">24小时</a>
-                                <a href="javascript:;">48小时</a>
+                                <a href="javascript:;" val="1">1小时</a>
+                                <a href="javascript:;" val="3">3小时</a>
+                                <a href="javascript:;" val="6">6小时</a>
+                                <a href="javascript:;" val="12">12小时</a>
+                                <a href="javascript:;" val="24">24小时</a>
+                                <a href="javascript:;" val="48">48小时</a>
                             </div>
                             <div class="element-block millimeter-select clearfix">
-                                <a href="javascript:;" class="action">>0.01mm</a>
-                                <a href="javascript:;">≥10.0mm</a>
-                                <a href="javascript:;">≥25mm</a>
-                                <a href="javascript:;">≥50mm</a>
-                                <a href="javascript:;">≥75mm</a>
-                                <a href="javascript:;">≥100mm</a>
+                                <a href="javascript:;" val="0.01">>0.00mm</a>
+                                <a href="javascript:;" val="10.0">≥10.0mm</a>
+                                <a href="javascript:;" val="25">≥25mm</a>
+                                <a href="javascript:;" val="50">≥50mm</a>
+                                <a href="javascript:;" val="75">≥75mm</a>
+                                <a href="javascript:;" val="100">≥100mm</a>
                             </div>
                         </div>
                     </div>
@@ -547,18 +577,18 @@
                         </div>
                         <div class="element-text">
                             <div class="element-block variable-select clearfix">
-                                <a href="javascript:;" class="action">温度</a>
-                                <a href="javascript:;">最高温度</a>
-                                <a href="javascript:;">24小时变温</a>
-                                <a href="javascript:;">最低温度</a>
+                                <a href="javascript:;" class="action" val="温度">温度</a>
+                                <a href="javascript:;" val="最高温度">最高温度</a>
+                                <a href="javascript:;" val="24小时变温">24小时变温</a>
+                                <a href="javascript:;" val="最低温度">最低温度</a>
                             </div>
                             <div class="element-block temperature-select clearfix">
-                                <a href="javascript:;" class="action">≥0℃</a>
-                                <a href="javascript:;">≥5℃</a>
-                                <a href="javascript:;">≥10℃</a>
-                                <a href="javascript:;"><0℃</a>
-                                <a href="javascript:;">≤-5℃</a>
-                                <a href="javascript:;">≤-10℃</a>
+                                <a href="javascript:;" class="action" val="≥0">≥0℃</a>
+                                <a href="javascript:;" val="≥5">≥5℃</a>
+                                <a href="javascript:;" val="≥10">≥10℃</a>
+                                <a href="javascript:;" val="<0"><0℃</a>
+                                <a href="javascript:;" val="≤-5">≤-5℃</a>
+                                <a href="javascript:;" val="≤-10">≤-10℃</a>
                             </div>
                         </div>
                     </div>
@@ -568,10 +598,10 @@
                         </div>
                         <div class="element-text">
                             <div class="element-block wind-select clearfix">
-                                <a href="javascript:;" class="action">平均风</a>
-                                <a href="javascript:;">2分钟风向风速</a>
-                                <a href="javascript:;">5分钟风向风速</a>
-                                <a href="javascript:;">10分钟风向风速</a>
+                                <a href="javascript:;" val="平均风">平均风</a>
+                                <a href="javascript:;" val="2分钟风向风速">2分钟风向风速</a>
+                                <a href="javascript:;" val="5分钟风向风速">5分钟风向风速</a>
+                                <a href="javascript:;" val="10分钟风向风速">10分钟风向风速</a>
                             </div>
                         </div>
                     </div>
@@ -581,12 +611,12 @@
                         </div>
                         <div class="element-text">
                             <div class="element-block geothermal-select clearfix">
-                                <a href="javascript:;" class="action">地面温度</a>
-                                <a href="javascript:;">5cm温度</a>
-                                <a href="javascript:;">10cm温度</a>
-                                <a href="javascript:;">15cm温度</a>
-                                <a href="javascript:;">20cm温度</a>
-                                <a href="javascript:;">40cm温度</a>
+                                <a href="javascript:;" val="0">地面温度</a>
+                                <a href="javascript:;" val="5">5cm温度</a>
+                                <a href="javascript:;" val="10">10cm温度</a>
+                                <a href="javascript:;" val="15">15cm温度</a>
+                                <a href="javascript:;" val="20">20cm温度</a>
+                                <a href="javascript:;" val="40">40cm温度</a>
                             </div>
                         </div>
                     </div>
@@ -596,8 +626,8 @@
                         </div>
                         <div class="element-text">
                             <div class="element-block air-pressure-select clearfix">
-                                <a href="javascript:;" class="action">本站气压</a>
-                                <a href="javascript:;">24小时变压</a>
+                                <a href="javascript:;" val="本站气压">本站气压</a>
+                                <a href="javascript:;" val="24小时变压">24小时变压</a>
                             </div>
                         </div>
                     </div>
@@ -607,10 +637,10 @@
                         </div>
                         <div class="element-text">
                             <div class="element-block humidity-select clearfix">
-                                <a href="javascript:;" class="action">>0%</a>
-                                <a href="javascript:;">≥70%</a>
-                                <a href="javascript:;">≥80%</a>
-                                <a href="javascript:;">≥90%</a>
+                                <a href="javascript:;" val=">0">>0%</a>
+                                <a href="javascript:;" val="≥70">≥70%</a>
+                                <a href="javascript:;" val="≥80">≥80%</a>
+                                <a href="javascript:;" val="≥90">≥90%</a>
                             </div>
                         </div>
                     </div>
@@ -621,7 +651,7 @@
                     <span>图层信息</span>
                 </div>
                 <div class="layer-content">
-                    <div class="clearfix">
+                    <div class="clearfix" id="inputofcheckbox">
                         <div class="layer-box">
                             <input id="basic" type="checkbox" checked>
                             <label for="basic">基本站</label>
@@ -635,7 +665,7 @@
                             <label for="station">站名</label>
                         </div>
                         <div class="layer-box">
-                            <input id="value" type="checkbox">
+                            <input id="value" type="checkbox" checked>
                             <label for="value">站值</label>
                         </div>
                         <div class="layer-box layer-isoline">
@@ -643,17 +673,17 @@
                             <label for="contour">等值线</label>
                         </div>
                         <div class="layer-box">
-                            <input id="color-figure" type="checkbox">
+                            <input id="color-figure" type="checkbox" checked>
                             <label for="color-figure">色斑图</label>
                         </div>
                     </div>
                     <div class="layer-text clearfix">
-                        <a href="javascript:;">雨</a>
-                        <a href="javascript:;" class="action">温</a>
-                        <a href="javascript:;">风</a>
-                        <a href="javascript:;">湿</a>
-                        <a href="javascript:;">压</a>
-                        <a href="javascript:;">地</a>
+                        <!--<a href="javascript:;" class="rain">雨</a>-->
+                        <a href="javascript:;" class="action temp" val="temperatures">温</a>
+                        <!--<a href="javascript:;" class="wind">风</a>
+                        <a href="javascript:;" class="hum">湿</a>
+                        <a href="javascript:;" class="press">压</a>
+                        <a href="javascript:;" class="land">地</a>-->
                     </div>
                 </div>
             </div>
@@ -1090,6 +1120,10 @@
 <script type="text/javascript" src="thirdparty/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="thirdparty/jquery.nicescroll.min.js"></script>
 <script type="text/javascript" src="thirdparty/swiper-3.4.2.min.js"></script>
+<script type="text/javascript" src="thirdparty/leaflet.js"></script>
+<script type="text/javascript" src="thirdparty/leaflet-windbarb.js"></script>
+<script type="text/javascript" src="thirdparty/leaflet.ChineseTmsProviders.js"></script>
+<script type="text/javascript" src="thirdparty/later/later.min.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
 <script type="text/javascript" src="js/mapInfo.js"></script>
 <script type="text/javascript" src="js/bottomPanel.js"></script>
@@ -1103,7 +1137,11 @@
 <script type="text/javascript" src="js/buttom-control/left/routineData.js"></script>
 <script type="text/javascript" src="js/buttom-control/left/lastData.js"></script>
 <script type="text/javascript" src="js/buttom-control/right/notRoutineData.js"></script>
-<script type="text/javascript" src="js/buttom-control/right/arrival.js"></script>
+<script type="text/javascript" src="js/buttom-control/right/dataArrival.js"></script>
 <script type="text/javascript" src="js/buttom-control/right/regionCode.js"></script>
-<script type="text/javascript" src="js/buttom-control/right/typeCode.js"></script>
+<script type="text/javascript" src="js/buttom-control/right/dataTypeCode.js"></script>
+<script type="text/javascript" src="js/right-control/typeRegion.js"></script>
+<script type="text/javascript" src="js/right-control/arrayRegion.js"></script>
+<script type="text/javascript" src="js/right-control/ArrayData.js"></script>
+<script type="text/javascript" src="js/color-control.js"></script>
 </html>

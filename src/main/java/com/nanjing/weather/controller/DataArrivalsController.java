@@ -91,7 +91,7 @@ public class DataArrivalsController {
 
     @RequestMapping("/findState")
     public List<List<DataState>> findState() {
-        return dataArrivalsService.findState();
+        return dataArrivalsService.findDataState();
     }
 
 }

@@ -35,11 +35,9 @@ public class WindServiceImpl implements WindService {
         List<ValuePoint> list = new ArrayList<>();
         List<Wind> winds;
         List<Winds> windsList = new ArrayList<>();
-        Integer num = Integer.parseInt(parmsTwo.substring(1));
 
         //判断前端查询条件
         WindCenter windCenter = new WindCenter();
-        windCenter.setSpeed(new BigDecimal(num));
         if (time != null) {
             windCenter.setCreateTime(time.split(":")[0]);
             windCenter.setRoutineTime(time.split(":")[1]);

@@ -1,115 +1,243 @@
 var RightPanel = function () {
 
-    this.result = null;
-    this.parmOne = null;
-    this.parmTwo = null;
-    this.requestValue = null;
+    this.result = new ArrayData();
+    this.rainFallResult = null;
+    this.windResult = null;
+    this.temperatureResult = null;
+    this.groundTemperatureResult = null;
+    this.pressureResult = null;
+    this.humidityResult = null;
     this.requestPath = '';
     this.flag = true;
+    this.timer = null;
+    this.count = 0;
     this.MapInfo = new MapInfo(this);
+    this.colorControl = new ColorContorl();
 
     this.Startup = function () {
+
+        this.handlerRefreshButtonCheck(true);
+        this.playCode('温度','≥0','temperatures');
+
         this.MapInfo.CreateEasyMap();
         this.MapInfo.Startup();
-        this.getInfo();
-        this.autoChang();
 
-        $("#checkbox0").on('click', this.layerInfoZeroButtonClick.bind(this));
-        $("#checkbox1").on('click', this.layerInfoOneButtonClick.bind(this));
-        $("#checkbox2").on('click', this.layerInfoTwoButtonClick.bind(this));
-        $("#checkbox4").on('click', this.layerInfoFourButtonClick.bind(this));
-        $("#checkbox3").on('click', this.layerInfoThreeButtonClick.bind(this));
-        $("#checkbox5").on('click', this.layerInfoFiveButtonClick.bind(this));
-        $("#weatherUl").on('click', this.onElementButtonClick.bind(this));
-        $("input[type='radio']").on('click', this.onOptionButtonClick.bind(this));
+        this.layerInfoRainFallButtonClick();
+        this.layerInfoTemperButtonClick();
+        this.layerInfoGoundTermpButtonClick();
+        this.layerInfoPressButtonClick();
+        this.layerInfoWindButtonClick();
+        this.layerInfoHumButtonClick();
+
+        this.refreshButtonClick();
+        this.isolineAndSplashMapClick();
+        this.optionCheck();
+
+        this.basePlotClick();
+        this.encryPlotClick();
+        this.plotNameClick();
+        this.plotValueClick();
+
+        //$("input[type='radio']").on('click', this.onOptionButtonClick.bind(this));
     }
 
-    //定义用户点击图层信息按钮
-    this.layerInfoZeroButtonClick = function () {
-        if ($("#checkbox0").prop('checked')) {
-            if ($("#checkbox1").prop("checked")) {
-                this.MapInfo.basePoltDirName(this.result.valuePoints);
-            }
-            if ($("#checkbox4").prop("checked")) {
-                this.MapInfo.basePlotValue(this.result.valuePoints);
-            }
-            //this.MapInfo.CreateDir(this.result.valuePoints);
-        } else {
-            this.MapInfo.Map.removeLayer(this.MapInfo.basePoltDirNameValue);
-            this.MapInfo.Map.removeLayer(this.MapInfo.basePlotValueValue);
-        }
-    }
-    this.layerInfoFiveButtonClick = function () {
-        if ($("#checkbox5").prop('checked')) {
-            if ($("#checkbox1").prop("checked")) {
-                this.MapInfo.encryptionPointName(this.result.valuePoints);
-            }
-            if ($("#checkbox4").prop("checked")) {
-                this.MapInfo.encryPlotValue(this.result.valuePoints);
-            }
-            //this.MapInfo.CreateDir(this.result.valuePoints);
-        } else {
-            this.MapInfo.Map.removeLayer(this.MapInfo.encryptionPointNameValue);
-            this.MapInfo.Map.removeLayer(this.MapInfo.encryPlotValueValue);
-        }
+    this.refreshButtonClick = function () {
+        $('.refresh').on('click',function () {
+            this.handlerRefreshButtonCheck(false);
+        }.bind(this))
     }
 
-    this.layerInfoOneButtonClick = function () {
-        if ($("#checkbox1").prop('checked')) {
-            /*this.MapInfo.PlotSite(this.result.valuePoints);*/
-            if ($("#checkbox0").prop('checked')) {
-                this.MapInfo.basePoltDirName(this.result.valuePoints);
-            }
-            if ($("#checkbox5").prop('checked')) {
-                this.MapInfo.encryptionPointName(this.result.valuePoints);
-            }
-            //this.MapInfo.CreateDir(this.result.valuePoints);
-        } else {
-            this.MapInfo.Map.removeLayer(this.MapInfo.basePoltDirNameValue);
-            this.MapInfo.Map.removeLayer(this.MapInfo.encryptionPointNameValue);
-        }
+    this.autoGetInfo = function () {
+
+        if($('.interval-select a.action').attr('val') != null)
+            this.playCode($('.interval-select a.action').attr('val'),$('.millimeter-select a.action').attr('val'),'rainfalls');
+
+        if($('.variable-select a.action').attr('val') != null)
+            this.playCode($('.variable-select a.action').attr('val'),$('.temperature-select a.action').attr('val'),'temperatures');
+
+        if($('.wind-select a.action').attr('val') != null)
+            this.playCode($('.wind-select a.action').attr('val'),null,'winds');
+
+        if($('.geothermal-select a.action').attr('val') != null)
+            this.playCode($('.geothermal-select a.action').attr('val'),null,'groundTemperature');
+
+        if($('.air-pressure-select a.action').attr('val') != null)
+            this.playCode($('.air-pressure-select a.action').attr('val'),null,'pressures');
+
+        if($('.humidity-select a.action').attr('val') != null)
+            this.playCode($('.humidity-select a.action').attr('val'),null,'humidities');
+
+        $('#last-time').html(this.setTime(null,false));
+        var time = later.parse.text('every 5 mins on the 0 sec');
+        if(this.count === 0)
+            $('#next-time').html(this.setTime(time,true));
+        else
+            $('#next-time').html(this.setTime(time,false));
+        this.count ++;
     }
 
-    this.layerInfoTwoButtonClick = function () {
-        if ($("#checkbox2").prop('checked')) {
-            this.MapInfo.CreateContourLayer(this.result.contourPolylines)
-        } else {
-            this.MapInfo.Map.removeLayer(this.MapInfo.ContourLayer);
-        }
-    }
-
-    this.layerInfoFourButtonClick = function () {
-        if ($("#checkbox4").prop('checked')) {
-            /*this.MapInfo.PlotSite(this.result.valuePoints);*/
-            if ($("#checkbox0").prop('checked')) {
-                this.MapInfo.basePlotValue(this.result.valuePoints);
+    this.handlerRefreshButtonCheck = function (flag) {
+        if($('.refresh-on').text().search('自动刷新') == -1){
+            if(this.timer != null){
+                this.timer.clear();
             }
-            if ($("#checkbox5").prop('checked')) {
-                this.MapInfo.encryPlotValue(this.result.valuePoints);
-            }
-            //this.MapInfo.CreateDir(this.result.valuePoints);
-        } else {
-            this.MapInfo.Map.removeLayer(this.MapInfo.basePlotValueValue);
-            this.MapInfo.Map.removeLayer(this.MapInfo.encryPlotValueValue);
+            if(flag)
+                $('#last-time').html(this.setTime(null,false));
+            $('#next-time').html('--:--:--');
+        }else{
+            $('#last-time').html(this.setTime(null,false));
+            var time = later.parse.text('every 5 mins on the 0 sec');
+            $('#next-time').html(this.setTime(time,false));
+            this.timer = later.setInterval(this.autoGetInfo.bind(this), time);
         }
     }
 
-    this.layerInfoThreeButtonClick = function () {
-        if ($("#checkbox3").prop('checked')) {
-            this.MapInfo.CreateSpotLayer(this.result.spotPolygons, this.result.legendLevels)
-            this.MapInfo.PlotColor(this.result.legendLevels);
-        } else {
-            this.MapInfo.PlotColor('');
-            this.MapInfo.Map.removeLayer(this.MapInfo.layer);
+    this.setTime = function (time,flag) {
+        var date = null;
+        var second = null;
+        if(time == null){
+            date = new Date();
+            second = date.getSeconds();
+            second = (second < 10) ? '0' + second : second;
+        }else {
+            if(flag){
+                date = later.schedule(time).next(2)[1];
+                second = '00';
+            }else {
+                date = later.schedule(time).next(1);
+                second = '00';
+            }
         }
+        var hour = date.getHours();
+        hour = (hour < 10) ? '0' + hour : hour;
+        var minute = date.getMinutes();
+        minute = (minute < 10) ? '0' + minute : minute;
+        return hour + ':' + minute + ':' +second;
     }
 
-    this.autoChang = function () {
-        setInterval(function () {
-            if (this.parmOne != null) {
-                this.playCode();
+    this.layerInfoRainFallButtonClick = function () {
+        var parmOne = null;
+        var parmTwo = null;
+        $(".interval-select a").click(function (e) {
+            if($(e.target).hasClass('action')){
+                parmOne = $(e.target).attr('val');
+                parmTwo = $(".millimeter-select a.action").attr('val');
+                if(parmOne != null && parmTwo != null)
+                    this.playCode(parmOne,parmTwo,'rainfalls');
+            }else{
+                this.rainFallResult = null;
+                this.insertData();
+                this.getCheckLayerInfo();
             }
-        }.bind(this), 1000 * 60 * 60)
+        }.bind(this));
+
+        $('.millimeter-select a').click(function (e) {
+            if($(e.target).hasClass('action')){
+                parmTwo = $(e.target).attr('val');
+                parmOne = $(".interval-select a.action").attr('val');
+                if(parmOne != null && parmTwo != null)
+                    this.playCode(parmOne,parmTwo,'rainfalls');
+            }else {
+                this.rainFallResult = null;
+                this.insertData();
+                this.getCheckLayerInfo();
+
+            }
+        }.bind(this));
+    }
+
+    this.layerInfoTemperButtonClick = function () {
+        var parmOne = null;
+        var parmTwo = null;
+        $('.variable-select a').click(function (e) {
+            if($(e.target).hasClass('action')){
+                parmOne = $(e.target).attr('val');
+                parmTwo = $('.temperature-select a.action').attr('val');
+                if(parmOne != null && parmTwo != null)
+                    this.playCode(parmOne,parmTwo,'temperatures');
+            }else{
+                this.temperatureResult = null;
+                this.insertData();
+                this.getCheckLayerInfo();
+            }
+        }.bind(this));
+
+        $('.temperature-select a').click(function (e) {
+            if($(e.target).hasClass('action')){
+                parmTwo = $(e.target).attr('val');
+                parmOne = $('.variable-select a.action').attr('val');
+                if(parmOne != null && parmTwo != null)
+                    this.playCode(parmOne,parmTwo,'temperatures');
+            }else{
+                this.temperatureResult = null;
+                this.insertData();
+                this.getCheckLayerInfo();
+            }
+        }.bind(this));
+    }
+
+    this.layerInfoWindButtonClick = function () {
+        var parmOne = null;
+        var parmTwo = null;
+        $('.wind-select a').click(function (e) {
+            if($(e.target).hasClass('action')){
+                parmOne = $(e.target).attr('val');
+                if(parmOne != null)
+                    this.playCode(parmOne,parmTwo,'winds');
+            }else{
+                this.windResult = null;
+                this.insertData();
+                this.getCheckLayerInfo();
+            }
+        }.bind(this));
+    }
+
+    this.layerInfoGoundTermpButtonClick = function () {
+        var parmOne = null;
+        var parmTwo = null;
+        $('.geothermal-select a').click(function (e) {
+            if($(e.target).hasClass('action')){
+                parmOne = $(e.target).attr('val');
+                if(parmOne != null)
+                    this.playCode(parmOne,parmTwo,'groundTemperature');
+            }else{
+                this.groundTemperatureResult = null;
+                this.insertData();
+                this.getCheckLayerInfo();
+            }
+        }.bind(this));
+    }
+
+    this.layerInfoPressButtonClick = function () {
+        var parmOne = null;
+        var parmTwo = null;
+        $('.air-pressure-select a').click(function (e) {
+            if($(e.target).hasClass('action')){
+                parmOne = $(e.target).attr('val');
+                if(parmOne != null)
+                    this.playCode(parmOne,parmTwo,'pressures');
+            }else{
+                this.pressureResult = null;
+                this.insertData();
+                this.getCheckLayerInfo();
+            }
+        }.bind(this));
+    }
+
+    this.layerInfoHumButtonClick = function () {
+        var parmOne = null;
+        var parmTwo = null;
+        $('.humidity-select a').click(function (e) {
+            if($(e.target).hasClass('action')){
+                parmOne = $(e.target).attr('val');
+                if(parmOne != null)
+                    this.playCode(parmOne,parmTwo,'humidities');
+            }else{
+                this.humidityResult = null;
+                this.insertData();
+                this.getCheckLayerInfo();
+            }
+        }.bind(this));
     }
 
     this.loadClick = function (flag) {
@@ -120,125 +248,311 @@ var RightPanel = function () {
         }
     }
 
-    this.getInfo = function () {
-        this.requestValue = "temperatures";
-
-        $.ajax({
-            type: "POST",
-            dataType: 'json',
-            url: this.requestPath + "temperatures/findAllBySomeTerm",
-            data: {
-                parmOne: '温度',
-                parmTwo: '≥0'
-            },
-            beforeSend: function () {
-                // show loading...
-                this.loadClick(true)
-            }.bind(this),
-            error: function () {
-                // hide loading
-                this.flag = true;
-                this.loadClick(false)
-            }.bind(this),
-            success: function (data) {
-                // hide loading...
-                this.loadClick(false)
-                this.flag = true;
-                if (data == null) {
-                    //alert("查询信息为空！！")
-                    this.checkNull();
-                } else {
-                    this.result = null;
-                    this.result = data;
-                    if ($("#checkbox3").prop('checked')) {
-                        this.MapInfo.CreateSpotLayer(data.spotPolygons, data.legendLevels)
-                        this.MapInfo.PlotColor(data.legendLevels);
-                    }
-                    if ($("#checkbox2").prop('checked')) {
-                        this.MapInfo.CreateContourLayer(data.contourPolylines);
-                    }
-                    if ($("#checkbox0").prop('checked')) {
-                        if ($("#checkbox1").attr("checked")) {
-                            this.MapInfo.basePoltDirName(this.result.valuePoints);
-                        }
-                        if ($("#checkbox4").prop("checked")) {
-                            this.MapInfo.basePlotValue(this.result.valuePoints);
-                        }
-                    }
-                    if ($("#checkbox5").prop('checked')) {
-                        if ($("#checkbox1").prop("checked")) {
-                            this.MapInfo.encryptionPointName(this.result.valuePoints);
-                        }
-                        if ($("#checkbox4").prop("checked")) {
-                            this.MapInfo.encryPlotValue(this.result.valuePoints);
-                        }
-                    }
-                    this.MapInfo.writeInfo(this.result, this.requestValue);
-                }
-            }.bind(this)
-        });
-    }
-
-    this.playCode = function () {
+    this.playCode = function (parmOne,parmTwo,requestValue) {
         if (this.flag) {
             $.ajax({
                 type: "POST",
                 dataType: 'json',
-                url: this.requestPath + this.requestValue + "/findAllBySomeTerm",
+                url: this.requestPath + requestValue + "/findAllBySomeTerm",
                 data: {
-                    parmOne: this.parmOne,
-                    parmTwo: this.parmTwo
+                    parmOne: parmOne,
+                    parmTwo: parmTwo
                 },
                 beforeSend: function () {
                     // show loading...
-                    this.loadClick(true)
+                    this.loadClick(true);
                 }.bind(this),
                 error: function () {
                     // hide loading
-                    this.loadClick(false)
+                    this.loadClick(false);
                     this.flag = true;
                 }.bind(this),
                 success: function (data) {
                     // hide loading...
-                    this.loadClick(false)
+                    this.loadClick(false);
                     this.flag = true;
-                    if (data == null) {
-                        //alert("查询信息为空！！")
-                        this.checkNull();
-                    } else {
-                        this.result = null;
-                        this.result = data;
-                        $("#color-unit").attr("style", "display: block")
-                        if ($("#checkbox3").prop('checked')) {
-                            this.MapInfo.CreateSpotLayer(data.spotPolygons, data.legendLevels)
-                            this.MapInfo.PlotColor(data.legendLevels);
-                        }
-                        if ($("#checkbox2").prop('checked')) {
-                            this.MapInfo.CreateContourLayer(data.contourPolylines);
-                        }
-                        if ($("#checkbox0").prop('checked')) {
-                            if ($("#checkbox1").attr("checked")) {
-                                this.MapInfo.basePoltDirName(this.result.valuePoints);
-                            }
-                            if ($("#checkbox4").prop("checked")) {
-                                this.MapInfo.basePlotValue(this.result.valuePoints);
-                            }
-                        }
-                        if ($("#checkbox5").prop('checked')) {
-                            if ($("#checkbox1").prop("checked")) {
-                                this.MapInfo.encryptionPointName(this.result.valuePoints);
-                            }
-                            if ($("#checkbox4").prop("checked")) {
-                                this.MapInfo.encryPlotValue(this.result.valuePoints);
-                            }
-                        }
-                        this.MapInfo.writeInfo(this.result, this.requestValue);
+
+                    if(requestValue == 'temperatures'){
+                        this.temperatureResult = data;
+                        //this.result.addData('temperatures',data.valuePoints);
+                    }else if(requestValue == 'rainfalls'){
+                        this.rainFallResult = data;
+                        //this.result.addData('rainfalls',data.valuePoints);
+                    }else if(requestValue == 'winds'){
+                        this.windResult = data;
+                        //this.result.addData('winds',data.valuePoints);
+                    }else if(requestValue == 'groundTemperature'){
+                        this.groundTemperatureResult = data;
+                        //this.result.addData('groundTemperature',data.valuePoints);
+                    }else if(requestValue == 'pressures'){
+                        this.pressureResult = data;
+                        //this.result.addData('pressures',data.valuePoints);
+                    }else if(requestValue == 'humidities'){
+                        this.humidityResult = data;
+                        //this.result.addData('humidities',data.valuePoints);
                     }
+
+                    this.insertData();
+                    this.getCheckLayerInfo();
+                    this.getCheckLayerOfChart(requestValue,data);
+
                 }.bind(this)
             });
         } else {
 
         }
+    }
+
+    this.insertData = function () {
+        var array = [];
+        if(this.rainFallResult != null)
+            array.push(new Array('rainfalls',this.rainFallResult.valuePoints));
+        if (this.temperatureResult != null)
+            array.push(new Array('temperatures',this.temperatureResult.valuePoints));
+        if (this.windResult != null)
+            array.push(new Array('winds',this.windResult.valuePoints));
+        if (this.groundTemperatureResult != null)
+            array.push(new Array('groundTemperature',this.groundTemperatureResult.valuePoints));
+        if (this.pressureResult != null)
+            array.push(new Array('pressures',this.pressureResult.valuePoints));
+        if (this.humidityResult != null)
+            array.push(new Array('humidities',this.humidityResult.valuePoints));
+        this.result.addData(array)
+    }
+
+    this.basePlotClick = function () {
+        $('#basic').on('click',function () {
+            this.basePoltSense();
+        }.bind(this))
+    }
+
+    this.encryPlotClick = function () {
+        $('#encrypt').on('click',function () {
+            this.encryPlotSense();
+        }.bind(this))
+    }
+
+    this.plotNameClick = function () {
+        $('#station').on('click',function () {
+            this.plotNameSense();
+        }.bind(this))
+    }
+
+    this.plotValueClick = function () {
+        $('#value').on('click',function () {
+            this.plotValueSense();
+        }.bind(this))
+    }
+
+    this.plotValueSense = function () {
+        if($('#value').attr('checked')){
+            if($('#basic').attr('checked')){
+                if(this.result != null)
+                    this.MapInfo.basePlotValue(this.result.regions);
+            }
+
+            if($('#encrypt').attr('checked')){
+                if(this.result != null)
+                    this.MapInfo.encryPlotValue(this.result.regions);
+            }
+        }else {
+            if (this.MapInfo.basePlotValueValue != null)
+                this.MapInfo.Map.removeLayer(this.MapInfo.basePlotValueValue);
+
+            if (this.MapInfo.encryPlotValueValue != null)
+                this.MapInfo.Map.removeLayer(this.MapInfo.encryPlotValueValue);
+
+        }
+    }
+
+    this.plotNameSense = function () {
+        if($('#station').attr('checked')){
+            if($('#basic').attr('checked')){
+                if(this.result != null)
+                    this.MapInfo.basePoltDirName(this.result.regions);
+            }
+
+            if($('#encrypt').attr('checked')){
+                if(this.result != null)
+                    this.MapInfo.encryptionPointName(this.result.regions);
+            }
+        }else {
+            if (this.MapInfo.basePoltDirNameValue != null)
+                this.MapInfo.Map.removeLayer(this.MapInfo.basePoltDirNameValue);
+            if (this.MapInfo.encryptionPointNameValue != null)
+                this.MapInfo.Map.removeLayer(this.MapInfo.encryptionPointNameValue);
+        }
+    }
+
+    this.basePoltSense = function () {
+        if($('#basic').attr('checked')){
+            if($('#station').attr('checked')){
+                if(this.result != null)
+                    this.MapInfo.basePoltDirName(this.result.regions);
+            }
+
+            if($('#value').attr('checked')){
+                if(this.result != null)
+                    this.MapInfo.basePlotValue(this.result.regions);
+            }
+        }else{
+            if (this.MapInfo.basePlotValueValue != null)
+                this.MapInfo.Map.removeLayer(this.MapInfo.basePlotValueValue);
+            if (this.MapInfo.basePoltDirNameValue != null) {
+                this.MapInfo.Map.removeLayer(this.MapInfo.basePoltDirNameValue);
+            }
+        }
+    }
+
+    this.encryPlotSense = function () {
+        if($('#encrypt').attr('checked')){
+            if($('#station').attr('checked')){
+                if(this.result != null)
+                    this.MapInfo.encryptionPointName(this.result.regions);
+            }
+
+            if($('#value').attr('checked')){
+                if(this.result != null)
+                    this.MapInfo.encryPlotValue(this.result.regions);
+            }
+        }else {
+            if (this.MapInfo.encryPlotValueValue != null) {
+                this.MapInfo.Map.removeLayer(this.MapInfo.encryPlotValueValue);
+            }
+            if (this.MapInfo.encryptionPointNameValue != null) {
+                this.MapInfo.Map.removeLayer(this.MapInfo.encryptionPointNameValue);
+            }
+        }
+    }
+
+    this.getCheckLayerInfo = function () {
+        this.plotNameSense();
+        this.plotValueSense();
+        this.encryPlotSense();
+        this.basePoltSense();
+    }
+
+    this.getCheckLayerOfChart = function (checkValue,result) {
+        /*if(checkValue == 'temperatures')
+            this.temperatureResult = result;*/
+        if($('.layer-text a.action').attr('val') === checkValue){
+            if(result != null){
+                if($('#contour').prop('checked')){
+                    this.MapInfo.CreateContourLayer(result.contourPolylines);
+                }else {
+                    if (this.MapInfo.ContourLayer != null) {
+                        this.MapInfo.Map.removeLayer(this.MapInfo.ContourLayer);
+                    }
+                }
+
+                if ($("#color-figure").prop('checked')) {
+                    this.MapInfo.CreateSpotLayer(result.spotPolygons, result.legendLevels)
+                    //this.MapInfo.PlotColor(result.legendLevels);
+                    $(".color-control").attr("style", "display: block")
+                    this.colorControl.setColor(result.legendLevels[0].type,this.returnColor(result.legendLevels));
+                    this.colorControl.Startup();
+                }else {
+                    if (this.MapInfo.layer != null) {
+                        this.MapInfo.Map.removeLayer(this.MapInfo.layer);
+                    }
+                    $(".color-control").attr("style", "display: none")
+                }
+            }
+        }
+
+    }
+
+    this.returnColor = function (colors) {
+        var array = []
+        var arrayColor = [];
+        var arrayValue = [];
+        $(colors).each(function (index,color) {
+            if(index == 0){
+                //arrayColor.push(new Array(color.Color,color.Color));
+                arrayValue.push(color.BeginValue);
+                arrayValue.push(color.EndValue);
+            }else{
+                //arrayColor.push(new Array(colors[index-1].Color,color.Color));
+                arrayValue.push(color.EndValue);
+            }
+        }.bind(this));
+        for(var i = colors.length -1 ; i >= 0; i--){
+            if(i == 0){
+                arrayColor.push(new Array(colors[i].Color,colors[i].Color));
+            }else{
+                arrayColor.push(new Array(colors[i-1].Color,colors[i].Color));
+            }
+        }
+        array.push(arrayColor);
+        array.push(arrayValue);
+        return array;
+    }
+    
+    this.optionCheck = function () {
+        $('.layer-text').off('click').on('click',function (e) {
+            if (this.MapInfo.ContourLayer != null) {
+                this.MapInfo.Map.removeLayer(this.MapInfo.ContourLayer);
+            }
+            if (this.MapInfo.layer != null) {
+                this.MapInfo.Map.removeLayer(this.MapInfo.layer);
+            }
+            //this.MapInfo.PlotColor('');
+            $(".color-control").attr("style", "display: none")
+
+            if($(e.target).hasClass('action')){
+                this.defineArray($(e.target).attr('val'));
+            }
+        }.bind(this))
+    }
+
+    this.defineArray = function (value) {
+        var arr = ['rainfalls','temperatures','winds','groundTemperature','pressures','humidities'];
+        var index = $.inArray(value,arr);
+        if(index === 0)
+            this.getCheckLayerOfChart(arr[index],this.rainFallResult);
+        else if (index === 1)
+            this.getCheckLayerOfChart(arr[index],this.temperatureResult);
+        else if (index === 2)
+            this.getCheckLayerOfChart(arr[index],this.windResult);
+        else if (index === 3)
+            this.getCheckLayerOfChart(arr[index],this.groundTemperatureResult);
+        else if (index === 4)
+            this.getCheckLayerOfChart(arr[index],this.pressureResult);
+        else if (index === 5)
+            this.getCheckLayerOfChart(arr[index],this.humidityResult);
+    }
+
+    this.isolineAndSplashMapClick = function () {
+        $('#contour').off('click').on('click',function (e) {
+            if($(e.target).attr('checked')){
+                if($('.layer-text a.action').attr('val') != null){
+                    if (this.MapInfo.ContourLayer != null) {
+                        this.MapInfo.Map.removeLayer(this.MapInfo.ContourLayer);
+                    }
+                    this.defineArray($('.layer-text a.action').attr('val'));
+                }
+            }else{
+                if (this.MapInfo.ContourLayer != null)
+                    this.MapInfo.Map.removeLayer(this.MapInfo.ContourLayer);
+            }
+        }.bind(this))
+
+        $('#color-figure').off('click').on('click',function (e) {
+            if($(e.target).attr('checked')){
+                if($('.layer-text a.action').attr('val') != null)
+                    if (this.MapInfo.layer != null) {
+                        this.MapInfo.Map.removeLayer(this.MapInfo.layer);
+                    }
+                //this.MapInfo.PlotColor('');
+                $(".color-control").attr("style", "display: none")
+                this.defineArray($('.layer-text a.action').attr('val'));
+            }else{
+                if (this.MapInfo.layer != null)
+                    this.MapInfo.Map.removeLayer(this.MapInfo.layer);
+                //this.MapInfo.PlotColor('');
+                $(".color-control").attr("style", "display: none")
+            }
+        }.bind(this))
     }
 
     this.checkNull = function () {
@@ -260,56 +574,7 @@ var RightPanel = function () {
         if (this.MapInfo.layer != null) {
             this.MapInfo.Map.removeLayer(this.MapInfo.layer);
         }
-        this.MapInfo.PlotColor('');
-        $("#color-unit").attr("style", "display: none")
+        $(".color-control").attr("style", "display: none")
     }
 
-    this.onElementButtonClick = function () {
-        //this.flag = false;
-        this.requestValue = $("#weatherUl").children(".action").attr("val");
-        if (this.requestValue == "temperatures") {
-            this.parmOne = $("input[checked][name='radio3']").attr("value");
-            this.parmTwo = $("input[checked][name='radio8']").attr("value");
-        } else if (this.requestValue == "rainfalls") {
-            this.parmOne = $("input[checked][name='radio1']").attr("value");
-            this.parmTwo = $("input[checked][name='radio2']").attr("value");
-        } else if (this.requestValue == "winds") {
-            this.parmOne = $("input[checked][name='radio4']").attr("value");
-            this.parmTwo = $("input[checked][name='radio9']").attr("value");
-        } else if (this.requestValue == "humidities") {
-            this.parmOne = $("input[checked][name='radio5']").attr("value");
-            this.parmTwo = null;
-        } else if (this.requestValue == "pressures") {
-            this.parmOne = $("input[checked][name='radio6']").attr("value");
-            this.parmTwo = null;
-        } else if (this.requestValue == "groundTemperature") {
-            this.parmOne = $("input[checked][name='radio7']").attr("value");
-            this.parmTwo = null;
-        }
-        this.playCode();
-    }
-
-    this.onOptionButtonClick = function () {
-        //this.flag = false;
-        if (this.requestValue == "temperatures") {
-            this.parmOne = $("input[name=radio3]:checked").attr("value");
-            this.parmTwo = $("input[name=radio8]:checked").attr("value");
-        } else if (this.requestValue == "rainfalls") {
-            this.parmOne = $("input[name=radio1]:checked").attr("value");
-            this.parmTwo = $("input[name=radio2]:checked").attr("value");
-        } else if (this.requestValue == "winds") {
-            this.parmOne = $("input[name=radio4]:checked").attr("value");
-            this.parmTwo = $("input[name=radio9]:checked").attr("value");
-        } else if (this.requestValue == "humidities") {
-            this.parmOne = $("input[name=radio5]:checked").attr("value");
-            this.parmTwo = null;
-        } else if (this.requestValue == "pressures") {
-            this.parmOne = $("input[name=radio6]:checked").attr("value");
-            this.parmTwo = null;
-        } else if (this.requestValue == "groundTemperature") {
-            this.parmOne = $("input[name=radio7]:checked").attr("value");
-            this.parmTwo = null;
-        }
-        this.playCode();
-    }
 }

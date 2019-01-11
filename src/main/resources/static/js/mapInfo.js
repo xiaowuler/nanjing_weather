@@ -17,11 +17,21 @@ var MapInfo = function () {
     }
 
     this.CreateEasyMap = function () {
-        this.Map = L.map("map", {
+        /*this.Map = L.map("map", {
             center: [31.70247, 118.11951],
             zoom: 9.2,
             zoomControl: false
+        });*/
+        this.Map = L.map("map", {
+            center: [32.00575, 119.26758],
+            zoom: 9.2,
+            zoomControl: false
         });
+        var layer = L.tileLayer.chinaProvider('Geoq.Normal.Gray', {
+            maxZoom: 18,
+            minZoom: 5
+        });
+        this.Map.addLayer(layer);
     }
 
     this.CreateMap = function () {
@@ -47,13 +57,6 @@ var MapInfo = function () {
         });
         this.Map.addLayer(layer);
         //this.Map.addLayer(layerMap);
-    }
-
-    this.ShowLoading = function (show) {
-        if (show)
-            $("#map").LoadingOverlay("show", {color: "rgba(255, 255, 255, 0.5)"});
-        else
-            $("#map").LoadingOverlay("hide", true);
     }
 
     this.GetProBorder = function () {
@@ -85,44 +88,6 @@ var MapInfo = function () {
             this.Map.addLayer(this.features);
         }.bind(this));
     }
-
-    this.basePoltPoint = function (labels) {
-        this.basePoltPointValue = new L.FeatureGroup();
-
-        $(labels).each(function (index, value) {
-            if (value.id.substring(0, 2) === '58') {
-                alert(true)
-            }
-        }.bind(this))
-    }
-
-    this.CreateDir = function (labels, flagO, flagT) {
-        this.ValueLayer = new L.FeatureGroup();
-
-        $(labels).each(function (index, value) {
-            if (value.Value > 0) {
-                L.marker([value.Latitude, value.Longitude], {
-                    icon: L.divIcon({
-                        className: 'text-shadow station-value-label',
-                        html: value.Value
-                    })
-                }).addTo(this.ValueLayer);
-
-                if (value.instantDirection > 0) {
-                    var icon = L.WindBarb.icon({
-                        lat: 40,
-                        deg: value.instantDirection,
-                        speed: value.Value,
-                        pointRadius: 5,
-                        strokeWidth: 1,
-                        strokeLength: 15
-                    });
-                    L.marker([value.Latitude, value.Longitude], {icon: icon}).addTo(this.ValueLayer);
-                }
-            }
-        }.bind(this));
-    }
-
 
     this.CreateSpotLayer = function (polygons, levels) {
         if (this.layer != undefined) {
@@ -178,48 +143,6 @@ var MapInfo = function () {
         return 'rgb(' + color + ')';
     };
 
-    this.PlotSite = function (labels, flagO, flagT) {
-        if (this.sitePoint != undefined) {
-            this.Map.removeLayer(this.sitePoint);
-        }
-
-        //var windBarLayer = new L.FeatureGroup();
-        this.sitePoint = new L.FeatureGroup();
-        $(labels).each(function (index, label) {
-
-            if (label.value > 0) {
-                if (flagO) {
-                    this.sitePoint.addLayer(L.marker([label.latitude, label.longitude], {
-                        icon: L.divIcon({
-                            className: 'name-label text-shadow',
-                            html: label.name
-                        })
-                    }));
-
-
-                    /*this.sitePoint.addLayer(L.marker([label.latitude, label.longitude], {
-                        icon: L.divIcon({
-                            className: 'value-label text-shadow',
-                            html: parseFloat(label.value)
-                        })
-                    }));*/
-
-                    this.sitePoint.addLayer(L.circleMarker([label.latitude, label.longitude], {
-                        opacity: 1,
-                        weight: 0.5,
-                        color: 'black',
-                        fillColor: '#fff',
-                        fillOpacity: 0.5,
-                        radius: 2.4
-                    }))
-                }
-            }
-
-        }.bind(this));
-        this.Map.addLayer(this.sitePoint);
-        //this.Map.addLayer(windBarLayer);
-    }
-
     //基本站的站名
     this.basePoltDirName = function (labels) {
         if (this.basePoltDirNameValue != undefined) {
@@ -229,29 +152,27 @@ var MapInfo = function () {
         //var windBarLayer = new L.FeatureGroup();
         this.basePoltDirNameValue = new L.FeatureGroup();
         $(labels).each(function (index, label) {
-            if (label.value > 0) {
-                if (label.id.substring(0, 2) == '58') {
-                    this.basePoltDirNameValue.addLayer(L.marker([label.latitude, label.longitude], {
-                        icon: L.divIcon({
-                            className: 'name-label text-shadow',
-                            html: label.name
-                        })
-                    }));
-                    /*this.sitePoint.addLayer(L.marker([label.latitude, label.longitude], {
-                        icon: L.divIcon({
-                            className: 'value-label text-shadow',
-                            html: parseFloat(label.value)
-                        })
-                    }));*/
-                    this.basePoltDirNameValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
-                        opacity: 1,
-                        weight: 0.5,
-                        color: 'black',
-                        fillColor: '#fff',
-                        fillOpacity: 0.5,
-                        radius: 2.4
-                    }))
-                }
+            if (label.id.substring(0, 2) == '58') {
+                this.basePoltDirNameValue.addLayer(L.marker([label.latitude, label.longitude], {
+                    icon: L.divIcon({
+                        className: 'name-label text-shadow',
+                        html: label.name
+                    })
+                }));
+                /*this.sitePoint.addLayer(L.marker([label.latitude, label.longitude], {
+                    icon: L.divIcon({
+                        className: 'value-label text-shadow',
+                        html: parseFloat(label.value)
+                    })
+                }));*/
+                this.basePoltDirNameValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
+                    opacity: 1,
+                    weight: 0.5,
+                    color: 'black',
+                    fillColor: '#fff',
+                    fillOpacity: 0.5,
+                    radius: 2.4
+                }))
             }
 
         }.bind(this));
@@ -268,76 +189,31 @@ var MapInfo = function () {
         this.encryptionPointNameValue = new L.FeatureGroup();
         $(labels).each(function (index, label) {
 
-            if (label.value > 0) {
-                if (label.id.substring(0, 2) != '58') {
-                    this.encryptionPointNameValue.addLayer(L.marker([label.latitude, label.longitude], {
-                        icon: L.divIcon({
-                            className: 'name-label text-shadow',
-                            html: label.name
-                        })
-                    }));
-                    /*this.sitePoint.addLayer(L.marker([label.latitude, label.longitude], {
-                        icon: L.divIcon({
-                            className: 'value-label text-shadow',
-                            html: parseFloat(label.value)
-                        })
-                    }));*/
-                    this.encryptionPointNameValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
-                        opacity: 1,
-                        weight: 0.5,
-                        color: 'black',
-                        fillColor: '#fff',
-                        fillOpacity: 0.5,
-                        radius: 2.4
-                    }))
-                }
+            if (label.id.substring(0, 2) != '58') {
+                this.encryptionPointNameValue.addLayer(L.marker([label.latitude, label.longitude], {
+                    icon: L.divIcon({
+                        className: 'name-label text-shadow',
+                        html: label.name
+                    })
+                }));
+                /*this.sitePoint.addLayer(L.marker([label.latitude, label.longitude], {
+                    icon: L.divIcon({
+                        className: 'value-label text-shadow',
+                        html: parseFloat(label.value)
+                    })
+                }));*/
+                this.encryptionPointNameValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
+                    opacity: 1,
+                    weight: 0.5,
+                    color: 'black',
+                    fillColor: '#fff',
+                    fillOpacity: 0.5,
+                    radius: 2.4
+                }))
             }
 
         }.bind(this));
         this.Map.addLayer(this.encryptionPointNameValue);
-    }
-
-
-    this.CreatePlotValue = function (labels) {
-        if (this.plotValue != undefined) {
-            this.Map.removeLayer(this.plotValue);
-        }
-
-        this.plotValue = new L.FeatureGroup();
-
-        $(labels).each(function (index, label) {
-            // Add label
-            this.plotValue.addLayer(L.marker([label.latitude, label.longitude], {
-                icon: L.divIcon({
-                    className: 'value-label text-shadow',
-                    html: parseFloat(label.value)
-                })
-            }));
-
-            if (label.instantDirection != null) {
-                this.plotValue.addLayer(L.marker([label.latitude, label.longitude], {
-                    icon: L.WindBarb.icon({
-                        lat: 40,
-                        deg: label.instantDirection,
-                        speed: label.Value,
-                        pointRadius: 5,
-                        strokeWidth: 1,
-                        strokeLength: 15
-                    })
-                }))
-            }
-
-            this.plotValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
-                opacity: 1,
-                weight: 0.5,
-                color: 'black',
-                fillColor: '#fff',
-                fillOpacity: 0.5,
-                radius: 2.4
-            }))
-        }.bind(this))
-
-        this.Map.addLayer(this.plotValue);
     }
 
     //基本站的站值
@@ -347,39 +223,42 @@ var MapInfo = function () {
         }
         this.basePlotValueValue = new L.FeatureGroup();
         $(labels).each(function (index, label) {
-            if (label.value > 0) {
+            //if (label.value > 0) {
                 // Add label
                 if (label.id.substring(0, 2) == '58') {
                     this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
                         icon: L.divIcon({
                             className: 'value-label text-shadow',
-                            html: parseFloat(label.value)
+                            //html: parseFloat(label.value)
+                            html: this.returnPlotValueHtml(label.typeRegions)
                         })
                     }));
 
-                    if (label.instantDirection != null) {
-                        this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
-                            icon: L.WindBarb.icon({
-                                lat: 40,
-                                deg: label.instantDirection,
-                                speed: label.Value,
-                                pointRadius: 5,
-                                strokeWidth: 1,
-                                strokeLength: 15
-                            })
-                        }))
-                    }
+                    $(label.typeRegions).each(function (index,typeRegion) {
+                        if (typeRegion.instantDirection != null) {
+                            this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
+                                icon: L.WindBarb.icon({
+                                    lat: 40,
+                                    deg: typeRegion.instantDirection,
+                                    speed: label.value,
+                                    pointRadius: 5,
+                                    strokeWidth: 1,
+                                    strokeLength: 15
+                                })
+                            }))
+                        }
+                    }.bind(this));
 
                     this.basePlotValueValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
                         opacity: 1,
                         weight: 0.5,
                         color: 'black',
-                        fillColor: '#fff',
+                        fillColor: '#fb1c15',
                         fillOpacity: 0.5,
                         radius: 2.4
                     }))
                 }
-            }
+            //}
         }.bind(this))
 
         this.Map.addLayer(this.basePlotValueValue);
@@ -393,43 +272,66 @@ var MapInfo = function () {
 
         this.encryPlotValueValue = new L.FeatureGroup();
         $(labels).each(function (index, label) {
-            if (label.value > 0) {
-                // Add label
-                if (label.id.substring(0, 2) != '58') {
-                    this.encryPlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
-                        icon: L.divIcon({
-                            className: 'value-label text-shadow',
-                            html: parseFloat(label.value)
-                        })
-                    }));
+            // Add label
+            if (label.id.substring(0, 2) != '58') {
+                this.encryPlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
+                    icon: L.divIcon({
+                        className: 'value-label text-shadow',
+                        //html: parseFloat(label.value)
+                        html: this.returnPlotValueHtml(label.typeRegions)
+                    })
+                }));
 
-                    if (label.instantDirection != null) {
-                        this.encryPlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
+                /*if (label.instantDirection != null) {
+                    this.encryPlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
+                        icon: L.WindBarb.icon({
+                            lat: 40,
+                            deg: label.instantDirection,
+                            speed: label.value,
+                            pointRadius: 5,
+                            strokeWidth: 1,
+                            strokeLength: 15
+                        })
+                    }))
+                }*/
+
+                $(label.typeRegions).each(function (index,typeRegion) {
+                    if (typeRegion.instantDirection != null) {
+                        this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
                             icon: L.WindBarb.icon({
                                 lat: 40,
-                                deg: label.instantDirection,
-                                speed: label.Value,
+                                deg: typeRegion.instantDirection,
+                                speed: label.value,
                                 pointRadius: 5,
                                 strokeWidth: 1,
                                 strokeLength: 15
                             })
                         }))
                     }
+                }.bind(this));
 
-                    this.encryPlotValueValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
-                        opacity: 1,
-                        weight: 0.5,
-                        color: 'black',
-                        fillColor: '#fff',
-                        fillOpacity: 0.5,
-                        radius: 2.4
-                    }))
-                }
+                this.encryPlotValueValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
+                    opacity: 1,
+                    weight: 0.5,
+                    color: 'black',
+                    fillColor: '#fb1c15',
+                    fillOpacity: 0.5,
+                    radius: 2.4
+                }))
             }
 
         }.bind(this))
 
         this.Map.addLayer(this.encryPlotValueValue);
+    }
+
+    this.returnPlotValueHtml = function (array) {
+        var textHtml = '<div class="mapinfo"><div class="element-value mapdiv clearfix">';
+        $(array).each(function (index,arr) {
+            textHtml += '<span class="{1}">{0}</span>'.format(arr.value,arr.type);
+        })
+        textHtml += '</div></div>';
+        return textHtml;
     }
 
     this.PlotColor = function (legendLevels) {

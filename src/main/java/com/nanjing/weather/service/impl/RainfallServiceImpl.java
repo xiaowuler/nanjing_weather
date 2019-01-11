@@ -48,6 +48,8 @@ public class RainfallServiceImpl implements RainfallService {
         rainfallsList = CodeIntegration.caleAvg(rainFalls,"getRainFallCenter","getValue","com.nanjing.weather.entitys.Rainfall","setValue");
 
         list = CodeIntegration.getValuePoint(rainfallsList, "getStationId", "getValue");
+        if(list == null)
+            return null;
         if (time != null)
             return CodeIntegration.getResult("rainfalls", list, time.split(":")[1]);
         return CodeIntegration.getResult("rainfalls", list, TimeFormat.getTime(rainFalls.get(0).getRainFallCenter().get(0).getRoutineTime()));

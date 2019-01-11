@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>地面探测</title>
+    <link rel="stylesheet" href="easyUI/easyui.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/leaflet.css">
+    <script src="js/helper.js"></script>
+</head>
+
+<body>
+<div class="map-wrapper" id="map-wrapper">
+    <div class="map" id="map">
+    </div>
+</div>
+
+<div class="map-loading" id="map-loading" style="display: none">
+    <img src="picture/loading.gif" class="load-img"/>
+</div>
+
+<div class="color-wrapper clearfix" id="drag">
+    <div id="color-unit">
+    </div>
+    <div class="color-gradient fl" id="color-number">
+    </div>
+    <div class="color-value fl" id="color-value">
+    </div>
+</div>
+
+<div class="box">
+    <div class="top clearfix">
+        <div class="logo fl">
+            <img src="images/logo.png">
+        </div>
+        <div class="top-menu fr clearfix">
+            <div class="nav fl">
+                <ul class="clearfix">
+                    <li class="nav-monitor"><a href="index.html">实况监控</a></li>
+                    <li class="nav-high-detect"><a href="aerological-sound.html?category=ji-guang-lei-da">高空探测</a></li>
+                    <li class="nav-ground-detect action"><a href="ground-location.html">地面探测</a></li>
+                    <li class="nav-material"><a href="data-monitor.html">资料监控</a></li>
+                </ul>
+            </div>
+            <div class="top-bg"></div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="right">
+            <div id="element">
+                <div class="element">
+                    <div class="element-content rainfall">
+                        <div class="element-title">
+                            <span>降水</span>
+                        </div>
+                        <div class="element-text">
+                            <!--<div class="element-block interval-select clearfix">
+                                <a href="javascript:;" class="action">1小时</a>
+                                <a href="javascript:;">3小时</a>
+                                <a href="javascript:;">6小时</a>
+                                <a href="javascript:;">12小时</a>
+                                <a href="javascript:;">24小时</a>
+                                <a href="javascript:;">48小时</a>
+                            </div>-->
+                            <div class="element-block millimeter-select clearfix">
+                                <a href="javascript:;" val="0.01">>0.00mm</a>
+                                <a href="javascript:;" val="10.0">≥10.0mm</a>
+                                <a href="javascript:;" val="25">≥25mm</a>
+                                <a href="javascript:;" val="50">≥50mm</a>
+                                <a href="javascript:;" val="75">≥75mm</a>
+                                <a href="javascript:;" val="100">≥100mm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="element-content temperature">
+                        <div class="element-title">
+                            <span>温度</span>
+                        </div>
+                        <div class="element-text">
+                            <div class="element-block variable-select clearfix">
+                                <a href="javascript:;" class="action" val="温度">温度</a>
+                                <a href="javascript:;" val="最高温度">最高温度</a>
+                                <!--<a href="javascript:;" val="24小时变温">24小时变温</a>-->
+                                <a href="javascript:;" val="最低温度">最低温度</a>
+                            </div>
+                            <div class="element-block temperature-select clearfix">
+                                <a href="javascript:;" class="action" val="≥0">≥0℃</a>
+                                <a href="javascript:;" val="≥5">≥5℃</a>
+                                <a href="javascript:;" val="≥10">≥10℃</a>
+                                <a href="javascript:;" val="<0"><0℃</a>
+                                <a href="javascript:;" val="≤-5">≤-5℃</a>
+                                <a href="javascript:;" val="≤-10">≤-10℃</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="element-content wind">
+                        <div class="element-title">
+                            <span>风</span>
+                        </div>
+                        <div class="element-text">
+                            <div class="element-block wind-select clearfix">
+                                <a href="javascript:;" val="平均风">平均风</a>
+                                <a href="javascript:;" val="2分钟风向风速">2分钟风向风速</a>
+                                <a href="javascript:;" val="5分钟风向风速">5分钟风向风速</a>
+                                <a href="javascript:;" val="10分钟风向风速">10分钟风向风速</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="element-content geothermal">
+                        <div class="element-title">
+                            <span>地温</span>
+                        </div>
+                        <div class="element-text">
+                            <div class="element-block geothermal-select clearfix">
+                                <a href="javascript:;" val="0">地面温度</a>
+                                <a href="javascript:;" val="5">5cm温度</a>
+                                <a href="javascript:;" val="10">10cm温度</a>
+                                <a href="javascript:;" val="15">15cm温度</a>
+                                <a href="javascript:;" val="20">20cm温度</a>
+                                <a href="javascript:;" val="40">40cm温度</a>
+                                <!--<a href="javascript:;" class="action">地面温度</a>
+                                <a href="javascript:;">5cm温度</a>
+                                <a href="javascript:;">10cm温度</a>
+                                <a href="javascript:;">15cm温度</a>
+                                <a href="javascript:;">20cm温度</a>
+                                <a href="javascript:;">40cm温度</a>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="element-content air-pressure">
+                        <div class="element-title">
+                            <span>气压</span>
+                        </div>
+                        <div class="element-text">
+                            <div class="element-block air-pressure-select clearfix">
+                                <a href="javascript:;" val="本站气压">本站气压</a>
+                                <!--<a href="javascript:;" class="action">本站气压</a>-->
+                                <!--<a href="javascript:;">24小时变压</a>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="element-content humidity">
+                        <div class="element-title">
+                            <span>相对湿度</span>
+                        </div>
+                        <div class="element-text">
+                            <div class="element-block humidity-select clearfix">
+                                <a href="javascript:;" val=">0">>0%</a>
+                                <a href="javascript:;" val="≥70">≥70%</a>
+                                <a href="javascript:;" val="≥80">≥80%</a>
+                                <a href="javascript:;" val="≥90">≥90%</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="date-select">
+                <div class="element-title">
+                    <span>日期选择</span>
+                </div>
+                <div class="date-content">
+                    <div class="clearfix">
+                        <div class="calendar-control date-control">
+                            <input class="easyui-datebox" id="start-date" label="开始" data-options="editable:false" value="123">
+                        </div>
+                        <div class="time-select">
+                            <select class="easyui-combobox" name="state" labelPosition="top" id="start-combobox" data-options="editable:false">
+                                <option value="00小时">00时</option>
+                                <option value="01小时">01时</option>
+                                <option value="02小时">02时</option>
+                                <option value="03小时">03时</option>
+                                <option value="04小时">04时</option>
+                                <option value="05小时">05时</option>
+                                <option value="06小时">06时</option>
+                                <option value="07小时">07时</option>
+                                <option value="08小时">08时</option>
+                                <option value="09小时">09时</option>
+                                <option value="10小时">10时</option>
+                                <option value="11小时">11时</option>
+                                <option value="12小时">12时</option>
+                                <option value="13小时">13时</option>
+                                <option value="14小时">14时</option>
+                                <option value="15小时">15时</option>
+                                <option value="16小时">16时</option>
+                                <option value="17小时">17时</option>
+                                <option value="18小时">18时</option>
+                                <option value="19小时">19时</option>
+                                <option value="20小时">20时</option>
+                                <option value="21小时">21时</option>
+                                <option value="22小时">22时</option>
+                                <option value="23小时">23时</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="calendar-control date-control">
+                            <input class="easyui-datebox" id="end-date" label="结束" data-options="editable:false" value="123">
+                        </div>
+                        <div class="time-select">
+                            <select class="easyui-combobox" name="state" labelPosition="top" id="end-combobox" data-options="editable:false,panelWidth:'68px'">
+                                <option value="00小时">00时</option>
+                                <option value="01小时">01时</option>
+                                <option value="02小时">02时</option>
+                                <option value="03小时">03时</option>
+                                <option value="04小时">04时</option>
+                                <option value="05小时">05时</option>
+                                <option value="06小时">06时</option>
+                                <option value="07小时">07时</option>
+                                <option value="08小时">08时</option>
+                                <option value="09小时">09时</option>
+                                <option value="10小时">10时</option>
+                                <option value="11小时">11时</option>
+                                <option value="12小时">12时</option>
+                                <option value="13小时">13时</option>
+                                <option value="14小时">14时</option>
+                                <option value="15小时">15时</option>
+                                <option value="16小时">16时</option>
+                                <option value="17小时">17时</option>
+                                <option value="18小时">18时</option>
+                                <option value="19小时">19时</option>
+                                <option value="20小时">20时</option>
+                                <option value="21小时">21时</option>
+                                <option value="22小时">22时</option>
+                                <option value="23小时">23时</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="date-btn"><button id="search">查询</button></div>
+                </div>
+            </div>
+            <div class="layer">
+                <div class="element-title">
+                    <span>图层信息</span>
+                </div>
+                <div class="layer-content">
+                    <div class="clearfix">
+                        <div class="layer-box">
+                            <input id="basic" type="checkbox" checked>
+                            <label for="basic">基本站</label>
+                        </div>
+                        <div class="layer-box">
+                            <input id="encrypt" type="checkbox">
+                            <label for="encrypt">加密站</label>
+                        </div>
+                        <div class="layer-box">
+                            <input id="station" type="checkbox">
+                            <label for="station">站名</label>
+                        </div>
+                        <div class="layer-box">
+                            <input id="value" type="checkbox">
+                            <label for="value">站值</label>
+                        </div>
+                        <div class="layer-box layer-isoline">
+                            <input id="contour" type="checkbox">
+                            <label for="contour">等值线</label>
+                        </div>
+                        <div class="layer-box">
+                            <input id="color-figure" type="checkbox">
+                            <label for="color-figure">色斑图</label>
+                        </div>
+                    </div>
+                    <div class="layer-text clearfix">
+                        <a href="javascript:;">雨</a>
+                        <a href="javascript:;" class="action">温</a>
+                        <a href="javascript:;">风</a>
+                        <a href="javascript:;">湿</a>
+                        <a href="javascript:;">压</a>
+                        <a href="javascript:;">地</a>
+                    </div>
+                </div>
+            </div>
+            <div class="shrink shrink-right" id="shrink-right"></div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="thirdparty/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="easyUI/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="easyUI/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="thirdparty/jquery.nicescroll.min.js"></script>
+<script type="text/javascript" src="thirdparty/jquery.nicescroll.min.js"></script>
+<script type="text/javascript" src="thirdparty/swiper-3.4.2.min.js"></script>
+<script type="text/javascript" src="thirdparty/leaflet.js"></script>
+<script type="text/javascript" src="thirdparty/leaflet-windbarb.js"></script>
+<script type="text/javascript" src="thirdparty/leaflet.ChineseTmsProviders.js"></script>
+<script type="text/javascript" src="js/ground-location.js"></script>
+<script type="text/javascript" src="js/groundDetection.js"></script>
+<script type="text/javascript" src="js/mapInfo.js"></script>
+<script type="text/javascript" src="js/color-control.js"></script>
+<script type="text/javascript" src="js/right-control/arrayRegion.js"></script>
+<script type="text/javascript" src="js/right-control/ArrayData.js"></script>
+<script type="text/javascript" src="js/right-control/typeRegion.js"></script>
+</html>

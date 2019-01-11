@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .element-txt{
+            line-height: 20px;
+            text-align: center;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            position: absolute;
+            left: 610px;
+            top: 60px;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .element-txt span{
+            width: 34px;
+            float: left;
+            color: #ffffff;
+            font-size: 12px;
+            background: #ff5f5f;
+        }
+
+        .element-txt span:nth-of-type(2){
+            background: #ff9853;
+        }
+
+        .element-txt span:nth-of-type(3){
+            background: #f5c840;
+        }
+
+        .element-txt span:nth-of-type(4){
+            background: #c3cf42;
+        }
+
+        .element-txt span:nth-of-type(5){
+            background: #85c53a;
+        }
+
+        .element-txt span:nth-of-type(6){
+            background: #38cfca;
+        }
+
+        .element-value{
+            text-align: center;
+            border-top: 1px solid #dadada;
+            border-right: 1px solid #d5d5d5;
+            border-bottom: 1px solid #d8d8d8;
+            border-left: 1px solid #d5d5d5;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            position: absolute;
+            left: 610px;
+            top: 90px;
+            z-index: 1000;
+            -webkit-box-shadow: 1px 3px 10px #f1f1f1;
+            -moz-box-shadow: 1px 3px 10px #f1f1f1;
+            box-shadow: 1px 3px 10px #f1f1f1;
+            background: url("images/element-value-bg.png") repeat-x;
+        }
+
+        .element-value span{
+            width: 30px;
+            line-height: 20px;
+            float: left;
+            color: #dd0404;
+            background: url("images/divider.png") no-repeat left;
+        }
+
+        .element-value span:first-child{
+            color: #ff5f5f;
+            background: none;
+        }
+
+        .element-value span:nth-of-type(2){
+            color: #ff9853;
+        }
+
+        .element-value span:nth-of-type(3){
+            color: #f5c840;
+        }
+
+        .element-value span:nth-of-type(4){
+            color: #c3cf42;
+        }
+
+        .element-value span:nth-of-type(5){
+            color: #85c53a;
+        }
+
+        .element-value span:nth-of-type(6){
+            color: #38cfca;
+        }
+
+        .element-value:before{
+            content: '';
+            width: 10px;
+            height: 7px;
+            margin-left: -4px;
+            display: block;
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            background: url("images/element-triangle.png") no-repeat;
+        }
+    </style>
+</head>
+<body>
+<div class="element-txt clearfix">
+    <span>降雨</span>
+    <span>温度</span>
+    <span>风</span>
+    <span>湿度</span>
+    <span>气压</span>
+    <span>地温</span>
+</div>
+<div class="element-value clearfix">
+    <span>100</span>
+    <span>22</span>
+    <span>10</span>
+    <span>15</span>
+    <span>40</span>
+    <span>10</span>
+</div>
+</body>
+</html>

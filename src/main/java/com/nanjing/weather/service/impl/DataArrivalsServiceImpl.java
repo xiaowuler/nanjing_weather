@@ -1,10 +1,7 @@
 package com.nanjing.weather.service.impl;
 
 import com.nanjing.weather.dao.DataArrivalsMapper;
-import com.nanjing.weather.domain.CenterDataArrival;
-import com.nanjing.weather.domain.DataArrivalLitter;
-import com.nanjing.weather.domain.DataArrivals;
-import com.nanjing.weather.domain.DataState;
+import com.nanjing.weather.domain.*;
 import com.nanjing.weather.entity.DataArrival;
 import com.nanjing.weather.service.DataArrivalsService;
 import com.nanjing.weather.utils.PageResult;
@@ -48,8 +45,7 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
 
     @Override
     public List<List<DataState>> findState() {
-        DataState ds = new DataState();
-        List<List<DataState>> list = new ArrayList<>();
+        /*List<List<DataState>> list = new ArrayList<>();
         List<DataState> routine = null;
         List<DataState> windData = null;
 
@@ -92,7 +88,7 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
             notRoutineData.add("地温");
             List<String> strings = getFlag(notRoutineData, dataStates);
             for (String name : strings) {
-                DataState dataState = addData(ds, name);
+                DataState dataState = addData(name);
                 dataStates.add(dataState);
             }
         }
@@ -131,7 +127,7 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
             notRoutineData.add("风廓线");
             List<String> strings = getFlag(notRoutineData, routine);
             for (String name : strings) {
-                DataState dataState = addData(ds, name);
+                DataState dataState = addData(name);
                 routine.add(dataState);
             }
         }
@@ -158,6 +154,76 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
             list.add(windData);
         }
 
+        return list;*/
+        return null;
+    }
+
+    @Override
+    public List<List<DataState>> findDataState() {
+        List<List<DataState>> list = new ArrayList<>();
+        List<DataArrival> maxList = dataArrivalsMapper.findMaxTime();
+        List<DataState> routineData = new ArrayList<>();
+        List<DataState> notRoutineData = new ArrayList<>();
+        List<DataState> windData = new ArrayList<>();
+        for(DataArrival dataArrival:maxList){
+            if(dataArrival.getProductTypeCode().equals("humidity")){
+                routineData = dataArrivalsMapper.findState(dataArrival.getRoutineTime().toString());
+                routineData = getHandleTime(routineData);
+            }
+
+            if(dataArrival.getProductTypeCode().equals("2d-tu")){
+                notRoutineData = dataArrivalsMapper.findNotRoutine(dataArrival.getRoutineTime().toString());
+                notRoutineData = getHandleTime(notRoutineData);
+            }
+
+            if(dataArrival.getProductTypeCode().equals("6-fen-zhong")){
+                windData = dataArrivalsMapper.findWindData(dataArrival.getRoutineTime().toString());
+                windData = getHandleTime(windData);
+            }
+        }
+
+        if (routineData.size() < 6) {
+            List<String> routineString = new ArrayList<>();
+            routineString.add("湿度");
+            routineString.add("温度");
+            routineString.add("气压");
+            routineString.add("降雨");
+            routineString.add("风");
+            routineString.add("地温");
+            List<String> strings = getFlag(routineString, routineData);
+            for (String name : strings) {
+                DataState dataState = addData(name);
+                routineData.add(dataState);
+            }
+        }
+
+        if (notRoutineData.size() < 4) {
+            List<String> notRoutineString = new ArrayList<>();
+            notRoutineString.add("雨滴谱");
+            notRoutineString.add("激光雷达");
+            notRoutineString.add("微波辐射");
+            notRoutineString.add("GPS/MET");
+            List<String> strings = getFlag(notRoutineString, notRoutineData);
+            for (String name : strings) {
+                DataState dataState = addData(name);
+                notRoutineData.add(dataState);
+            }
+        }
+
+        for(DataState dataState:routineData){
+            for(DataArrivalLitter dataArrivalLitter:dataState.getDataArrivalLitter()){
+                for(CenterDataArrival centerDataArrival:dataArrivalLitter.getCenterDataArrival()){
+                    String num = centerDataArrival.getDescription().replaceAll("[^0-9\\-]", "");
+                    centerDataArrival.setDescription(num);
+                }
+            }
+        }
+
+        list.add(routineData);
+        notRoutineData = getUpArea(notRoutineData);
+        list.add(setAreaName(notRoutineData));
+        windData = getUpArea(windData);
+        list.add(setAreaName(windData));
         return list;
     }
 
@@ -191,18 +257,55 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
         return dataStates;
     }
 
+    //处理地区
+    private List<DataState> setAreaName(List<DataState> dataStates){
+
+        List<String> strings = new ArrayList<>();
+        strings.add("JN");
+        strings.add("GC");
+        strings.add("LS");
+        strings.add("LH");
+        strings.add("PK");
+
+        for (String str : strings) {
+            for(DataState dataState:dataStates){
+                for(DataArrivalLitter dataArrivalLitter:dataState.getDataArrivalLitter()){
+                    if(dataArrivalLitter.getCenterDataArrival().size() < 5){
+                        boolean flag = false;
+                        for(CenterDataArrival centerDataArrival:dataArrivalLitter.getCenterDataArrival()){
+                            if(centerDataArrival.getProductRegionCode().equals(str)){
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if(flag == false){
+                            CenterDataArrival centerDataArrival = new CenterDataArrival();
+                            centerDataArrival.setProductRegionCode(str);
+                            centerDataArrival.setTimeliessCode("lost");
+                            dataArrivalLitter.getCenterDataArrival().add(centerDataArrival);
+                        }
+                    }
+                }
+            }
+        }
+
+        return dataStates;
+    }
+
     //处理地区首字母
     private List<DataState> getUpArea(List<DataState> dataStates){
         for(DataState dataState:dataStates){
             if(dataState.getDataArrivalLitter().get(0).getCenterDataArrival().get(0).getProductRegionCode() != null){
                 for(DataArrivalLitter dataArrivalLitter:dataState.getDataArrivalLitter()){
                     for(CenterDataArrival centerDataArrival:dataArrivalLitter.getCenterDataArrival()){
-                        String[] string = centerDataArrival.getProductRegionCode().split("-");
-                        String area = "";
-                        for(String str :string){
-                            area += str.substring(0,1).toUpperCase();
+                        if(centerDataArrival.getProductRegionCode().contains("-")){
+                            String[] string = centerDataArrival.getProductRegionCode().split("-");
+                            String area = "";
+                            for(String str :string){
+                                area += str.substring(0,1).toUpperCase();
+                            }
+                            centerDataArrival.setProductRegionCode(area);
                         }
-                        centerDataArrival.setProductRegionCode(area);
                     }
                 }
             }
@@ -246,22 +349,24 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
     }
 
     //添加数据
-    private DataState addData(DataState ds, String name) {
-        DataState dataState = ds;
+    private DataState addData(String name) {
+        DataState dataState = new DataState();
         dataState.setProductCategoryCode(name);
         dataState.setProductTypeCode(name);
         List<DataArrivalLitter> litterList = new ArrayList<>();
         DataArrivalLitter dataArrivalLitter = new DataArrivalLitter();
         List<CenterDataArrival> centerDataArrivals = new ArrayList<>();
         CenterDataArrival centerDataArrival = new CenterDataArrival();
+        if (name.equals("GPS/MET")) {
+            centerDataArrival.setTimeliessCode("lost");
+        } else {
+            centerDataArrival.setTimeliessCode("missing");
+        }
+        centerDataArrival.setProductRegionCode("jiang"+"-"+"ning");
+        centerDataArrival.setDescription("-1");
+        centerDataArrivals.add(centerDataArrival);
+        dataArrivalLitter.setCenterDataArrival(centerDataArrivals);
         for (int i = 0; i < 12; i++) {
-            if (name.equals("GPS/MET")) {
-                centerDataArrival.setTimeliessCode("lost");
-            } else {
-                centerDataArrival.setTimeliessCode("missing");
-            }
-            centerDataArrivals.add(centerDataArrival);
-            dataArrivalLitter.setCenterDataArrival(centerDataArrivals);
             litterList.add(dataArrivalLitter);
         }
         dataState.setDataArrivalLitter(litterList);

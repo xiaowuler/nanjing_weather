@@ -17,4 +17,6 @@ public interface DataArrivalsService {
     PageResult<DataArrivals> findByHalfTime(Integer page, Integer rows, String type);
 
     List<List<DataState>> findState();
+
+    List<List<DataState>> findDataState();
 }

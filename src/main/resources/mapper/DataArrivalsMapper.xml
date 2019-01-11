@@ -144,7 +144,7 @@
             data_arrivals da
             LEFT JOIN product_categories pc ON da.product_category_code = pc.`code`
         WHERE
-            routine_time BETWEEN ( SELECT date_sub( #{0}, INTERVAL 2 HOUR ) )
+            routine_time BETWEEN ( SELECT date_sub( #{0}, INTERVAL 1 HOUR ) )
             AND #{0}
             AND product_category_code = 'feng-kuo-xian'
         ORDER BY

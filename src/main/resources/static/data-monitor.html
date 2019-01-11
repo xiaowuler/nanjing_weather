@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>观测资料监控 - 南京市基础气象信息综合数据平台</title>
+    <title>观测资料监控</title>
     <link rel="stylesheet" href="easyUI/easyui.css">
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/data-monitor.css">
@@ -16,205 +16,398 @@
         <div class="top-menu fr clearfix">
             <div class="nav fl">
                 <ul class="clearfix">
-                    <li class="nav-home"><a href="index.html">首页</a></li>
-                    <li class="nav-detect"><a href="aerological-sound.html?category=ji-guang-lei-da">非常规高空探测</a></li>
-                    <li class="nav-observe"><a href="home.html">自动站常规要素观测</a></li>
-                    <li class="nav-sequence action"><a href="data-monitor.html">观测资料监控</a></li>
-                    <!--<li class="nav-manage"><a href="javascript:;">系统管理</a></li>-->
-
+                    <li class="nav-monitor"><a href="javascript:;">实况监控</a></li>
+                    <li class="nav-high-detect"><a href="aerological-sound.html?category=ji-guang-lei-da">高空探测</a></li>
+                    <li class="nav-ground-detect"><a href="home.html">地面探测</a></li>
+                    <li class="nav-material action"><a href="data-monitor.html">资料监控</a></li>
                 </ul>
             </div>
-            <!--<div class="operate fr">
-                <a href="javascript:;" class="operate-admin fl">欢迎 管理员</a>
-                <a href="logout" class="operate-cancel fl">注销</a>
-            </div>-->
+            <div class="top-bg"></div>
         </div>
     </div>
     <div class="main">
-        <div class="aside">
-            <ul id="first-menu">
-                <li class="level-first-menu first-menu-click level-element action">
-                    <span class="aside-title">基础六要素</span>
-                    <span class="aside-bottom-line"></span>
-                    <span class="aside-left-line"></span>
-                    <ul class="level-second-menu" id="weatherUl">
-                        <li class="active" val="rainfall" name="li">降雨</li>
-                        <li val="temperature" name="li">温度</li>
-                        <li val="wind" name="li">风</li>
-                        <li val="pressure" name="li">气压</li>
-                        <li val="humidity" name="li">湿度</li>
-                        <li val="ground_temperature" name="li">地温</li>
+        <div class="aside aside-left">
+            <ul>
+                <li class="first-menu menu-radar selected">
+                    <a href="javascript:;" class="first-menu-title" val="ji-guang-lei-da"><i></i>气象六要素</a>
+                    <ul class="second-nav">
+                        <li class="second-menu"><a href="javascript:;">降雨</a></li>
+                        <li class="second-menu active"><a href="javascript:;">温度</a></li>
+                        <li class="second-menu"><a href="javascript:;">风</a></li>
+                        <li class="second-menu"><a href="javascript:;">气压</a></li>
+                        <li class="second-menu"><a href="javascript:;">湿度</a></li>
+                        <li class="second-menu"><a href="javascript:;">地温</a></li>
                     </ul>
                 </li>
-                <li class="level-first-menu first-menu-click level-radar">
-                    <span class="aside-title">激光雷达</span>
-                    <span class="aside-bottom-line"></span>
-                    <span class="aside-left-line"></span>
-                    <ul class="level-second-menu">
-                        <li val="xiao-guang" name="li">消光</li>
-                        <li val="tui-pian" name="li">退偏</li>
-                        <li val="pm10" name="li">PM10</li>
-
+                <li class="first-menu menu-radar">
+                    <a href="javascript:;" class="first-menu-title" val="ji-guang-lei-da"><i></i>激光雷达</a>
+                    <ul class="second-nav">
+                        <li class="second-menu"><a href="javascript:;">消光</a></li>
+                        <li class="second-menu"><a href="javascript:;">退偏</a></li>
+                        <li class="second-menu"><a href="javascript:;">PM10</a></li>
                     </ul>
                 </li>
-                <li class="level-first-menu first-menu-click level-broad">
-                    <span class="aside-title">风廓线</span>
-                    <span class="aside-bottom-line"></span>
-                    <span class="aside-left-line"></span>
-                    <ul class="level-second-menu">
-                        <li val="6-fen-zhong" name="li">6分钟</li>
-                        <li val="30-fen-zhong" name="li">30分钟</li>
-                        <li val="60-fen-zhong" name="li">60分钟</li>
+                <li class="first-menu menu-broad">
+                    <a href="javascript:;" class="first-menu-title" val="feng-kuo-xian"><i></i>风廓线</a>
+                    <ul class="second-nav">
+                        <li class="second-menu"><a href="javascript:;">6分钟</a></li>
+                        <li class="second-menu"><a href="javascript:;">30分钟</a></li>
+                        <li class="second-menu"><a href="javascript:;">60分钟</a></li>
                     </ul>
                 </li>
-                <li class="level-first-menu first-menu-click level-microwave">
-                    <span class="aside-title">微波辐射</span>
-                    <span class="aside-bottom-line"></span>
-                    <span class="aside-left-line"></span>
-                    <ul class="level-second-menu">
-                        <li val="3d-tu" name="li">3D图</li>
-                        <li val="kuo-xian" name="li">廓线</li>
-                        <li val="2d-tu" name="li">2D图</li>
+                <li class="first-menu menu-microwave">
+                    <a href="javascript:;" class="first-menu-title" val="wei-bo-fu-she"><i></i>微波辐射</a>
+                    <ul class="second-nav">
+                        <li class="second-menu"><a href="javascript:;">3D图</a></li>
+                        <li class="second-menu"><a href="javascript:;">廓线</a></li>
+                        <li class="second-menu"><a href="javascript:;">2D图</a></li>
                     </ul>
                 </li>
-                <li class="level-first-menu first-menu-click level-raindrop">
-                    <span class="aside-title" val="yu-di-pu">雨滴谱</span>
-                    <span class="aside-bottom-line"></span>
-                    <span class="aside-left-line"></span>
-                    <ul class="level-second-menu">
-                        <li val="yu-di-pu" name="li">雨滴谱</li>
-
+                <li class="first-menu menu-raindrop">
+                    <a href="javascript:;" class="first-menu-title" val="yu-di-pu"><i></i>雨滴谱</a>
+                    <ul class="second-nav">
+                        <li class="second-menu"><a href="javascript:;">雨滴谱</a></li>
                     </ul>
                 </li>
-                <li class="level-first-menu first-menu-click level-gps">
-                    <span class="aside-title" val="gps/met">GPS/MET</span>
-                    <span class="aside-bottom-line"></span>
-                    <span class="aside-left-line"></span>
-                    <ul class="level-second-menu">
-                        <li val="gps/met" name="li">GPS/MET</li>
-
+                <li class="first-menu menu-gps">
+                    <a href="javascript:;" class="first-menu-title" val="gps/met"><i></i>GPS/MET</a>
+                    <ul class="second-nav">
+                        <li class="second-menu"><a href="javascript:;">GPS/MET</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
         <div class="content">
-            <div class="content-column clearfix">
-                <div class="content-txt">
-                    <div class="content-calendar">
-                        <input class="easyui-datebox" id="calendar" label="日期" data-options="editable:false"
-                               value="123">
-                    </div>
-                    <div class="hour-select">
-                        <span id="start-text" class="interval-text start-hour">00时</span>
-                        <ul id="start-select" class="interval-select">
-                            <li class="action">00时</li>
-                            <li>01时</li>
-                            <li>02时</li>
-                            <li>03时</li>
-                            <li>04时</li>
-                            <li>05时</li>
-                            <li>06时</li>
-                            <li>07时</li>
-                            <li>08时</li>
-                            <li>09时</li>
-                            <li>10时</li>
-                            <li>11时</li>
-                            <li>12时</li>
-                            <li>13时</li>
-                            <li>14时</li>
-                            <li>15时</li>
-                            <li>16时</li>
-                            <li>17时</li>
-                            <li>18时</li>
-                            <li>19时</li>
-                            <li>20时</li>
-                            <li>21时</li>
-                            <li>22时</li>
-                            <li>23时</li>
-                        </ul>
+            <div class="operate clearfix">
+                <div class="operate-left clearfix">
+                    <span class="area-title">地区</span>
+                    <div class="area-name operate-border">
+                        <a href="javascript:;">高淳</a>
+                        <a href="javascript:;" class="action">溧水</a>
+                        <a href="javascript:;">六合</a>
+                        <a href="javascript:;">浦口</a>
+                        <a href="javascript:;">江宁</a>
                     </div>
                 </div>
-                <div class="content-txt content-line"></div>
-                <div class="content-txt">
-                    <div class="content-calendar">
-                        <input class="easyui-datebox" id="end-calendar" label="" data-options="editable:false"
-                               value="123">
+                <div class="operate-right">
+                    <div class="calendar-control start-date">
+                        <input class="easyui-datebox" id="calendar" label="起止日期" data-options="editable:false" value="123">
                     </div>
-                    <div class="hour-select">
-                        <span id="end-text" class="interval-text end-hour">00时</span>
-                        <ul id="end-select" class="interval-select">
-                            <li class="action">00时</li>
-                            <li>01时</li>
-                            <li>02时</li>
-                            <li>03时</li>
-                            <li>04时</li>
-                            <li>05时</li>
-                            <li>06时</li>
-                            <li>07时</li>
-                            <li>08时</li>
-                            <li>09时</li>
-                            <li>10时</li>
-                            <li>11时</li>
-                            <li>12时</li>
-                            <li>13时</li>
-                            <li>14时</li>
-                            <li>15时</li>
-                            <li>16时</li>
-                            <li>17时</li>
-                            <li>18时</li>
-                            <li>19时</li>
-                            <li>20时</li>
-                            <li>21时</li>
-                            <li>22时</li>
-                            <li>23时</li>
-                        </ul>
+                    <div class="time-select">
+                        <select class="easyui-combobox" name="state" labelPosition="top" editable="false">
+                            <option value="00时">00时</option>
+                            <option value="01时">01时</option>
+                            <option value="02时">02时</option>
+                            <option value="03时">03时</option>
+                            <option value="04时">04时</option>
+                            <option value="05时">05时</option>
+                            <option value="06时">06时</option>
+                            <option value="07时">07时</option>
+                            <option value="08时">08时</option>
+                            <option value="09时">09时</option>
+                            <option value="10时">10时</option>
+                            <option value="11时">11时</option>
+                            <option value="12时">12时</option>
+                            <option value="13时">13时</option>
+                            <option value="14时">14时</option>
+                            <option value="15时">15时</option>
+                            <option value="16时">16时</option>
+                            <option value="17时">17时</option>
+                            <option value="18时">18时</option>
+                            <option value="19时">19时</option>
+                            <option value="20时">20时</option>
+                            <option value="21时">21时</option>
+                            <option value="22时">22时</option>
+                            <option value="23时">23时</option>
+                        </select>
                     </div>
+                    <div class="time-split">~</div>
+                    <div class="calendar-control end-date">
+                        <input class="easyui-datebox" id="end-date" data-options="editable:false" value="123">
+                    </div>
+                    <div class="time-select end-time-select">
+                        <select class="easyui-combobox" name="state" labelPosition="top" editable="false">
+                            <option value="00时">00时</option>
+                            <option value="01时">01时</option>
+                            <option value="02时">02时</option>
+                            <option value="03时">03时</option>
+                            <option value="04时">04时</option>
+                            <option value="05时">05时</option>
+                            <option value="06时">06时</option>
+                            <option value="07时">07时</option>
+                            <option value="08时">08时</option>
+                            <option value="09时">09时</option>
+                            <option value="10时">10时</option>
+                            <option value="11时">11时</option>
+                            <option value="12时">12时</option>
+                            <option value="13时">13时</option>
+                            <option value="14时">14时</option>
+                            <option value="15时">15时</option>
+                            <option value="16时">16时</option>
+                            <option value="17时">17时</option>
+                            <option value="18时">18时</option>
+                            <option value="19时">19时</option>
+                            <option value="20时">20时</option>
+                            <option value="21时">21时</option>
+                            <option value="22时">22时</option>
+                            <option value="23时">23时</option>
+                        </select>
+                    </div>
+                    <button class="query-button">查询</button>
                 </div>
-                <button class="content-txt content-query" id="query-button">查询</button>
             </div>
-            <div class="content-monitor">
-                <div class="monitor ">
-
-                    <table id="data-monitor-grid"></table>
-                    <div class="angle angle1"></div>
-                    <div class="angle angle2"></div>
-                    <div class="angle angle3"></div>
-                    <div class="angle angle4"></div>
-                </div>
+            <div class="monitor">
+                <table id="data-monitor-grid">
+                    <thead>
+                    <tr>
+                        <th data-options="field:'Time',width:$(this).width() * 0.12,align:'center'">资料时间</th>
+                        <th data-options="field:'StartTime',width:$(this).width() * 0.12,align:'center'">采集开始时间</th>
+                        <th data-options="field:'EndTime',width:$(this).width() * 0.12,align:'center'">采集结束时间</th>
+                        <th data-options="field:'Result',width:$(this).width() * 0.12,align:'center'">采集结果</th>
+                        <th data-options="field:'Remark',width:375,align:'center'">备注</th>
+                        <th data-options="field:'Operate',width:$(this).width() * 0.12,align:'center'">操作</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect gather">正在采集</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect success">采集失败</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect success">采集成功</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect failure">采集失败</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect success">采集成功</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect gather">采集失败</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect success">采集成功</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect failure">采集失败</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect success">采集成功</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect failure">采集失败</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect success">采集成功</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect failure">采集失败</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect success">采集成功</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect failure">采集失败</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect success">采集成功</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect failure">采集失败</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect success">采集成功</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect failure">采集失败</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect success">采集成功</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect failure">采集失败</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect success">采集成功</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect failure">采集失败</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect success">采集成功</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect failure">采集失败</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect success">采集成功</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect failure">采集失败</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect success">采集成功</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect failure">采集失败</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                    <tr>
+                        <td>2018/11/22  10:10</td>
+                        <td>2018/11/22  10:12</td>
+                        <td>2018/11/22  10:20</td>
+                        <td><span class="collect success">采集成功</span></td>
+                        <td>共采集数据<span class="monitor-mun">200</span>条</td>
+                        <td><button class="collect-refresh">重新采集</button></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
 </div>
 </body>
-<script type="text/javascript" src="thirdparty/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="easyUI/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="easyUI/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="js/data-monitor.js"></script>
-<!--<script>
-    /*$('#dg').datagrid({
-        url:'dataArrivals/findByType',
-        columns:[[
-            {field:'routine_Time',title:'资料时间',width:100},
-            {field:'begin_sync_time',title:'采集开始时间',width:100},
-            {field:'end_sync_time',title:'采集结束时间',width:100,align:'right'},
-            {field:'timeliness_code',title:'采集结果',width:100},
-        ]],
-        pagination : true,
-        //选择当前页
-        pageNumber : 1,
-        //页面显示几个
-        pageSize : 3,
-        //可选页面显示几个
-        pageList : [3,5,9]
-    });*/
-   /* $('.data-monitor-grid').datagrid('load', {
-        url:'dataArrivals/findByType',
-        columns:[[
-            {field:'routine_Time',title:'资料时间',width:100},
-            {field:'begin_sync_time',title:'采集开始时间',width:100},
-            {field:'end_sync_time',title:'采集结束时间',width:100,align:'right'},
-            {field:'timeliness_code',title:'采集结果',width:100},
-        ]]});
-    $('#dg').datagrid('reload');    // 重新载入当前页面数据*/
-</script>-->
 </html>
