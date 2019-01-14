@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/leaflet.css">
+    <link rel="stylesheet" type="text/css" href="css/color-control.css">
     <script src="js/helper.js"></script>
 </head>
 
@@ -20,12 +21,24 @@
     <img src="picture/loading.gif" class="load-img"/>
 </div>
 
-<div class="color-wrapper clearfix" id="drag">
+<!--<div class="color-wrapper clearfix" id="drag">
     <div id="color-unit">
     </div>
     <div class="color-gradient fl" id="color-number">
     </div>
     <div class="color-value fl" id="color-value">
+    </div>
+</div>-->
+
+<div class="color-control" id="drag" style="display: none">
+    <div class="color-content clearfix">
+        <div class="color-unit">
+            <div class="color-align" id="color-text">
+                <p>温度(单位: ℃)</p>
+            </div>
+        </div>
+        <div class="color-gradient" id="color-gradient"></div>
+        <div class="color-value" id="color-value"></div>
     </div>
 </div>
 
@@ -244,11 +257,11 @@
                             <label for="encrypt">加密站</label>
                         </div>
                         <div class="layer-box">
-                            <input id="station" type="checkbox">
+                            <input id="station" type="checkbox" checked>
                             <label for="station">站名</label>
                         </div>
                         <div class="layer-box">
-                            <input id="value" type="checkbox">
+                            <input id="value" type="checkbox" checked>
                             <label for="value">站值</label>
                         </div>
                         <div class="layer-box layer-isoline">
@@ -256,17 +269,18 @@
                             <label for="contour">等值线</label>
                         </div>
                         <div class="layer-box">
-                            <input id="color-figure" type="checkbox">
+                            <input id="color-figure" type="checkbox" checked>
                             <label for="color-figure">色斑图</label>
                         </div>
                     </div>
                     <div class="layer-text clearfix">
-                        <a href="javascript:;">雨</a>
+                        <!--<a href="javascript:;">雨</a>
                         <a href="javascript:;" class="action">温</a>
                         <a href="javascript:;">风</a>
                         <a href="javascript:;">湿</a>
                         <a href="javascript:;">压</a>
-                        <a href="javascript:;">地</a>
+                        <a href="javascript:;">地</a>-->
+                        <a href="javascript:;" class="action temp" val="temperatures">温</a>
                     </div>
                 </div>
             </div>

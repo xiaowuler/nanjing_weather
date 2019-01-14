@@ -38,25 +38,54 @@ var GroundDetection = function () {
         var time = this.timeFormat(startTime,endTime);
 
         this.senseRainfallCheck(time);
+        this.senseTermperCheck(time);
+        this.senseWindCheck(time);
+        this.senseGroundTermperCheck(time);
+        this.sensePressCheck(time);
+        this.senseHumCheck(time);
     }
 
     this.senseRainfallCheck = function (time) {
-        if($('.millimeter-select a.action') != null){
+        if($('.millimeter-select a.action').length > 0){
             var parmOne = $('.millimeter-select a.action').attr('val')
             this.playCode(parmOne,null,time,'rainfalls');
         }
     }
 
-    this.senseTermperCheck = function () {
-
+    this.senseTermperCheck = function (time) {
+        if($('.variable-select a.action').length > 0){
+            var parmOne = $('.variable-select a.action').attr('val');
+            var parmTwo = $('.temperature-select a.action').attr('val');
+             this.playCode(parmOne,parmTwo,time,'temperatures');
+        }
     }
 
-    this.senseWindCheck = function () {
-        
+    this.senseWindCheck = function (time) {
+        if($('.wind-select a.action').length > 0){
+            var parmOne = $('.wind-select a.action').attr('val')
+            this.playCode(parmOne,null,time,'winds');
+        }
     }
     
-    this.senseGroundTermperCheck = function () {
-        
+    this.senseGroundTermperCheck = function (time) {
+        if($('.geothermal-select a.action').length > 0){
+            var parmOne = $('.geothermal-select a.action').attr('val');
+            this.playCode(parmOne,null,time,'groundTemperature');
+        }
+    }
+
+    this.sensePressCheck = function (time) {
+        if($('.air-pressure-select a.action').length > 0){
+            var parmOne = $('.air-pressure-select a.action').attr('val');
+            this.playCode(parmOne,null,time,'pressures');
+        }
+    }
+    
+    this.senseHumCheck = function (time) {
+        if($('.humidity-select a.action').length > 0){
+            var parmOne = $('.humidity-select a.action').attr('val');
+            this.playCode(parmOne,null,time,'humidities');
+        }
     }
 
     this.timeFormat = function (timeStart, timeEnd) {
@@ -74,8 +103,13 @@ var GroundDetection = function () {
             if (parseFloat(startNum) > parseFloat(endNum)) {
                 return null;
             }
-            startTime += startArray[i] + '/';
-            endTime += endArray[i] + '/';
+            if(i == startArray.length - 2){
+                startTime += startArray[i] + ' ';
+                endTime += endArray[i] + ' ';
+            }else {
+                startTime += startArray[i] + '/';
+                endTime += endArray[i] + '/';
+            }
         }
         if (parseFloat(startNum + startHour) > parseFloat(endNum + endHour)) {
             alert("时间选段出错，请调整后查询！！");
@@ -199,13 +233,13 @@ var GroundDetection = function () {
     }
 
     this.plotValueSense = function () {
-        if($('#value').attr('checked')){
-            if($('#basic').attr('checked')){
+        if($('#value').prop('checked')){
+            if($('#basic').prop('checked')){
                 if(this.result != null)
                     this.MapInfo.basePlotValue(this.result.regions);
             }
 
-            if($('#encrypt').attr('checked')){
+            if($('#encrypt').prop('checked')){
                 if(this.result != null)
                     this.MapInfo.encryPlotValue(this.result.regions);
             }
@@ -220,13 +254,13 @@ var GroundDetection = function () {
     }
 
     this.plotNameSense = function () {
-        if($('#station').attr('checked')){
-            if($('#basic').attr('checked')){
+        if($('#station').prop('checked')){
+            if($('#basic').prop('checked')){
                 if(this.result != null)
                     this.MapInfo.basePoltDirName(this.result.regions);
             }
 
-            if($('#encrypt').attr('checked')){
+            if($('#encrypt').prop('checked')){
                 if(this.result != null)
                     this.MapInfo.encryptionPointName(this.result.regions);
             }
@@ -239,13 +273,13 @@ var GroundDetection = function () {
     }
 
     this.basePoltSense = function () {
-        if($('#basic').attr('checked')){
-            if($('#station').attr('checked')){
+        if($('#basic').prop('checked')){
+            if($('#station').prop('checked')){
                 if(this.result != null)
                     this.MapInfo.basePoltDirName(this.result.regions);
             }
 
-            if($('#value').attr('checked')){
+            if($('#value').prop('checked')){
                 if(this.result != null)
                     this.MapInfo.basePlotValue(this.result.regions);
             }
@@ -259,13 +293,13 @@ var GroundDetection = function () {
     }
 
     this.encryPlotSense = function () {
-        if($('#encrypt').attr('checked')){
-            if($('#station').attr('checked')){
+        if($('#encrypt').prop('checked')){
+            if($('#station').prop('checked')){
                 if(this.result != null)
                     this.MapInfo.encryptionPointName(this.result.regions);
             }
 
-            if($('#value').attr('checked')){
+            if($('#value').prop('checked')){
                 if(this.result != null)
                     this.MapInfo.encryPlotValue(this.result.regions);
             }
@@ -378,7 +412,7 @@ var GroundDetection = function () {
 
     this.isolineAndSplashMapClick = function () {
         $('#contour').off('click').on('click',function (e) {
-            if($(e.target).attr('checked')){
+            if($(e.target).prop('checked')){
                 if($('.layer-text a.action').attr('val') != null){
                     if (this.MapInfo.ContourLayer != null) {
                         this.MapInfo.Map.removeLayer(this.MapInfo.ContourLayer);
@@ -392,7 +426,7 @@ var GroundDetection = function () {
         }.bind(this))
 
         $('#color-figure').off('click').on('click',function (e) {
-            if($(e.target).attr('checked')){
+            if($(e.target).prop('checked')){
                 if($('.layer-text a.action').attr('val') != null)
                     if (this.MapInfo.layer != null) {
                         this.MapInfo.Map.removeLayer(this.MapInfo.layer);

@@ -139,7 +139,7 @@ var ColorContorl = function () {
         for (var i = 0; i < this.color.length; i++) {
             var node = document.getElementById('color-gradient');
             var dataId = node.getElementsByTagName('span')[i];
-            setGradient(dataId, 'rgb(' + this.color[i][0] + ')', 'rgb(' + this.color[i][1] + ')');
+            setGradient(dataId, 'rgb(' + this.color[i][1] + ')', 'rgb(' + this.color[i][0] + ')');
         }
     };
 };
