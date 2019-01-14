@@ -3,6 +3,16 @@
 <!--客户映射 指定到dao接口 -->
 <mapper namespace="com.nanjing.weather.dao.DataArrivalsMapper">
 
+    <select id="findAllType" resultType="com.nanjing.weather.domain.DataArrivals" parameterType="map">
+        select * from data_arrivals WHERE product_type_code =#{type}
+        ORDER BY routine_time DESC limit #{begin},#{pageSize}
+    </select>
+
+    <select id="findAllTypeAndTime" resultType="com.nanjing.weather.domain.DataArrivals" parameterType="map">
+        select * from data_arrivals WHERE routine_time between #{startTime} and #{endTime} AND product_type_code =#{type}
+        ORDER BY routine_time DESC limit #{begin},#{pageSize};
+    </select>
+
     <select id="findByType" resultType="com.nanjing.weather.domain.DataArrivals" parameterType="map">
         select * from data_arrivals WHERE product_type_code =#{type} AND end_sync_time is NOT null
         ORDER BY routine_time DESC limit #{begin},#{pageSize};

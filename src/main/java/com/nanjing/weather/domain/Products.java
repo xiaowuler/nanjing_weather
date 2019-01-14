@@ -10,6 +10,15 @@ public class Products {
     private String url;
     private Timestamp routine_time;
     private Timestamp create_time;
+    private String dataTime;
+
+    public String getDataTime() {
+        return dataTime;
+    }
+
+    public void setDataTime(String dataTime) {
+        this.dataTime = dataTime;
+    }
 
     public Integer getId() {
         return id;

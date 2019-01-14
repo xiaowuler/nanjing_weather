@@ -7,17 +7,17 @@ var ProductShow = function (activeProductCallback) {
 
     this.Init = function (id) {
         var control = $(id);
-        this.LeftScroller = control.find('a.arrow-left:first');
-        this.RightScroller = control.find('a.arrow-right:first');
+        this.LeftScroller = control.find('.arrow-left:first');
+        this.RightScroller = control.find('.arrow-right:first');
         this.ProductContainer = control.find('ul.imgeUrl:first');
 
-        this.LeftScroller.on('click', this.ActivePrevious.bind(this));
-        this.LeftScroller.on('mousedown', this.OnLeftScrollerMouseDown.bind(this));
-        this.LeftScroller.on('mouseup', this.ClearTimer.bind(this));
+        this.LeftScroller.off('click').on('click', this.ActivePrevious.bind(this));
+        this.LeftScroller.off('mousedown').on('mousedown', this.OnLeftScrollerMouseDown.bind(this));
+        this.LeftScroller.off('mouseup').on('mouseup', this.ClearTimer.bind(this));
 
-        this.RightScroller.on('click', this.ActiveNext.bind(this));
-        this.RightScroller.on('mousedown', this.OnRightScrollerMouseDown.bind(this));
-        this.RightScroller.on('mouseup', this.ClearTimer.bind(this));
+        this.RightScroller.off('click').on('click', this.ActiveNext.bind(this));
+        this.RightScroller.off('mousedown').on('mousedown', this.OnRightScrollerMouseDown.bind(this));
+        this.RightScroller.off('mouseup').on('mouseup', this.ClearTimer.bind(this));
     }
 
     this.OnLeftScrollerMouseDown = function () {
@@ -43,7 +43,7 @@ var ProductShow = function (activeProductCallback) {
     }
 
     this.OnProductClick = function (e) {
-        var product = $(e.target.parentNode);
+        var product = $(e.target).parents('li');
         this.SetActiveProduct(product);
     }
 
@@ -52,19 +52,15 @@ var ProductShow = function (activeProductCallback) {
             return;
 
         // Initialize products
-        for (var i = products.length - 1; i >= 0; i--) {
-            var child = this.CreateProduct(products[i]);
-            this.ProductContainer.append(child);
-        }
-        /*$(products).each(function (index, product) {
+        this.ProductContainer.empty();
+        $(products).each(function (index, product) {
             var child = this.CreateProduct(product);
-            this.ProductContainer.append(child);
-
-        }.bind(this));*/
+            this.ProductContainer.prepend(child);
+        }.bind(this));
 
         // Active the last product
-        var first = products[0];
-        this.SetActiveProduct($('#' + first.id));
+        var last = products[0];
+        this.SetActiveProduct($('#' + last.id));
 
         // Bind product event
         this.ProductContainer.find('li').on('click', this.OnProductClick.bind(this));
@@ -85,15 +81,12 @@ var ProductShow = function (activeProductCallback) {
     }
 
     this.CreateProduct = function (product) {
-        var url = product.url;
-        var arr = url.split("/")[url.split("/").length - 1].split(".")[0];
-        var time = arr.substr(0, 2);
-        var template = '<li id="{0}"><img src="{1}" class="width100"><p>{2}时</p></li>';
-        return template.format(product.id, product.url, time);
+        var template = '<li id="{0}"><div><img src="{1}"><p>{2}</p></div></li>';
+        return template.format(product.id, product.url, product.dataTime);
     }
 
     this.GetActiveProduct = function () {
-        var elements = this.ProductContainer.find('li.action');
+        var elements = this.ProductContainer.find('li.action ');
         return elements.length > 0 ? $(elements[0]) : null;
     }
 

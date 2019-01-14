@@ -64,6 +64,16 @@ var Region = function (typeName, regionId, regionImg) {
 
     this.OpenProductPage = function (category) {
         var url = 'aerological-sound.html?category={0}'.format(category);
+        if(category === 'ji-guang-lei-da')
+            url = 'lidar.html';
+        else if(category === 'feng-kuo-xian')
+            url = 'wind-profile.html';
+        else if(category === 'wei-bo-fu-she')
+            url = 'microwave.html';
+        else if(category === 'yu-di-pu')
+            url = 'raindrop.html';
+        else if(category === 'gps/met')
+            url = 'gps.html';
         window.open(url, '_blank');
     }
 

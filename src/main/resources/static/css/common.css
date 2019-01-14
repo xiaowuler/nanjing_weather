@@ -376,6 +376,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 .operate-border a.action{
     margin-left: -1px;
     color: #ffffff;
+    z-index: 10;
     background: url("../images/block-bged.png") repeat-x;
 }
 

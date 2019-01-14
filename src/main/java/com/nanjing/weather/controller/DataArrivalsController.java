@@ -22,44 +22,82 @@ public class DataArrivalsController {
 
     //查询
     @RequestMapping("/findByType")
-    public PageResult<DataArrivals> findByType(String startTime, String endTime, Integer page, Integer rows, String type) {
+    public PageResult<DataArrivals> findByType(String startTime, String endTime, Integer page, Integer rows, String type,String regionCode) {
 
         if (type.equals("60-fen-zhong")) {
             type = "6-fen-zhong";
             if (startTime.equals("") && endTime.equals("")) {
-                PageResult<DataArrivals> pageResult = dataArrivalsService.findByTiming(page, rows, type);
+                PageResult<DataArrivals> pageResult = dataArrivalsService.findByTiming(page, rows, type,regionCode);
                 List<DataArrivals> rowsList = getDataArrivals(pageResult);
                 pageResult.setRows(rowsList);
                 return pageResult;
             } else {
-                PageResult pageResult = getPageResult(startTime, endTime, page, rows, type);
-                return pageResult;
+                return getDataArrivalsPageResult(startTime, endTime, page, rows, type,regionCode);
             }
 
         } else if (type.equals("30-fen-zhong")) {
             type = "6-fen-zhong";
             if (startTime.equals("") && endTime.equals("")) {
-                PageResult<DataArrivals> pageResult = dataArrivalsService.findByHalfTime(page, rows, type);
+                PageResult<DataArrivals> pageResult = dataArrivalsService.findByHalfTime(page, rows, type,regionCode);
                 List<DataArrivals> rowsList = getDataArrivals(pageResult);
                 pageResult.setRows(rowsList);
                 return pageResult;
             } else {
-                PageResult pageResult = getPageResult(startTime, endTime, page, rows, type);
-                return pageResult;
+                return getDataArrivalsPageResult(startTime, endTime, page, rows, type,regionCode);
             }
-        } else {
+        } else if(type.equals("rainfall")||type.equals("temperature")||type.equals("wind")||
+                type.equals("pressure")||type.equals("humidity")||type.equals("ground_temperature")){
+            if(startTime.equals("") && endTime.equals("")){
+                //六要素查询（没有地区）
+                PageResult<DataArrivals> pageResult = dataArrivalsService.findAllType(page, rows, type);
+                List<DataArrivals> rowsList = getDataArrivals(pageResult);
+                pageResult.setRows(rowsList);
+                return pageResult;
+            }else{
+                //六要素根据时间查询（没有地区）
+                return getDataArrivalsPageResultAllType(startTime, endTime, page, rows, type);
+            }
+        }else{
             if (startTime.equals("") && endTime.equals("")) {
-                PageResult<DataArrivals> pageResult = dataArrivalsService.findByType(page, rows, type);
+                PageResult<DataArrivals> pageResult = dataArrivalsService.findByType(page, rows, type,regionCode);
                 List<DataArrivals> rowsList = getDataArrivals(pageResult);
                 pageResult.setRows(rowsList);
                 return pageResult;
             } else {
-                PageResult pageResult = getPageResult(startTime, endTime, page, rows, type);
-                return pageResult;
+                //2018/12/03/00时+"/00/00"  "2018-11-10 10:20:00" 定义规范时间方法
+                return getDataArrivalsPageResult(startTime, endTime, page, rows, type,regionCode);
             }
         }
     }
 
+    private PageResult<DataArrivals> getDataArrivalsPageResult(String startTime, String endTime, Integer page, Integer rows, String type,String regionCode) {
+        String[] strs = startTime.split("/");
+        String[] strs2 = endTime.split("/");
+        String string1 = "";
+        String string2 = "";
+        string1 += strs[0] + "-" + strs[1] + "-" + strs[2] + " " + strs[3].substring(0, 2);
+        string2 += strs2[0] + "-" + strs2[1] + "-" + strs2[2] + " " + strs2[3].substring(0, 2);
+
+        PageResult<DataArrivals> pageResult = dataArrivalsService.findByType1(string1, string2, page, rows, type,regionCode);
+        List<DataArrivals> rowsList = getDataArrivals(pageResult);
+        pageResult.setRows(rowsList);
+        return pageResult;
+    }
+
+
+    private PageResult<DataArrivals> getDataArrivalsPageResultAllType(String startTime, String endTime, Integer page, Integer rows, String type) {
+        String[] strs = startTime.split("/");
+        String[] strs2 = endTime.split("/");
+        String string1 = "";
+        String string2 = "";
+        string1 += strs[0] + "-" + strs[1] + "-" + strs[2] + " " + strs[3].substring(0, 2);
+        string2 += strs2[0] + "-" + strs2[1] + "-" + strs2[2] + " " + strs2[3].substring(0, 2);
+
+        PageResult<DataArrivals> pageResult = dataArrivalsService.findAllType1(string1, string2, page, rows, type);
+        List<DataArrivals> rowsList = getDataArrivals(pageResult);
+        pageResult.setRows(rowsList);
+        return pageResult;
+    }
     private List<DataArrivals> getDataArrivals(PageResult<DataArrivals> pageResult) {
         List<DataArrivals> rowsList = pageResult.getRows();
         for (DataArrivals dataArrivals : rowsList) {
@@ -75,23 +113,11 @@ public class DataArrivalsController {
         return rowsList;
     }
 
-    private PageResult getPageResult(String startTime,String endTime,Integer page, Integer rows, String type){
-        String[] strs = startTime.split("/");
-        String[] strs2 = endTime.split("/");
-        //string1 += strs[0] + "-" + strs[1] + "-" + strs[2] + " " + strs[3].substring(0, 2);
-        //string2 += strs2[0] + "-" + strs2[1] + "-" + strs2[2] + " " + strs2[3].substring(0, 2);
-        String string1 =String.format("%s-%s-%s %s",strs[0],strs[1],strs[2],strs[3].substring(0, 2));
-        String string2 =String.format("%s-%s-%s %s",strs2[0],strs2[1],strs2[2],strs2[3].substring(0, 2));
-
-        PageResult<DataArrivals> pageResult = dataArrivalsService.findByType1(string1, string2, page, rows, type);
-        List<DataArrivals> rowsList = getDataArrivals(pageResult);
-        pageResult.setRows(rowsList);
-        return pageResult;
-    }
-
     @RequestMapping("/findState")
     public List<List<DataState>> findState() {
         return dataArrivalsService.findDataState();
     }
+
+
 
 }

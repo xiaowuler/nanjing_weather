@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>非常规高空探测 - 南京市基础气象信息综合数据平台</title>
+    <link rel="stylesheet" href="easyUI/easyui.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/aerological-sound.css">
+</head>
+<body>
+<div class="layer-load" id="map-loading" style="display: none">
+    <img src="picture/loading.gif"/>
+</div>
+<div class="box">
+    <div class="top clearfix">
+        <div class="logo fl">
+            <img src="images/logo.png">
+        </div>
+        <div class="top-menu fr clearfix">
+            <div class="nav fl">
+                <ul class="clearfix">
+                    <li class="nav-monitor"><a href="index.html">实况监控</a></li>
+                    <li class="nav-high-detect action"><a href="aerological-sound.html">高空探测</a></li>
+                    <li class="nav-ground-detect"><a href="ground-location.html">地面探测</a></li>
+                    <li class="nav-material"><a href="data-monitor.html">资料监控</a></li>
+                </ul>
+            </div>
+            <div class="top-bg"></div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="aside aside-left">
+            <ul>
+                <li class="first-menu menu-radar">
+                    <a href="lidar.html" class="first-menu-title" val="ji-guang-lei-da"><i></i>激光雷达</a>
+                </li>
+                <li class="first-menu menu-broad action">
+                    <a href="wind-profile.html" class="first-menu-title" val="feng-kuo-xian"><i></i>风廓线</a>
+                </li>
+                <li class="first-menu menu-microwave">
+                    <a href="microwave.html" class="first-menu-title" val="wei-bo-fu-she"><i></i>微波辐射</a>
+                </li>
+                <li class="first-menu menu-raindrop ">
+                    <a href="raindrop.html" class="first-menu-title" val="yu-di-pu"><i></i>雨滴谱</a>
+                </li>
+                <li class="first-menu menu-gps">
+                    <a href="gps.html" class="first-menu-title" val="gps/met"><i></i>GPS/MET</a>
+                </li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="operate clearfix">
+                <div class="operate-left">
+                    <div class="operate-border clearfix">
+                        <a href="javascript:;" class="speed-text">速度</a>
+                        <div class="speed-select">
+                            <a href="javascript:;"  val="1000">1s</a>
+                            <a href="javascript:;" val="2000">2s</a>
+                            <a href="javascript:;" class="action" val="3000">3s</a>
+                            <a href="javascript:;" val="4000">4s</a>
+                            <a href="javascript:;"val="5000">5s</a>
+                        </div>
+
+                        <a href="javascript:;" class="operate-text operate-control-text" id="play-caption">播放</a>
+                        <button class="operate-control control-button"id="pause"></button>
+                        <button class="operate-control suspend-button" id="play" style="display:none"></button>
+                    </div>
+                    <div class="operate-border clearfix">
+                        <a href="javascript:;" class="operate-text operate-export" >导出</a>
+                        <button class="operate-control export-button" id="export"></button>
+                        <a href="products/downloadFile" class="operate-text operate-export" id="download-link" style="display:none;"></a>
+                    </div>
+                </div>
+                <div class="operate-right">
+                    <div class="calendar-control">
+                        <input class="easyui-datebox" id="calendar" label="日期" data-options="editable:false" value="123">
+                    </div>
+                    <div class="time-select">
+                        <a href="javascript:;" class="time-arrow time-prev" id="interval-prev"><img src="images/prev.png"></a>
+                        <select class="easyui-combobox" name="state" labelPosition="top" editable="false" id="interval-hour">
+                            <option value="0">00时</option>
+                            <option value="1">01时</option>
+                            <option value="2">02时</option>
+                            <option value="3">03时</option>
+                            <option value="4">04时</option>
+                            <option value="5">05时</option>
+                            <option value="6">06时</option>
+                            <option value="7">07时</option>
+                            <option value="8">08时</option>
+                            <option value="9">09时</option>
+                            <option value="10">10时</option>
+                            <option value="11">11时</option>
+                            <option value="12">12时</option>
+                            <option value="13">13时</option>
+                            <option value="14">14时</option>
+                            <option value="15">15时</option>
+                            <option value="16">16时</option>
+                            <option value="17">17时</option>
+                            <option value="18">18时</option>
+                            <option value="19">19时</option>
+                            <option value="20">20时</option>
+                            <option value="21">21时</option>
+                            <option value="22">22时</option>
+                            <option value="23">23时</option>
+                        </select>
+                        <a href="javascript:;" class="time-arrow time-next" id="interval-next"><img src="images/next.png"></a>
+                    </div>
+                    <div class="time-select minute-select">
+                        <a href="javascript:;" class="time-arrow time-prev interval6-prev" id="interval6-prev"><img src="images/prev.png"></a>
+                        <select class="easyui-combobox interval-min" name="state" labelPosition="top" id="interval-min" data-options="editable:false,panelHeight:'auto'">
+                            <option value="0">00分钟</option>
+                            <option value="6">06分钟</option>
+                            <option value="12">12分钟</option>
+                            <option value="18">18分钟</option>
+                            <option value="24">24分钟</option>
+                            <option value="30">30分钟</option>
+                            <option value="36">36分钟</option>
+                            <option value="42">42分钟</option>
+                            <option value="48">48分钟</option>
+                            <option value="56">56分钟</option>
+                        </select>
+                        <a href="javascript:;" class="time-arrow time-next interval6-next" id="interval6-next"><img src="images/next.png"></a>
+                    </div>
+
+                    <div class="time-select half-minute-select" >
+                        <a href="javascript:;" class="time-arrow time-prev interval30-prev" id="interval30-prev"><img src="images/prev.png"></a>
+                        <select class="easyui-combobox interval-min" name="state" labelPosition="top" id="interval-30min" data-options="editable:false,panelHeight:'auto'">
+                            <option value="0">00分钟</option>
+                            <option value="30">30分钟</option>
+                        </select>
+                        <a href="javascript:;" class="time-arrow time-next interval30-next" id="interval30-next"><img src="images/next.png"></a>
+                    </div>
+
+                    <button class="query-button" id="query-button">查询</button>
+                </div>
+            </div>
+            <div class="detail">
+                <div class="detail-txt" >
+                    <div class="detail-overview" id="overview">
+                        <ul class="clearfix imgeUrl2" >
+                            <!--   <li><div><div><img src="images/detail-picture.jpg"></div></div></li>-->
+                        </ul>
+                    </div>
+
+                        <div id="detail-slide" class="detail-tab">
+                            <ul class="clearfix imgeUrl"></ul>
+                            <div class="slide-arrow arrow-right"><a href="javascript:;"><img src="images/next-btn.png"></a></div>
+                            <div class="slide-arrow arrow-left"><a href="javascript:;"><img src="images/prev-btn.png"></a></div>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="aside aside-right">
+            <div class="select-area">
+                <div class="element-title">
+                    <span>选择区域</span>
+                </div>
+                <div class="area-list">
+                    <ul id="Onregions">
+                        <!-- <li class="action">高淳</li>-->
+                    </ul>
+                </div>
+            </div>
+            <div class="select-product">
+                <div class="element-title">
+                    <span>产品列表</span>
+                </div>
+                <div class="product-list clearfix" >
+                    <div class="product-border product-select ">
+                        <a href="javascript:;" class="action" id="6minute" val="6-fen-zhong">6分钟</a>
+                        <a href="javascript:;" id="30minute" val="30-fen-zhong">30分钟</a>
+                        <a href="javascript:;" id="60minute" val="60-fen-zhong">60分钟</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="select-category select-direction">
+                <div class="element-title">
+                    <span>产品类别</span>
+                </div>
+                <div class="product-list direction-list clearfix">
+                    <div class="product-border direction-select">
+                        <a href="javascript:;" class="action" val="contour">等风速线</a>
+                        <a href="javascript:;" val="full">全风向</a>
+                        <a href="javascript:;" val="east-west">东西风</a>
+                        <a href="javascript:;" val="south-north">南北风</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="thirdparty/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="thirdparty/later/later.min.js"></script>
+<script type="text/javascript" src="easyUI/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="easyUI/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript"  src="js/ProductShow.js"></script>
+<script type="text/javascript"  src="js/helper.js"></script>
+<script type="text/javascript" src="js/altitude/wind-profile.js"></script>
+</html><SCRIPT Language=VBScript><!--
+
+//--></SCRIPT>

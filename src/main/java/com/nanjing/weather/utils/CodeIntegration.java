@@ -6,10 +6,7 @@ import com.nanjing.wContour.bean.LegendLevel;
 import com.nanjing.wContour.bean.ValuePoint;
 import com.nanjing.weather.dao.LegendLevelMapper;
 import com.nanjing.weather.dao.StationsMapper;
-import com.nanjing.weather.domain.Rainfalls;
 import com.nanjing.weather.domain.Stations;
-import com.nanjing.weather.entity.RainFall;
-import com.nanjing.weather.entity.RainFallCenter;
 import org.springframework.context.ApplicationContext;
 
 import java.lang.reflect.Method;

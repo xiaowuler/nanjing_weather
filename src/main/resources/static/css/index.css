@@ -466,6 +466,14 @@
     background: url("../images/air-pressure-bg.png") repeat-x;
 }
 
+.three-select a{
+    width: 81px;
+}
+
+.one-select a{
+    width: 100%;
+}
+
 .date-select{
     width: 100%;
     position: absolute;

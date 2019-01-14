@@ -9,9 +9,18 @@ public class DataArrivals {
     private String description;//备注插入的条数
     private Timestamp begin_sync_time;//开始时间
     private Timestamp end_sync_time;//结束时间
+    private String product_region_code;
     private String routine;
     private String begin;
     private String end;
+
+    public String getProduct_region_code() {
+        return product_region_code;
+    }
+
+    public void setProduct_region_code(String product_region_code) {
+        this.product_region_code = product_region_code;
+    }
 
     public Timestamp getRoutine_Time() {
         return routine_Time;

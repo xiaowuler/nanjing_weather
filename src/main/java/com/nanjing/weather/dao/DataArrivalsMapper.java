@@ -11,8 +11,12 @@ import java.util.Map;
 
 @Mapper
 public interface DataArrivalsMapper {
-    List<DataArrivals> findByType(Map map);
 
+    List<DataArrivals> findAllType(Map map);//
+
+    List<DataArrivals> findAllTypeAndTime(Map map);//
+
+    List<DataArrivals> findByType(Map map);
 
     Long findCount(String type);
 

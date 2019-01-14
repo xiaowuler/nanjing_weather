@@ -21,14 +21,22 @@
     <img src="picture/loading.gif" class="load-img"/>
 </div>
 
-<!--<div class="color-wrapper clearfix" id="drag">
-    <div id="color-unit">
-    </div>
-    <div class="color-gradient fl" id="color-number">
-    </div>
-    <div class="color-value fl" id="color-value">
-    </div>
-</div>-->
+<div class="element-txt clearfix">
+    <span>降雨</span>
+    <span>温度</span>
+    <span>风</span>
+    <span>湿度</span>
+    <span>气压</span>
+    <span>地温</span>
+</div>
+<div class="element-value clearfix">
+    <span class="rainfalls">100</span>
+    <span class="temperatures">22</span>
+    <span class="winds">10</span>
+    <span class="humidities">15</span>
+    <span class="pressures">40</span>
+    <span class="groundTemperature">10</span>
+</div>
 
 <div class="color-control" id="drag" style="display: none">
     <div class="color-content clearfix">
@@ -51,7 +59,7 @@
             <div class="nav fl">
                 <ul class="clearfix">
                     <li class="nav-monitor"><a href="index.html">实况监控</a></li>
-                    <li class="nav-high-detect"><a href="aerological-sound.html?category=ji-guang-lei-da">高空探测</a></li>
+                    <li class="nav-high-detect"><a href="lidar.html">高空探测</a></li>
                     <li class="nav-ground-detect action"><a href="ground-location.html">地面探测</a></li>
                     <li class="nav-material"><a href="data-monitor.html">资料监控</a></li>
                 </ul>
@@ -91,7 +99,7 @@
                             <span>温度</span>
                         </div>
                         <div class="element-text">
-                            <div class="element-block variable-select clearfix">
+                            <div class="element-block variable-select three-select clearfix">
                                 <a href="javascript:;" class="action" val="温度">温度</a>
                                 <a href="javascript:;" val="最高温度">最高温度</a>
                                 <!--<a href="javascript:;" val="24小时变温">24小时变温</a>-->
@@ -146,7 +154,7 @@
                             <span>气压</span>
                         </div>
                         <div class="element-text">
-                            <div class="element-block air-pressure-select clearfix">
+                            <div class="element-block air-pressure-select one-select clearfix">
                                 <a href="javascript:;" val="本站气压">本站气压</a>
                                 <!--<a href="javascript:;" class="action">本站气压</a>-->
                                 <!--<a href="javascript:;">24小时变压</a>-->

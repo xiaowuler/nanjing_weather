@@ -26,9 +26,17 @@ public class ProductsServiceImpl implements ProductsService {
         List<Products> products = productsMapper.findByTime(type, startTime, county);
         String path = productsMapper.findConfigPath();
         for (int i = 0; i < products.size(); i++) {
+            String[] str=products.get(i).getUrl().split("/");
+            String data=str[str.length-2];
+            String data1=data.substring(6,8)+"日";
+            String time=str[str.length-1].split("\\.")[0]+"时";
+            String dataTime=data1+time;
+            products.get(i).setDataTime(dataTime);
+
             String path1 = products.get(i).getUrl();
             String paths = path + "/" + path1;
             products.get(i).setUrl(paths);
+
         }
         return products;
     }
@@ -38,6 +46,16 @@ public class ProductsServiceImpl implements ProductsService {
         List<Products> products = productsMapper.findAllByTime(type, startTime, county, windValue);
         String root = productsMapper.findConfigPath();
         for (int i = 0; i < products.size(); i++) {
+            String[] str=products.get(i).getUrl().split("/");
+            String data=str[str.length-3];
+            String data1=data.substring(6,8)+"日";
+            String time=str[str.length-1].split("\\.")[0];
+            String time1=time.substring(0,2)+"时";
+            String min=time.substring(2,4)+"分";
+            String dataTime=data1+time1+min;
+            products.get(i).setDataTime(dataTime);
+
+
             String path = products.get(i).getUrl();
             String url = String.format("%s/%s", root, path);
             products.get(i).setUrl(url);
@@ -50,6 +68,15 @@ public class ProductsServiceImpl implements ProductsService {
         List<Products> products = productsMapper.findByhalfTime(type, startTime, county, windValue);
         String path = productsMapper.findConfigPath();
         for (int i = 0; i < products.size(); i++) {
+            String[] str=products.get(i).getUrl().split("/");
+            String data=str[str.length-3];
+            String data1=data.substring(6,8)+"日";
+            String time=str[str.length-1].split("\\.")[0];
+            String time1=time.substring(0,2)+"时";
+            String min=time.substring(2,4)+"分";
+            String dataTime=data1+time1+min;
+            products.get(i).setDataTime(dataTime);
+
             String path1 = products.get(i).getUrl();
             String paths = path + "/" + path1;
             products.get(i).setUrl(paths);
@@ -77,6 +104,14 @@ public class ProductsServiceImpl implements ProductsService {
         List<Products> products = productsMapper.findByTiming(type, startTime, county, windValue);
         String path = productsMapper.findConfigPath();
         for (int i = 0; i < products.size(); i++) {
+            String[] str=products.get(i).getUrl().split("/");
+            String data=str[str.length-3];
+            String data1=data.substring(6,8)+"日";
+            String time=str[str.length-1].split("\\.")[0];
+            String time1=time.substring(0,2)+"时";
+            String dataTime=data1+time1;
+            products.get(i).setDataTime(dataTime);
+
             String path1 = products.get(i).getUrl();
             String paths = path + "/" + path1;
             products.get(i).setUrl(paths);
@@ -89,6 +124,13 @@ public class ProductsServiceImpl implements ProductsService {
         List<Products> products = productsMapper.findByTime1(type, county, categoryCodeValue);
         String path = productsMapper.findConfigPath();
         for (int i = 0; i < products.size(); i++) {
+            String[] str=products.get(i).getUrl().split("\\\\");
+            String data=str[str.length-2];
+            String data1=data.substring(6,8)+"日";
+            String time=str[str.length-1].split("\\.")[0]+"时";
+            String dataTime=data1+time;
+            products.get(i).setDataTime(dataTime);
+
             String path1 = products.get(i).getUrl();
             String paths = path + "/" + path1;
             products.get(i).setUrl(paths);

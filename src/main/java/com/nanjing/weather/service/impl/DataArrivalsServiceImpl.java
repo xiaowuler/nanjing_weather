@@ -20,27 +20,75 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
     private DataArrivalsMapper dataArrivalsMapper;
 
     @Override
-    public PageResult<DataArrivals> findByType(Integer pageNum, Integer pageSize, String type) {
+    public PageResult<DataArrivals> findAllType(Integer pageNum, Integer pageSize, String type) {
         Map map = new HashMap();
         map.put("type", type);
         map.put("begin", (pageNum - 1) * pageSize);
         map.put("pageSize", pageSize);
-        return new PageResult<>(dataArrivalsMapper.findCount(type), dataArrivalsMapper.findByType(map));
+        PageResult<DataArrivals> dataArrivalsPageResult = new PageResult<>(dataArrivalsMapper.findCount(type), dataArrivalsMapper.findAllType(map));
+        return dataArrivalsPageResult;
     }
 
     //根据时间段查询
     @Override
-    public PageResult<DataArrivals> findByType1(String startTime, String endTime, Integer pageNum, Integer pageSize, String type) {
+    public PageResult<DataArrivals> findAllType1(String startTime, String endTime, Integer pageNum, Integer pageSize, String type) {
         Map map = new HashMap();
         map.put("startTime", startTime);
         map.put("endTime", endTime);
         map.put("type", type);
         map.put("begin", (pageNum - 1) * pageSize);
         map.put("pageSize", pageSize);
+        Long count1 = dataArrivalsMapper.findCount1(map);
+        List<DataArrivals> byTypeAndTime = dataArrivalsMapper.findAllTypeAndTime(map);
+        return new PageResult<>(count1, byTypeAndTime);
+    }
 
+    @Override
+    public PageResult<DataArrivals> findByType(Integer pageNum, Integer pageSize, String type,String regionCode) {
+        Map map = new HashMap();
+        map.put("type", type);
+        map.put("begin", (pageNum - 1) * pageSize);
+        map.put("pageSize", pageSize);
+        map.put("regionCode",regionCode);
+        PageResult<DataArrivals> dataArrivalsPageResult = new PageResult<>(dataArrivalsMapper.findCount(type), dataArrivalsMapper.findByType(map));
+        return dataArrivalsPageResult;
+    }
+
+    //根据时间段查询
+    @Override
+    public PageResult<DataArrivals> findByType1(String startTime, String endTime, Integer pageNum, Integer pageSize, String type,String regionCode) {
+        Map map = new HashMap();
+        map.put("startTime", startTime);
+        map.put("endTime", endTime);
+        map.put("type", type);
+        map.put("begin", (pageNum - 1) * pageSize);
+        map.put("pageSize", pageSize);
+        map.put("regionCode",regionCode);
         Long count1 = dataArrivalsMapper.findCount1(map);
         List<DataArrivals> byTypeAndTime = dataArrivalsMapper.findByTypeAndTime(map);
         return new PageResult<>(count1, byTypeAndTime);
+    }
+
+    @Override
+    public PageResult<DataArrivals> findByTiming(Integer pageNum, Integer pageSize, String type,String regionCode) {
+        Map map = new HashMap();
+        map.put("type", type);
+        map.put("begin", (pageNum - 1) * pageSize);
+        map.put("pageSize", pageSize);
+        map.put("regionCode",regionCode);
+        return new PageResult<>(dataArrivalsMapper.findCount(type), dataArrivalsMapper.findByTiming(map));
+    }
+
+    @Override
+    public PageResult<DataArrivals> findByHalfTime(Integer pageNum, Integer pageSize, String type,String regionCode) {
+        Map map = new HashMap();
+        map.put("type", type);
+        map.put("begin", (pageNum - 1) * pageSize);
+        map.put("pageSize", pageSize);
+        map.put("regionCode",regionCode);
+        PageResult<DataArrivals> dataArrivalsPageResult = new PageResult<DataArrivals>(dataArrivalsMapper.findCount(type), dataArrivalsMapper.findByHalfTime(map));
+
+        return dataArrivalsPageResult;
     }
 
     @Override
@@ -225,26 +273,6 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
         windData = getUpArea(windData);
         list.add(setAreaName(windData));
         return list;
-    }
-
-    @Override
-    public PageResult<DataArrivals> findByTiming(Integer pageNum, Integer pageSize, String type) {
-        Map map = new HashMap();
-        map.put("type", type);
-        map.put("begin", (pageNum - 1) * pageSize);
-        map.put("pageSize", pageSize);
-        return new PageResult<>(dataArrivalsMapper.findCount(type), dataArrivalsMapper.findByTiming(map));
-    }
-
-    @Override
-    public PageResult<DataArrivals> findByHalfTime(Integer pageNum, Integer pageSize, String type) {
-        Map map = new HashMap();
-        map.put("type", type);
-        map.put("begin", (pageNum - 1) * pageSize);
-        map.put("pageSize", pageSize);
-        PageResult<DataArrivals> dataArrivalsPageResult = new PageResult<DataArrivals>(dataArrivalsMapper.findCount(type), dataArrivalsMapper.findByHalfTime(map));
-
-        return dataArrivalsPageResult;
     }
 
     private List<DataState> getHandleTime(List<DataState> dataStates){
