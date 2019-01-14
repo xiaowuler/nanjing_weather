@@ -345,13 +345,13 @@ var RightPanel = function () {
     }
 
     this.plotValueSense = function () {
-        if($('#value').attr('checked')){
-            if($('#basic').attr('checked')){
+        if($('#value').prop('checked')){
+            if($('#basic').prop('checked')){
                 if(this.result != null)
                     this.MapInfo.basePlotValue(this.result.regions);
             }
 
-            if($('#encrypt').attr('checked')){
+            if($('#encrypt').prop('checked')){
                 if(this.result != null)
                     this.MapInfo.encryPlotValue(this.result.regions);
             }
@@ -366,13 +366,13 @@ var RightPanel = function () {
     }
 
     this.plotNameSense = function () {
-        if($('#station').attr('checked')){
-            if($('#basic').attr('checked')){
+        if($('#station').prop('checked')){
+            if($('#basic').prop('checked')){
                 if(this.result != null)
                     this.MapInfo.basePoltDirName(this.result.regions);
             }
 
-            if($('#encrypt').attr('checked')){
+            if($('#encrypt').prop('checked')){
                 if(this.result != null)
                     this.MapInfo.encryptionPointName(this.result.regions);
             }
@@ -385,13 +385,13 @@ var RightPanel = function () {
     }
 
     this.basePoltSense = function () {
-        if($('#basic').attr('checked')){
-            if($('#station').attr('checked')){
+        if($('#basic').prop('checked')){
+            if($('#station').prop('checked')){
                 if(this.result != null)
                     this.MapInfo.basePoltDirName(this.result.regions);
             }
 
-            if($('#value').attr('checked')){
+            if($('#value').prop('checked')){
                 if(this.result != null)
                     this.MapInfo.basePlotValue(this.result.regions);
             }
@@ -405,13 +405,13 @@ var RightPanel = function () {
     }
 
     this.encryPlotSense = function () {
-        if($('#encrypt').attr('checked')){
-            if($('#station').attr('checked')){
+        if($('#encrypt').prop('checked')){
+            if($('#station').prop('checked')){
                 if(this.result != null)
                     this.MapInfo.encryptionPointName(this.result.regions);
             }
 
-            if($('#value').attr('checked')){
+            if($('#value').prop('checked')){
                 if(this.result != null)
                     this.MapInfo.encryPlotValue(this.result.regions);
             }
