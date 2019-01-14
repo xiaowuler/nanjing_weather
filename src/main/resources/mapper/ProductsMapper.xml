@@ -31,16 +31,11 @@
 
 
     <select id="findByhalfTime" resultType="com.nanjing.weather.domain.Products">
-        select * from products WHERE url !='data-miss.jpg'and type_code = #{0} and  routine_time BETWEEN (SELECT date_sub((#{1}),interval 24 hour)) and (#{1}) AND RIGHT(routine_time,5)='30:00' and region_code=#{2}and reserved1=#{3} ORDER BY routine_time desc;
+        select * from products WHERE url !='data-miss.jpg'and type_code = #{0} and  routine_time BETWEEN (SELECT date_sub((#{1}),interval 24 hour)) and (#{1}) AND (RIGHT(routine_time,5)='30:00'or RIGHT(routine_time,5)='00:00') and region_code=#{2}and reserved1=#{3} ORDER BY routine_time desc;
 
     </select>
 
-    <select id="findByhalfTime1" resultType="com.nanjing.weather.domain.Products">
-       select * from products WHERE url !='data-miss.jpg'and type_code = #{0} and  routine_time BETWEEN (SELECT date_sub((#{1}),interval 24 hour)) and (#{1}) AND RIGHT(routine_time,5)='00:00' and region_code=#{2} and reserved1=#{3} ORDER BY routine_time desc;
-
-    </select>
-
-
+     <!--gps/met查询-->
     <select id="findByTime1" resultType="com.nanjing.weather.domain.Products">
       select * from products where url !='data-miss.jpg'and type_code =  #{0} and region_code=#{1} and category_code=#{2} BETWEEN (SELECT date_sub((SELECT MAX(routine_time) from products),interval 24 hour)) and (SELECT MAX(routine_time) from products) AND RIGHT(routine_time,5)='00:00'
        ORDER BY routine_time desc ;

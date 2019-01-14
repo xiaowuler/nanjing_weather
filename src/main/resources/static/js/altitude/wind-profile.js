@@ -12,9 +12,9 @@ var App = function () {
         this.LoadProducts();
         this.BindExportButtonClick();
         this.BindTimerEvents();
-        this.BindProductSelectClick();//产品列表
-        this.OnDirectionSelectClick();//产品类别
-        this.BindAreaSelectClick();//地区
+        this.BindProductSelectClick();
+        this.OnDirectionSelectClick();
+        this.BindAreaSelectClick();
         this.BindHourButtonsClick();
         this.BindMinuteButtonsClick();
         this.BindQueryButtonClick();

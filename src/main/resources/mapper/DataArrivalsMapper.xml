@@ -4,32 +4,30 @@
 <mapper namespace="com.nanjing.weather.dao.DataArrivalsMapper">
 
     <select id="findAllType" resultType="com.nanjing.weather.domain.DataArrivals" parameterType="map">
-        select * from data_arrivals WHERE product_type_code =#{type}
-        ORDER BY routine_time DESC limit #{begin},#{pageSize}
+         select * from data_arrivals WHERE product_type_code =#{type} ORDER BY routine_time DESC limit #{begin},#{pageSize}
     </select>
 
     <select id="findAllTypeAndTime" resultType="com.nanjing.weather.domain.DataArrivals" parameterType="map">
-        select * from data_arrivals WHERE routine_time between #{startTime} and #{endTime} AND product_type_code =#{type}
+       select * from data_arrivals WHERE routine_time between #{startTime} and #{endTime} AND product_type_code =#{type}
         ORDER BY routine_time DESC limit #{begin},#{pageSize};
     </select>
 
     <select id="findByType" resultType="com.nanjing.weather.domain.DataArrivals" parameterType="map">
-        select * from data_arrivals WHERE product_type_code =#{type}
-        ORDER BY routine_time DESC limit #{begin},#{pageSize};
+         select * from data_arrivals WHERE product_type_code =#{type}AND product_region_code= #{regionCode}
+        ORDER BY routine_time DESC limit #{begin},#{pageSize}
     </select>
 
     <select id="findByTiming" resultType="com.nanjing.weather.domain.DataArrivals" parameterType="map">
-
-      select * from data_arrivals WHERE routine_time AND RIGHT(routine_time,5)='00:00' and product_type_code =#{type}
-        ORDER BY routine_time DESC limit #{begin},#{pageSize};
+      select * from data_arrivals WHERE  RIGHT(routine_time,5)='00:00'  and product_type_code =#{type}
+      AND product_region_code=#{regionCode} ORDER BY routine_time DESC limit #{begin},#{pageSize};
 
     </select>
 
 
     <select id="findByHalfTime" resultType="com.nanjing.weather.domain.DataArrivals" parameterType="map">
 
-      select * from data_arrivals WHERE routine_time AND RIGHT(routine_time,5)='30:00' and product_type_code =#{type}
-        ORDER BY routine_time DESC limit #{begin},#{pageSize};
+     select * from data_arrivals WHERE  (RIGHT(routine_time,5)='30:00' or RIGHT(routine_time,5)='00:00') and product_type_code =#{type}
+     AND product_region_code=#{regionCode}ORDER BY routine_time DESC limit #{begin},#{pageSize};
 
     </select>
 
@@ -41,10 +39,9 @@
         select count(1) from data_arrivals WHERE routine_time between #{startTime} and #{endTime} and product_type_code =#{type}
     </select>
 
-
     <select id="findByTypeAndTime" resultType="com.nanjing.weather.domain.DataArrivals" parameterType="map">
         select * from data_arrivals WHERE routine_time between #{startTime} and #{endTime} AND product_type_code =#{type}
-        ORDER BY routine_time DESC limit #{begin},#{pageSize};
+        AND product_region_code=#{regionCode}ORDER BY routine_time DESC limit #{begin},#{pageSize};
     </select>
 
     <select id="findMaxTime" resultType="com.nanjing.weather.entity.DataArrival" >

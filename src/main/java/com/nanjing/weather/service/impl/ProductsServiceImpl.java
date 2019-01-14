@@ -55,7 +55,6 @@ public class ProductsServiceImpl implements ProductsService {
             String dataTime=data1+time1+min;
             products.get(i).setDataTime(dataTime);
 
-
             String path = products.get(i).getUrl();
             String url = String.format("%s/%s", root, path);
             products.get(i).setUrl(url);
@@ -81,21 +80,6 @@ public class ProductsServiceImpl implements ProductsService {
             String paths = path + "/" + path1;
             products.get(i).setUrl(paths);
         }
-        /*List<Products> products1= productsMapper.findByhalfTime1(type, startTime, county,windValue);
-        List<Products> list=new ArrayList<>();
-
-
-
-        for(int i=0;i<products1.size();i++){
-            String path1= products1.get(i).getUrl();
-            String paths=path+"/"+path1;
-            products1.get(i).setUrl(paths);
-        }
-        for(int i=0;i<products1.size();i++){
-            list.add(products.get(i));
-            list.add(products1.get(i));
-        }*/
-
         return products;
     }
 
@@ -138,7 +122,7 @@ public class ProductsServiceImpl implements ProductsService {
         return products;
 
     }
-
+  //gps/met查询
     @Override
     public List<ProductCategoryRegionRels> findAllByTypeAndArea() {
         String configPath = productsMapper.findConfigPath();

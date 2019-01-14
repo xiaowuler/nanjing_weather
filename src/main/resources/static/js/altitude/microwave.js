@@ -161,7 +161,7 @@ var App = function () {
     this.ActiveProductCallback = function (product) {
         var image = product.find('img:first');
         var url = image.attr('src');
-        this.imgHtml2 = '<li style="display: list-item;"><div><img class="img1" src="{0}"></div></li>'.format(url);
+        this.imgHtml2 = '<li style="display: list-item;"><div><div><img class="img1" src="{0}"></div></div></li>'.format(url);
         $('.imgeUrl2').html(this.imgHtml2);
     }
 };
