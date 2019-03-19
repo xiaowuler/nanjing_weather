@@ -476,9 +476,9 @@
 
 .date-select{
     width: 100%;
-    position: absolute;
-    left: 0;
-    bottom: 117px;
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*bottom: 117px;*/
 }
 
 .date-select .time-select .textbox{

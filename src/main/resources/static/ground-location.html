@@ -21,7 +21,7 @@
     <img src="picture/loading.gif" class="load-img"/>
 </div>
 
-<div class="element-txt clearfix">
+<div class="element-txt clearfix" style="left: 20px;">
     <span>降雨</span>
     <span>温度</span>
     <span>风</span>
@@ -29,14 +29,14 @@
     <span>气压</span>
     <span>地温</span>
 </div>
-<div class="element-value clearfix">
+<!--<div class="element-value clearfix">
     <span class="rainfalls">100</span>
     <span class="temperatures">22</span>
     <span class="winds">10</span>
     <span class="humidities">15</span>
     <span class="pressures">40</span>
     <span class="groundTemperature">10</span>
-</div>
+</div>-->
 
 <div class="color-control" id="drag" style="display: none">
     <div class="color-content clearfix">
@@ -272,6 +272,15 @@
                             <input id="value" type="checkbox" checked>
                             <label for="value">站值</label>
                         </div>
+                        <div class="layer-text clearfix">
+                            <!--<a href="javascript:;">雨</a>
+                            <a href="javascript:;" class="action">温</a>
+                            <a href="javascript:;">风</a>
+                            <a href="javascript:;">湿</a>
+                            <a href="javascript:;">压</a>
+                            <a href="javascript:;">地</a>-->
+                            <a href="javascript:;" class="action temp" val="temperatures">温</a>
+                        </div>
                         <div class="layer-box layer-isoline">
                             <input id="contour" type="checkbox">
                             <label for="contour">等值线</label>
@@ -280,15 +289,6 @@
                             <input id="color-figure" type="checkbox" checked>
                             <label for="color-figure">色斑图</label>
                         </div>
-                    </div>
-                    <div class="layer-text clearfix">
-                        <!--<a href="javascript:;">雨</a>
-                        <a href="javascript:;" class="action">温</a>
-                        <a href="javascript:;">风</a>
-                        <a href="javascript:;">湿</a>
-                        <a href="javascript:;">压</a>
-                        <a href="javascript:;">地</a>-->
-                        <a href="javascript:;" class="action temp" val="temperatures">温</a>
                     </div>
                 </div>
             </div>
