@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="nanjing-weather" />
         <module name="springboot1" />
+        <module name="weather_nanjing" />
       </profile>
     </annotationProcessing>
   </component>

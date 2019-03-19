@@ -295,7 +295,6 @@ var RightPanel = function () {
                     this.insertData();
                     this.getCheckLayerInfo();
                     this.getCheckLayerOfChart(requestValue,data);
-
                 }.bind(this)
             });
         } else {
@@ -430,6 +429,12 @@ var RightPanel = function () {
         this.plotValueSense();
         this.encryPlotSense();
         this.basePoltSense();
+        this.getCheckedByLayerText();
+    }
+
+    this.getCheckedByLayerText = function () {
+        if($('.layer-text a.action').length === 0)
+            this.checkNull();
     }
 
     this.getCheckLayerOfChart = function (checkValue,result) {
@@ -490,18 +495,16 @@ var RightPanel = function () {
     
     this.optionCheck = function () {
         $('.layer-text').off('click').on('click',function (e) {
-            if (this.MapInfo.ContourLayer != null) {
+            if (this.MapInfo.ContourLayer != null)
                 this.MapInfo.Map.removeLayer(this.MapInfo.ContourLayer);
-            }
-            if (this.MapInfo.layer != null) {
+
+            if (this.MapInfo.layer != null)
                 this.MapInfo.Map.removeLayer(this.MapInfo.layer);
-            }
-            //this.MapInfo.PlotColor('');
+
             $(".color-control").attr("style", "display: none")
 
-            if($(e.target).hasClass('action')){
+            if($(e.target).hasClass('action'))
                 this.defineArray($(e.target).attr('val'));
-            }
         }.bind(this))
     }
 
@@ -556,7 +559,7 @@ var RightPanel = function () {
     }
 
     this.checkNull = function () {
-        if (this.MapInfo.basePlotValueValue != null) {
+        /*if (this.MapInfo.basePlotValueValue != null) {
             this.MapInfo.Map.removeLayer(this.MapInfo.basePlotValueValue);
         }
         if (this.MapInfo.encryPlotValueValue != null) {
@@ -567,13 +570,13 @@ var RightPanel = function () {
         }
         if (this.MapInfo.encryptionPointNameValue != null) {
             this.MapInfo.Map.removeLayer(this.MapInfo.encryptionPointNameValue);
-        }
-        if (this.MapInfo.ContourLayer != null) {
+        }*/
+        if (this.MapInfo.ContourLayer != null)
             this.MapInfo.Map.removeLayer(this.MapInfo.ContourLayer);
-        }
-        if (this.MapInfo.layer != null) {
+
+        if (this.MapInfo.layer != null)
             this.MapInfo.Map.removeLayer(this.MapInfo.layer);
-        }
+
         $(".color-control").attr("style", "display: none")
     }
 

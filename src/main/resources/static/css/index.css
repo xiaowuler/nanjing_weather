@@ -597,15 +597,11 @@
     background: url("../images/checked.png") no-repeat center;
 }
 
-.layer-isoline{
-    margin-left: 123px;
-}
 
 .layer-text{
     /*width: 115px;*/
-    position: absolute;
-    left: 20px;
-    bottom: 20px;
+    float: left;
+    margin-right: 8px;
     border-right: 1px solid #d5d5d5;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;

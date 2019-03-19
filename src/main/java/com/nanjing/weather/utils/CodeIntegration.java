@@ -61,7 +61,8 @@ public class CodeIntegration {
             ApplicationContext applicationContext = SpringUtil.getApplicationContext();
             LegendLevelMapper legendLevelMapper = applicationContext.getBean(LegendLevelMapper.class);
             List<LegendLevel> legendLevels = legendLevelMapper.findAll(type);
-            ContourHelper contourHelper = new ContourHelper("D:\\project\\springboot-nanjing\\springboot-nanjing\\src\\main\\resources\\static\\json\\nanjing.json");
+            // ContourHelper contourHelper = new ContourHelper("D:\\project\\springboot-nanjing\\springboot-nanjing\\src\\main\\resources\\static\\json\\nanjing.json");
+            ContourHelper contourHelper = new ContourHelper("D:\\项目\\weather_nanjing\\src\\main\\resources\\static\\json\\nanjing.json");
             ContourResult contourResult = contourHelper.Calc(list, legendLevels, 8, -9999);
             contourResult.setTime(time);
             return contourResult;

@@ -23,7 +23,7 @@ var MapInfo = function () {
             zoomControl: false
         });*/
         this.Map = L.map("map", {
-            center: [32.00575, 119.26758],
+            center: [31.77777, 118.26758],
             zoom: 9.2,
             zoomControl: false
         });
