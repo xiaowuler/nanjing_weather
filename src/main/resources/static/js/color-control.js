@@ -47,7 +47,7 @@ var ColorContorl = function () {
         if (type == 'temperatures') {
             $("#color-text").html('<p>温度(单位: °c)</p>')
         } else if (type == 'winds') {
-            $("#color-text").html('<p>风(单位: m/s)</p>')
+            $("#color-text").html('<p>风速(单位: m/s)</p>')
         } else if (type == 'rainfalls') {
             $("#color-text").html('<p>降雨(单位: mm)</p>')
         } else if (type == 'humidities') {
@@ -55,7 +55,7 @@ var ColorContorl = function () {
         } else if (type == 'pressures') {
             $("#color-text").html('<p>气压(单位: Pa)</p>')
         } else if (type == 'groundTemperature') {
-            $("#color-text").html('<p>气压(单位: °c)</p>')
+            $("#color-text").html('<p>地温(单位: °c)</p>')
         }
 
         this.gradient.css({

@@ -8,9 +8,14 @@ import com.nanjing.weather.dao.LegendLevelMapper;
 import com.nanjing.weather.dao.StationsMapper;
 import com.nanjing.weather.domain.Stations;
 import org.springframework.context.ApplicationContext;
+import org.springframework.util.ClassUtils;
 
+import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,7 +67,14 @@ public class CodeIntegration {
             LegendLevelMapper legendLevelMapper = applicationContext.getBean(LegendLevelMapper.class);
             List<LegendLevel> legendLevels = legendLevelMapper.findAll(type);
             // ContourHelper contourHelper = new ContourHelper("D:\\project\\springboot-nanjing\\springboot-nanjing\\src\\main\\resources\\static\\json\\nanjing.json");
-            ContourHelper contourHelper = new ContourHelper("D:\\项目\\weather_nanjing\\src\\main\\resources\\static\\json\\nanjing.json");
+            //ContourHelper contourHelper = new ContourHelper("D:\\项目\\weather_nanjing\\src\\main\\resources\\static\\json\\nanjing.json");
+            String productPath = ClassUtils.getDefaultClassLoader().getResource("").getPath();
+            try {
+                productPath = URLDecoder.decode(productPath, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            ContourHelper contourHelper = new ContourHelper(String.format("%s\\%s", productPath, "static\\json\\nanjing.json"));
             ContourResult contourResult = contourHelper.Calc(list, legendLevels, 8, -9999);
             contourResult.setTime(time);
             return contourResult;

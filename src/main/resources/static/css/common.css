@@ -94,6 +94,7 @@ i, em {
     display: block;
     height: 0;
     clear: both;
+    font-size: 0;
     overflow: hidden;
     visibility: hidden
 }

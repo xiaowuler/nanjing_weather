@@ -1,19 +1,15 @@
 package com.nanjing.weather.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.nanjing.wContour.bean.ContourResult;
 import com.nanjing.weather.dao.WindsMapper;
 import com.nanjing.weather.domain.Winds;
-import com.nanjing.weather.entity.Result;
 import com.nanjing.weather.service.WindService;
 import com.nanjing.weather.utils.SpringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/winds")

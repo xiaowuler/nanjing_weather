@@ -48,13 +48,13 @@ public class DataArrivalsController {
         } else if(type.equals("rainfall")||type.equals("temperature")||type.equals("wind")||
                 type.equals("pressure")||type.equals("humidity")||type.equals("ground_temperature")){
             if(startTime.equals("") && endTime.equals("")){
-                //六要素查询（没有地区）
+                // 六要素查询（没有地区）
                 PageResult<DataArrivals> pageResult = dataArrivalsService.findAllType(page, rows, type);
                 List<DataArrivals> rowsList = getDataArrivals(pageResult);
                 pageResult.setRows(rowsList);
                 return pageResult;
             }else{
-                //六要素根据时间查询（没有地区）
+                // 六要素根据时间查询（没有地区）
                 return getDataArrivalsPageResultAllType(startTime, endTime, page, rows, type);
             }
         }else{
@@ -64,7 +64,7 @@ public class DataArrivalsController {
                 pageResult.setRows(rowsList);
                 return pageResult;
             } else {
-                //2018/12/03/00时+"/00/00"  "2018-11-10 10:20:00" 定义规范时间方法
+                // 2018/12/03/00时+"/00/00"  "2018-11-10 10:20:00" 定义规范时间方法
                 return getDataArrivalsPageResult(startTime, endTime, page, rows, type,regionCode);
             }
         }

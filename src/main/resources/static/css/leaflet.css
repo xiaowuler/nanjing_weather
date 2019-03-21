@@ -294,7 +294,7 @@
 }
 
 .leaflet-container a {
-    color: #0a5070;
+    color: #eeeeee;
 }
 
 .leaflet-container a.leaflet-active {
@@ -455,7 +455,7 @@
 
 .leaflet-container .leaflet-control-attribution {
     background: #fff;
-    background: rgba(10, 80, 112, 0.7);
+    background: rgba(238, 238, 238, 0.7);
     margin: 0;
 }
 

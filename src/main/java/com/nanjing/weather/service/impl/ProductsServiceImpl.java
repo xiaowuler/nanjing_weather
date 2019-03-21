@@ -65,6 +65,10 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     public List<Products> findByhalfTime(String type, String startTime, String county, String windValue) {
         List<Products> products = productsMapper.findByhalfTime(type, startTime, county, windValue);
+        if (products.size() < 1){
+            String time = productsMapper.findMaxHalfRoutineByProduct(type, county, windValue).toString();
+            products = productsMapper.findByhalfTime(type, time, county, windValue);
+        }
         String path = productsMapper.findConfigPath();
         for (int i = 0; i < products.size(); i++) {
             String[] str=products.get(i).getUrl().split("/");
@@ -86,6 +90,10 @@ public class ProductsServiceImpl implements ProductsService {
     @Override
     public List<Products> findByTiming(String type, String startTime, String county, String windValue) {
         List<Products> products = productsMapper.findByTiming(type, startTime, county, windValue);
+        if (products.size() < 1){
+            String time = productsMapper.findMaxRoutineByProduct(type, county, windValue).toString();
+            products = productsMapper.findByTiming(type, time, county, windValue);
+        }
         String path = productsMapper.findConfigPath();
         for (int i = 0; i < products.size(); i++) {
             String[] str=products.get(i).getUrl().split("/");

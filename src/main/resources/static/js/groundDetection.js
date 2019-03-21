@@ -11,7 +11,7 @@ var GroundDetection = function () {
     this.flag = true;
     this.timer = null;
     this.count = 0;
-    this.MapInfo = new MapInfo(this);
+    this.MapInfo = new MapInfoGround(this);
     this.colorControl = new ColorContorl();
 
     this.Startup = function () {
@@ -123,8 +123,8 @@ var GroundDetection = function () {
     this.timeProcessing = function () {
         var myDate = new Date();
         var hour = myDate.getHours();
-        $('#start-combobox').combobox('setValue',hour + '小时');
-        $('#end-combobox').combobox('setValue','{0}小时'.format(new Date().addHours(1).getHours()))
+        $('#start-combobox').combobox('setValue',hour + '时');
+        $('#end-combobox').combobox('setValue','{0}时'.format(new Date().addHours(1).getHours()))
     }
 
     this.loadClick = function (flag) {
@@ -318,11 +318,25 @@ var GroundDetection = function () {
         this.plotValueSense();
         this.encryPlotSense();
         this.basePoltSense();
+        this.getCheckedByLayerText();
+    }
+
+    this.getCheckedByLayerText = function () {
+        if($('.layer-text a.action').length === 0)
+            this.checkNull();
+    }
+
+    this.checkNull = function () {
+        if (this.MapInfo.ContourLayer != null)
+            this.MapInfo.Map.removeLayer(this.MapInfo.ContourLayer);
+
+        if (this.MapInfo.layer != null)
+            this.MapInfo.Map.removeLayer(this.MapInfo.layer);
+
+        $(".color-control").attr("style", "display: none")
     }
 
     this.getCheckLayerOfChart = function (checkValue,result) {
-        /*if(checkValue == 'temperatures')
-            this.temperatureResult = result;*/
         if($('.layer-text a.action').attr('val') === checkValue){
             if(result != null){
                 if($('#contour').prop('checked')){

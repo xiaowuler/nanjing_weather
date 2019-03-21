@@ -1,4 +1,4 @@
-var MapInfo = function () {
+var MapInfoGround = function () {
 
     this.Map = null;
     this.borders = null;
@@ -14,10 +14,10 @@ var MapInfo = function () {
         this.GetRegionName();
     }
 
-    this.CreateEasyMap = function () {
+    this.CreateMap = function () {
         this.Map = L.map("map", {
-            center: [31.70666, 118.40758],
-            zoom: 9.2,
+            center: [31.95995, 119.06758],
+            zoom: 9.25,
             zoomControl: false
         });
         var layer = L.tileLayer.chinaProvider('Geoq.Normal.Gray', {
@@ -185,40 +185,40 @@ var MapInfo = function () {
         this.basePlotValueValue = new L.FeatureGroup();
         $(labels).each(function (index, label) {
             //if (label.value > 0) {
-                // Add label
-                if (label.id.substring(0, 2) == '58') {
-                    this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
-                        icon: L.divIcon({
-                            className: 'value-label text-shadow',
-                            //html: parseFloat(label.value)
-                            html: this.returnPlotValueHtml(label.typeRegions)
-                        })
-                    }));
+            // Add label
+            if (label.id.substring(0, 2) == '58') {
+                this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
+                    icon: L.divIcon({
+                        className: 'value-label text-shadow',
+                        //html: parseFloat(label.value)
+                        html: this.returnPlotValueHtml(label.typeRegions)
+                    })
+                }));
 
-                    $(label.typeRegions).each(function (index,typeRegion) {
-                        if (typeRegion.instantDirection != null) {
-                            this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
-                                icon: L.WindBarb.icon({
-                                    lat: 40,
-                                    deg: typeRegion.instantDirection,
-                                    speed: label.value,
-                                    pointRadius: 5,
-                                    strokeWidth: 1,
-                                    strokeLength: 15
-                                })
-                            }))
-                        }
-                    }.bind(this));
+                $(label.typeRegions).each(function (index,typeRegion) {
+                    if (typeRegion.instantDirection != null) {
+                        this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
+                            icon: L.WindBarb.icon({
+                                lat: 40,
+                                deg: typeRegion.instantDirection,
+                                speed: label.value,
+                                pointRadius: 5,
+                                strokeWidth: 1,
+                                strokeLength: 15
+                            })
+                        }))
+                    }
+                }.bind(this));
 
-                    this.basePlotValueValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
-                        opacity: 1,
-                        weight: 0.5,
-                        color: 'black',
-                        fillColor: '#fb1c15',
-                        fillOpacity: 0.5,
-                        radius: 2.4
-                    }))
-                }
+                this.basePlotValueValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
+                    opacity: 1,
+                    weight: 0.5,
+                    color: 'black',
+                    fillColor: '#fb1c15',
+                    fillOpacity: 0.5,
+                    radius: 2.4
+                }))
+            }
             //}
         }.bind(this))
 
@@ -319,76 +319,4 @@ var MapInfo = function () {
         }
         this.Map.addLayer(this.ContourLayer);
     };
-
-    this.setGradient = (function () {
-        var canvas = document.createElement('canvas');
-        var useCanvas = !!(typeof (canvas.getContext) == 'function');
-        var ctx = useCanvas ? canvas.getContext('2d') : null;
-        var isIE = false;
-        if (useCanvas) {
-            return function (dEl, sColor1, sColor2) {
-                if (typeof (dEl) == 'string') dEl = document.getElementById(dEl);
-                if (!dEl) return false;
-                var width = dEl.offsetWidth;
-                var height = dEl.offsetHeight;
-                canvas.width = width;
-                canvas.height = height;
-                var dGradient;
-                var sRepeat;
-                dGradient = ctx.createLinearGradient(0, 0, width, 0);
-                sRepeat = 'repeat-y';
-                dGradient.addColorStop(0, sColor1);
-                dGradient.addColorStop(1, sColor2);
-                ctx.fillStyle = dGradient;
-                ctx.fillRect(0, 0, width, height);
-                var sDataUrl = ctx.canvas.toDataURL('image/png');
-                with (dEl.style) {
-                    backgroundRepeat = sRepeat;
-                    backgroundImage = 'url(' + sDataUrl + ')';
-                    backgroundColor = sColor2;
-                }
-            }
-        } else if (isIE) {
-            return function (dEl, sColor1, sColor2, bRepeatY) {
-                if (typeof (dEl) == 'string') dEl = document.getElementById(dEl);
-                if (!dEl) return false;
-                dEl.style.zoom = 1;
-                dEl.style.filter += ' ' + ['progid:DXImageTransform.Microsoft.gradient( GradientType=', +(!!bRepeatY), ',enabled=true,startColorstr=', sColor1, ', endColorstr=', sColor2, ')'].join('');
-            };
-        } else {
-            return function (dEl, sColor1, sColor2) {
-                if (typeof (dEl) == 'string') dEl = document.getElementById(dEl);
-                if (!dEl) return false;
-                with (dEl.style) {
-                    backgroundColor = sColor2;
-                }
-            }
-        }
-    })();
-
-    this.writeInfo = function (result, requestValue) {
-        var htmlText = '';
-        if (requestValue != undefined) {
-            if (requestValue == "rainfalls") {
-                htmlText = result.time + "的降雨信息";
-            } else if (requestValue == "temperatures") {
-                htmlText = result.time + "的温度信息";
-                ;
-            } else if (requestValue == "winds") {
-                htmlText = result.time + "的风信息";
-                ;
-            } else if (requestValue == "humidities") {
-                htmlText = result.time + "的湿度信息";
-                ;
-            } else if (requestValue == "pressures") {
-                htmlText = result.time + "的气压信息";
-                ;
-            } else if (requestValue == "groundTemperature") {
-                htmlText += result.time + "的地温信息";
-                ;
-            }
-            $("#map-info").html(htmlText)
-        }
-    }
-
 }

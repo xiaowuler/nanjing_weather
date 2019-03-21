@@ -6,9 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="nanjing-weather" />
         <module name="springboot1" />
-        <module name="weather_nanjing" />
       </profile>
     </annotationProcessing>
   </component>

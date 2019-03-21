@@ -29,7 +29,7 @@ var App = function () {
         var height = $(window).height();
         var dateHeight = $('.date-select').height();
         var layerHeight = $('.layer').height();
-        $(".map-wrapper").width(width);
+        $(".map-wrapper").width(width + 15);
         $(".map-wrapper,.main").height(height - 50);
         $('.right').height(height - 50);
         $('#element,#Yscrollouter').height(height - layerHeight - dateHeight - 50);

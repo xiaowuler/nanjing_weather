@@ -29,7 +29,7 @@ var RightPanel = function () {
         this.layerInfoWindButtonClick();
         this.layerInfoHumButtonClick();
 
-        this.refreshButtonClick();
+        $('#auto-refresh').on('click', this.handlerRefreshButtonCheck.bind(this));
         this.isolineAndSplashMapClick();
         this.optionCheck();
 
@@ -38,13 +38,7 @@ var RightPanel = function () {
         this.plotNameClick();
         this.plotValueClick();
 
-        //$("input[type='radio']").on('click', this.onOptionButtonClick.bind(this));
-    }
-
-    this.refreshButtonClick = function () {
-        $('.refresh').on('click',function () {
-            this.handlerRefreshButtonCheck(false);
-        }.bind(this))
+        this.SetTimeText();
     }
 
     this.autoGetInfo = function () {
@@ -67,52 +61,110 @@ var RightPanel = function () {
         if($('.humidity-select a.action').attr('val') != null)
             this.playCode($('.humidity-select a.action').attr('val'),null,'humidities');
 
-        $('#last-time').html(this.setTime(null,false));
-        var time = later.parse.text('every 5 mins on the 0 sec');
-        if(this.count === 0)
-            $('#next-time').html(this.setTime(time,true));
-        else
-            $('#next-time').html(this.setTime(time,false));
-        this.count ++;
-    }
-
-    this.handlerRefreshButtonCheck = function (flag) {
-        if($('.refresh-on').text().search('自动刷新') == -1){
-            if(this.timer != null){
-                this.timer.clear();
-            }
-            if(flag)
-                $('#last-time').html(this.setTime(null,false));
-            $('#next-time').html('--:--:--');
-        }else{
+        setTimeout( function(){
             $('#last-time').html(this.setTime(null,false));
             var time = later.parse.text('every 5 mins on the 0 sec');
-            $('#next-time').html(this.setTime(time,false));
-            this.timer = later.setInterval(this.autoGetInfo.bind(this), time);
-        }
+            if(this.count === 0)
+                $('#next-time').html(this.setTime(time,true));
+            else
+                $('#next-time').html(this.setTime(time,false));
+            this.count ++;
+            }.bind(this), 5 * 1000 );
     }
 
-    this.setTime = function (time,flag) {
+    this.handlerRefreshButtonCheck = function () {
+        later.date.localTime();
+        var cron = later.parse.cron('0 0/5 * * * ?', true);
+
+        if (this.IsAutoRefresh())
+            this.timer = later.setInterval(this.OnTimerTick.bind(this), cron);
+        else
+            this.timer.clear();
+    }
+
+    this.OnTimerTick = function () {
+        this.SetTimeText();
+        this.ReloadData();
+    }
+    
+    this.SetTimeText = function () {
+        if (!this.IsAutoRefresh()) {
+            $('#next-time').html('--:--:--');
+            return;
+        }
+
+        $('#last-time').html(this.getTimeByLater("last"));
+        setTimeout(function () {
+            $('#next-time').html(this.getTimeByLater("next"))
+        }.bind(this), 2000);
+    }
+
+    this.getTimeByLater = function (flag) {
         var date = null;
         var second = null;
-        if(time == null){
+
+        if (flag == 'next'){
+            var cron = later.parse.cron('0 0/5 * * * ?', true);
+            var date = later.schedule(cron).next(1);
+            second = "00";
+        }else {
             date = new Date();
             second = date.getSeconds();
             second = (second < 10) ? '0' + second : second;
-        }else {
-            if(flag){
-                date = later.schedule(time).next(2)[1];
-                second = '00';
-            }else {
-                date = later.schedule(time).next(1);
-                second = '00';
-            }
         }
+
         var hour = date.getHours();
         hour = (hour < 10) ? '0' + hour : hour;
         var minute = date.getMinutes();
         minute = (minute < 10) ? '0' + minute : minute;
-        return hour + ':' + minute + ':' +second;
+        return hour + ':' + minute + ':' + second;
+    }
+
+    this.ReloadData = function () {
+        if($('.interval-select a.action').attr('val') != null)
+            this.playCode($('.interval-select a.action').attr('val'),$('.millimeter-select a.action').attr('val'),'rainfalls');
+
+        if($('.variable-select a.action').attr('val') != null)
+            this.playCode($('.variable-select a.action').attr('val'),$('.temperature-select a.action').attr('val'),'temperatures');
+
+        if($('.wind-select a.action').attr('val') != null)
+            this.playCode($('.wind-select a.action').attr('val'),null,'winds');
+
+        if($('.geothermal-select a.action').attr('val') != null)
+            this.playCode($('.geothermal-select a.action').attr('val'),null,'groundTemperature');
+
+        if($('.air-pressure-select a.action').attr('val') != null)
+            this.playCode($('.air-pressure-select a.action').attr('val'),null,'pressures');
+
+        if($('.humidity-select a.action').attr('val') != null)
+            this.playCode($('.humidity-select a.action').attr('val'),null,'humidities');
+    }
+
+    this.IsAutoRefresh = function () {
+        return $('#auto-refresh').hasClass('refresh-on');
+    }
+
+    this.setTime = function (time,flag) {
+        // var date = null;
+        // var second = null;
+        // if(time == null){
+        //     date = new Date();
+        //     second = date.getSeconds();
+        //     second = (second < 10) ? '0' + second : second;
+        // }else {
+        //     /*if(flag){
+        //         date = later.schedule(time).next(2)[1];
+        //         second = '00';
+        //     }else {*/
+        //         date = later.schedule(time).next(1);
+        //         second = '00';
+        //     //}
+        // }
+        // var hour = date.getHours();
+        // hour = (hour < 10) ? '0' + hour : hour;
+        // var minute = date.getMinutes();
+        // minute = (minute < 10) ? '0' + minute : minute;
+        // return hour + ':' + minute + ':' +second;
     }
 
     this.layerInfoRainFallButtonClick = function () {

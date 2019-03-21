@@ -11,7 +11,6 @@ var App = function () {
     this.Startup = function () {
 
         this.Relayout();
-        //this.LocalTime();
         this.WindSelect();
         this.RightScroll();
         this.IntervalSelect();
@@ -32,9 +31,6 @@ var App = function () {
         this.BottomPanel.Startup();
         this.RightPanel.Startup();
         window.onresize = this.Relayout.bind(this);
-        //$('#shrink-left').on('click', this.OnShrinkLeftButton.bind(this));
-        //$('#shrink-right').on('click', this.OnShrinkRightButton.bind(this));
-        //$('#shrink-bottom').on('click', this.OnShrinkBottomButton.bind(this));
     };
 
     this.Relayout = function () {
@@ -58,27 +54,6 @@ var App = function () {
             'left': -(typeHeight / 2) + 17,
             'top': typeHeight / 2 - 15
         });
-    };
-
-    this.LocalTime = function () {
-        function Time() {
-            var date = new Date();
-            var hour = date.getHours();
-            var minutes = date.getMinutes();
-            var nextMinute = minutes + 5;
-            var second = date.getSeconds();
-
-            hour = (hour < 10) ? "0" + hour : hour;
-            minutes = (minutes < 10) ? "0" + minutes : minutes;
-            nextMinute = (minutes < 10) ? "0" + nextMinute : nextMinute;
-            second = (second < 10) ? "0" + second : second;
-            var LastTime = hour + ":" + minutes + ":" + second;
-            var nextTime = hour + ":" + nextMinute + ":" + second;
-            document.getElementById("last-time").innerHTML = LastTime;
-            document.getElementById("next-time").innerHTML = nextTime;
-            setTimeout(Time, 500);
-        }
-        Time();
     };
 
     this.OnRefreshButton = function () {

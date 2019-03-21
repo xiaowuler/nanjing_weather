@@ -6,6 +6,7 @@ import com.nanjing.weather.domain.Products;
 import com.nanjing.weather.dto.Category;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Mapper
@@ -19,13 +20,13 @@ public interface ProductsMapper {
 
     List<Products> findByhalfTime(String type, String startTime, String county, String windValue);
 
-    List<Products> findByhalfTime1(String type, String startTime, String county, String windValue);
+    Timestamp findMaxHalfRoutineByProduct(String type, String county, String windValue);
+
+    Timestamp findMaxRoutineByProduct(String type, String county, String windValue);
 
     List<Products> findByTiming(String type, String startTime, String county, String windValue);
 
     List<Products> findByTime1(String type, String county, String categoryCodeValue);
-
-    List<ProductData> findAllByType();
 
     ProductData findOneByTypeAndArea(String categoryCode, String regionCode, String typeCode);
 

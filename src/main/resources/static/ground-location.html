@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<div class="map-loading" id="map-loading" style="display: none">
+<div class="map-loading map-loading-position" id="map-loading" style="display: none;">
     <img src="picture/loading.gif" class="load-img"/>
 </div>
 
@@ -29,14 +29,6 @@
     <span>气压</span>
     <span>地温</span>
 </div>
-<!--<div class="element-value clearfix">
-    <span class="rainfalls">100</span>
-    <span class="temperatures">22</span>
-    <span class="winds">10</span>
-    <span class="humidities">15</span>
-    <span class="pressures">40</span>
-    <span class="groundTemperature">10</span>
-</div>-->
 
 <div class="color-control" id="drag" style="display: none">
     <div class="color-content clearfix">
@@ -76,14 +68,6 @@
                             <span>降水</span>
                         </div>
                         <div class="element-text">
-                            <!--<div class="element-block interval-select clearfix">
-                                <a href="javascript:;" class="action">1小时</a>
-                                <a href="javascript:;">3小时</a>
-                                <a href="javascript:;">6小时</a>
-                                <a href="javascript:;">12小时</a>
-                                <a href="javascript:;">24小时</a>
-                                <a href="javascript:;">48小时</a>
-                            </div>-->
                             <div class="element-block millimeter-select clearfix">
                                 <a href="javascript:;" val="0.01">>0.00mm</a>
                                 <a href="javascript:;" val="10.0">≥10.0mm</a>
@@ -140,12 +124,6 @@
                                 <a href="javascript:;" val="15">15cm温度</a>
                                 <a href="javascript:;" val="20">20cm温度</a>
                                 <a href="javascript:;" val="40">40cm温度</a>
-                                <!--<a href="javascript:;" class="action">地面温度</a>
-                                <a href="javascript:;">5cm温度</a>
-                                <a href="javascript:;">10cm温度</a>
-                                <a href="javascript:;">15cm温度</a>
-                                <a href="javascript:;">20cm温度</a>
-                                <a href="javascript:;">40cm温度</a>-->
                             </div>
                         </div>
                     </div>
@@ -156,8 +134,6 @@
                         <div class="element-text">
                             <div class="element-block air-pressure-select one-select clearfix">
                                 <a href="javascript:;" val="本站气压">本站气压</a>
-                                <!--<a href="javascript:;" class="action">本站气压</a>-->
-                                <!--<a href="javascript:;">24小时变压</a>-->
                             </div>
                         </div>
                     </div>
@@ -273,12 +249,6 @@
                             <label for="value">站值</label>
                         </div>
                         <div class="layer-text clearfix">
-                            <!--<a href="javascript:;">雨</a>
-                            <a href="javascript:;" class="action">温</a>
-                            <a href="javascript:;">风</a>
-                            <a href="javascript:;">湿</a>
-                            <a href="javascript:;">压</a>
-                            <a href="javascript:;">地</a>-->
                             <a href="javascript:;" class="action temp" val="temperatures">温</a>
                         </div>
                         <div class="layer-box layer-isoline">
@@ -308,7 +278,7 @@
 <script type="text/javascript" src="thirdparty/leaflet.ChineseTmsProviders.js"></script>
 <script type="text/javascript" src="js/ground-location.js"></script>
 <script type="text/javascript" src="js/groundDetection.js"></script>
-<script type="text/javascript" src="js/mapInfo.js"></script>
+<script type="text/javascript" src="js/mapinfo-ground.js"></script>
 <script type="text/javascript" src="js/color-control.js"></script>
 <script type="text/javascript" src="js/right-control/arrayRegion.js"></script>
 <script type="text/javascript" src="js/right-control/ArrayData.js"></script>

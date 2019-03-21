@@ -25,7 +25,11 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
         map.put("type", type);
         map.put("begin", (pageNum - 1) * pageSize);
         map.put("pageSize", pageSize);
-        PageResult<DataArrivals> dataArrivalsPageResult = new PageResult<>(dataArrivalsMapper.findCount(type), dataArrivalsMapper.findAllType(map));
+        Long count = dataArrivalsMapper.findCount(type);
+        List<DataArrivals> dataArrivals = dataArrivalsMapper.findAllType(map);
+        if (dataArrivals.size() < 1)
+            count = 0L;
+        PageResult<DataArrivals> dataArrivalsPageResult = new PageResult<>(count, dataArrivals);
         return dataArrivalsPageResult;
     }
 
@@ -40,6 +44,8 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
         map.put("pageSize", pageSize);
         Long count1 = dataArrivalsMapper.findCount1(map);
         List<DataArrivals> byTypeAndTime = dataArrivalsMapper.findAllTypeAndTime(map);
+        if (byTypeAndTime.size() < 1)
+            count1 = 0L;
         return new PageResult<>(count1, byTypeAndTime);
     }
 
@@ -50,7 +56,11 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
         map.put("begin", (pageNum - 1) * pageSize);
         map.put("pageSize", pageSize);
         map.put("regionCode",regionCode);
-        PageResult<DataArrivals> dataArrivalsPageResult = new PageResult<>(dataArrivalsMapper.findCount(type), dataArrivalsMapper.findByType(map));
+        Long count = dataArrivalsMapper.findCount(type);
+        List<DataArrivals> dataArrivals = dataArrivalsMapper.findByType(map);
+        if (dataArrivals.size() < 1)
+            count = 0L;
+        PageResult<DataArrivals> dataArrivalsPageResult = new PageResult<>(count, dataArrivals);
         return dataArrivalsPageResult;
     }
 
@@ -66,6 +76,8 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
         map.put("regionCode",regionCode);
         Long count1 = dataArrivalsMapper.findCount1(map);
         List<DataArrivals> byTypeAndTime = dataArrivalsMapper.findByTypeAndTime(map);
+        if (byTypeAndTime.size() < 1)
+            count1 = 0L;
         return new PageResult<>(count1, byTypeAndTime);
     }
 
@@ -76,7 +88,11 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
         map.put("begin", (pageNum - 1) * pageSize);
         map.put("pageSize", pageSize);
         map.put("regionCode",regionCode);
-        return new PageResult<>(dataArrivalsMapper.findCount(type), dataArrivalsMapper.findByTiming(map));
+        Long count = dataArrivalsMapper.findCount(type);
+        List<DataArrivals> dataArrivals = dataArrivalsMapper.findByTiming(map);
+        if (dataArrivals.size() < 1)
+            count = 0L;
+        return new PageResult<>(count, dataArrivals);
     }
 
     @Override
@@ -86,9 +102,11 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
         map.put("begin", (pageNum - 1) * pageSize);
         map.put("pageSize", pageSize);
         map.put("regionCode",regionCode);
-        PageResult<DataArrivals> dataArrivalsPageResult = new PageResult<DataArrivals>(dataArrivalsMapper.findCount(type), dataArrivalsMapper.findByHalfTime(map));
-
-        return dataArrivalsPageResult;
+        Long count = dataArrivalsMapper.findCount(type);
+        List<DataArrivals> dataArrivals = dataArrivalsMapper.findByHalfTime(map);
+        if (dataArrivals.size() < 1)
+            count = 0L;
+        return new PageResult<>(count, dataArrivals);
     }
 
     @Override
@@ -152,6 +170,8 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
             for(DataArrivalLitter dataArrivalLitter:dataState.getDataArrivalLitter()){
                 for(CenterDataArrival centerDataArrival:dataArrivalLitter.getCenterDataArrival()){
                     String num = centerDataArrival.getDescription().replaceAll("[^0-9\\-]", "");
+                    if ("-1".equals(num))
+                        num = "0";
                     centerDataArrival.setDescription(num);
                 }
             }
