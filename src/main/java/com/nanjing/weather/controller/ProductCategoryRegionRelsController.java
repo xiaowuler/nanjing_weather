@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/ProductCategoryRegionRels")
 public class ProductCategoryRegionRelsController {
+
     @Autowired
     private ProductCategoryRegionRelsService productCategoryRegionRelsService;
 

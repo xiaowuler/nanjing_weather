@@ -11,24 +11,21 @@
          select VALUE from configs  where `key`='root-path'
     </select>
 
-    <!--<select id="findByTime" resultType="com.nanjing.weather.domain.Products">
-        select * from products WHERE type_code = #{0} and  routine_time BETWEEN (SELECT date_sub((#{1}),interval 80 hour)) and (#{1}) AND RIGHT(routine_time,5)='00:00' and region_code=#{2} ORDER BY routine_time desc;
-    </select>-->
-
     <select id="findByTime" resultType="com.nanjing.weather.domain.Products">
         select * from products WHERE url !='data-miss.jpg'and type_code = #{0} and  routine_time BETWEEN (SELECT date_sub((#{1}),interval 24 hour)) and (#{1}) AND RIGHT(routine_time,5)='00:00' and region_code=#{2} GROUP BY routine_time ORDER BY routine_time desc;
     </select>
 
     <select id="findAllByTime" resultType="com.nanjing.weather.domain.Products">
         select * from products WHERE url !='data-miss.jpg'and  type_code = #{0} and  routine_time&lt;=#{1} and region_code=#{2} and reserved1=#{3} ORDER BY routine_time desc limit 0,24;
-
     </select>
 
     <select id="findByTiming" resultType="com.nanjing.weather.domain.Products">
         select * from products WHERE  url !='data-miss.jpg'and type_code = #{0} and  routine_time BETWEEN (SELECT date_sub((#{1}),interval 24 hour)) and (#{1}) AND RIGHT(routine_time,5)='00:00' and region_code=#{2} and reserved1=#{3} ORDER BY routine_time desc limit 0,24;
-
     </select>
 
+    <select id="findMaxTimeByType" resultType="com.nanjing.weather.domain.Products">
+        select * from products WHERE  url !='data-miss.jpg'and type_code = #{0} and  routine_time BETWEEN (SELECT date_sub((#{1}),interval 24 hour)) and (#{1}) AND RIGHT(routine_time,5)='00:00' and region_code=#{2} and reserved1=#{3} ORDER BY routine_time desc limit 0,24;
+    </select>
 
     <select id="findByhalfTime" resultType="com.nanjing.weather.domain.Products">
         select * from products WHERE url !='data-miss.jpg'and type_code = #{0} and  routine_time BETWEEN (SELECT date_sub((#{1}),interval 24 hour)) and (#{1}) AND (RIGHT(routine_time,5)='30:00'or RIGHT(routine_time,5)='00:00') and region_code=#{2}and reserved1=#{3} ORDER BY routine_time desc;
@@ -46,7 +43,6 @@
     <select id="findByTime1" resultType="com.nanjing.weather.domain.Products">
       select * from products where url !='data-miss.jpg'and type_code =  #{0} and region_code=#{1} and category_code=#{2} BETWEEN (SELECT date_sub((SELECT MAX(routine_time) from products),interval 24 hour)) and (SELECT MAX(routine_time) from products) AND RIGHT(routine_time,5)='00:00'
        ORDER BY routine_time desc ;
-
     </select>
     <select id="findAllByType" resultType="com.nanjing.weather.domain.ProductData">
         select pcr.category_code categoryCode,pcr.region_code regionCode,pcr.data_file_path dataFilePath,pr.`name` areaName,pt.`code` dataType,pt.`name` typeName from product_category_region_rels pcr LEFT JOIN product_regions pr on pcr.region_code = pr.code LEFT JOIN product_types pt ON pcr.category_code = pt.category_code;

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/temperatures")
 public class TemperatureController {
+
     @Autowired
     private TemperatureService temperaturesService;
 
