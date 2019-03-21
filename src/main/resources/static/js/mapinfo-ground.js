@@ -245,7 +245,7 @@ var MapInfoGround = function () {
 
                 $(label.typeRegions).each(function (index,typeRegion) {
                     if (typeRegion.instantDirection != null) {
-                        this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
+                        this.encryPlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
                             icon: L.WindBarb.icon({
                                 lat: 40,
                                 deg: typeRegion.instantDirection,
