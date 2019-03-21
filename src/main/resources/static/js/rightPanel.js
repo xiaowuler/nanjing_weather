@@ -45,10 +45,13 @@ var RightPanel = function () {
         later.date.localTime();
         var cron = later.parse.cron('0 0/5 * * * ?', true);
 
-        if (this.IsAutoRefresh())
+        if (this.IsAutoRefresh()){
+            this.SetTimeText();
             this.timer = later.setInterval(this.OnTimerTick.bind(this), cron);
-        else
+        }else{
+            this.SetTimeText();
             this.timer.clear();
+        }
     }
 
     this.OnTimerTick = function () {
@@ -58,7 +61,7 @@ var RightPanel = function () {
     
     this.SetTimeText = function () {
         if (!this.IsAutoRefresh()) {
-            $('#next-time').html('--:--:--');
+            $('#next-time').html('-- : -- : --');
             return;
         }
 
