@@ -41,37 +41,6 @@ var RightPanel = function () {
         this.SetTimeText();
     }
 
-    this.autoGetInfo = function () {
-
-        if($('.interval-select a.action').attr('val') != null)
-            this.playCode($('.interval-select a.action').attr('val'),$('.millimeter-select a.action').attr('val'),'rainfalls');
-
-        if($('.variable-select a.action').attr('val') != null)
-            this.playCode($('.variable-select a.action').attr('val'),$('.temperature-select a.action').attr('val'),'temperatures');
-
-        if($('.wind-select a.action').attr('val') != null)
-            this.playCode($('.wind-select a.action').attr('val'),null,'winds');
-
-        if($('.geothermal-select a.action').attr('val') != null)
-            this.playCode($('.geothermal-select a.action').attr('val'),null,'groundTemperature');
-
-        if($('.air-pressure-select a.action').attr('val') != null)
-            this.playCode($('.air-pressure-select a.action').attr('val'),null,'pressures');
-
-        if($('.humidity-select a.action').attr('val') != null)
-            this.playCode($('.humidity-select a.action').attr('val'),null,'humidities');
-
-        setTimeout( function(){
-            $('#last-time').html(this.setTime(null,false));
-            var time = later.parse.text('every 5 mins on the 0 sec');
-            if(this.count === 0)
-                $('#next-time').html(this.setTime(time,true));
-            else
-                $('#next-time').html(this.setTime(time,false));
-            this.count ++;
-            }.bind(this), 5 * 1000 );
-    }
-
     this.handlerRefreshButtonCheck = function () {
         later.date.localTime();
         var cron = later.parse.cron('0 0/5 * * * ?', true);
@@ -96,7 +65,7 @@ var RightPanel = function () {
         $('#last-time').html(this.getTimeByLater("last"));
         setTimeout(function () {
             $('#next-time').html(this.getTimeByLater("next"))
-        }.bind(this), 2000);
+        }.bind(this), 1000);
     }
 
     this.getTimeByLater = function (flag) {
@@ -142,29 +111,6 @@ var RightPanel = function () {
 
     this.IsAutoRefresh = function () {
         return $('#auto-refresh').hasClass('refresh-on');
-    }
-
-    this.setTime = function (time,flag) {
-        // var date = null;
-        // var second = null;
-        // if(time == null){
-        //     date = new Date();
-        //     second = date.getSeconds();
-        //     second = (second < 10) ? '0' + second : second;
-        // }else {
-        //     /*if(flag){
-        //         date = later.schedule(time).next(2)[1];
-        //         second = '00';
-        //     }else {*/
-        //         date = later.schedule(time).next(1);
-        //         second = '00';
-        //     //}
-        // }
-        // var hour = date.getHours();
-        // hour = (hour < 10) ? '0' + hour : hour;
-        // var minute = date.getMinutes();
-        // minute = (minute < 10) ? '0' + minute : minute;
-        // return hour + ':' + minute + ':' +second;
     }
 
     this.layerInfoRainFallButtonClick = function () {
@@ -326,22 +272,16 @@ var RightPanel = function () {
 
                     if(requestValue == 'temperatures'){
                         this.temperatureResult = data;
-                        //this.result.addData('temperatures',data.valuePoints);
                     }else if(requestValue == 'rainfalls'){
                         this.rainFallResult = data;
-                        //this.result.addData('rainfalls',data.valuePoints);
                     }else if(requestValue == 'winds'){
                         this.windResult = data;
-                        //this.result.addData('winds',data.valuePoints);
                     }else if(requestValue == 'groundTemperature'){
                         this.groundTemperatureResult = data;
-                        //this.result.addData('groundTemperature',data.valuePoints);
                     }else if(requestValue == 'pressures'){
                         this.pressureResult = data;
-                        //this.result.addData('pressures',data.valuePoints);
                     }else if(requestValue == 'humidities'){
                         this.humidityResult = data;
-                        //this.result.addData('humidities',data.valuePoints);
                     }
 
                     this.insertData();
@@ -449,9 +389,8 @@ var RightPanel = function () {
         }else{
             if (this.MapInfo.basePlotValueValue != null)
                 this.MapInfo.Map.removeLayer(this.MapInfo.basePlotValueValue);
-            if (this.MapInfo.basePoltDirNameValue != null) {
+            if (this.MapInfo.basePoltDirNameValue != null)
                 this.MapInfo.Map.removeLayer(this.MapInfo.basePoltDirNameValue);
-            }
         }
     }
 

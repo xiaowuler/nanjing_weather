@@ -145,7 +145,7 @@ var MapInfo = function () {
         this.Map.addLayer(this.basePoltDirNameValue);
     }
 
-    //加密站的站名
+    // 加密站的站名
     this.encryptionPointName = function (labels) {
         if (this.encryptionPointNameValue != undefined) {
             this.Map.removeLayer(this.encryptionPointNameValue);
@@ -177,49 +177,45 @@ var MapInfo = function () {
         this.Map.addLayer(this.encryptionPointNameValue);
     }
 
-    //基本站的站值
+    // 基本站的站值
     this.basePlotValue = function (labels) {
         if (this.basePlotValueValue != undefined) {
             this.Map.removeLayer(this.basePlotValueValue);
         }
         this.basePlotValueValue = new L.FeatureGroup();
         $(labels).each(function (index, label) {
-            //if (label.value > 0) {
-                // Add label
-                if (label.id.substring(0, 2) == '58') {
-                    this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
-                        icon: L.divIcon({
-                            className: 'value-label text-shadow',
-                            //html: parseFloat(label.value)
-                            html: this.returnPlotValueHtml(label.typeRegions)
-                        })
-                    }));
+            if (label.id.substring(0, 2) == '58') {
+                this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
+                    icon: L.divIcon({
+                        className: 'value-label text-shadow',
+                        html: this.returnPlotValueHtml(label.typeRegions)
+                    })
+                }));
 
-                    $(label.typeRegions).each(function (index,typeRegion) {
-                        if (typeRegion.instantDirection != null) {
-                            this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
-                                icon: L.WindBarb.icon({
-                                    lat: 40,
-                                    deg: typeRegion.instantDirection,
-                                    speed: label.value,
-                                    pointRadius: 5,
-                                    strokeWidth: 1,
-                                    strokeLength: 15
-                                })
-                            }))
-                        }
-                    }.bind(this));
+                $(label.typeRegions).each(function (index,typeRegion) {
+                    if (typeRegion.instantDirection != null) {
+                        this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
+                            icon: L.WindBarb.icon({
+                                lat: 40,
+                                deg: typeRegion.instantDirection,
+                                speed: label.value,
+                                pointRadius: 5,
+                                strokeWidth: 1,
+                                strokeLength: 15
+                            })
+                        }))
+                    }
+                }.bind(this));
 
-                    this.basePlotValueValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
-                        opacity: 1,
-                        weight: 0.5,
-                        color: 'black',
-                        fillColor: '#fb1c15',
-                        fillOpacity: 0.5,
-                        radius: 2.4
-                    }))
-                }
-            //}
+                this.basePlotValueValue.addLayer(L.circleMarker([label.latitude, label.longitude], {
+                    opacity: 1,
+                    weight: 0.5,
+                    color: 'black',
+                    fillColor: '#fb1c15',
+                    fillOpacity: 0.5,
+                    radius: 2.4
+                }))
+            }
         }.bind(this))
 
         this.Map.addLayer(this.basePlotValueValue);
@@ -245,7 +241,7 @@ var MapInfo = function () {
 
                 $(label.typeRegions).each(function (index,typeRegion) {
                     if (typeRegion.instantDirection != null) {
-                        this.basePlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
+                        this.encryPlotValueValue.addLayer(L.marker([label.latitude, label.longitude], {
                             icon: L.WindBarb.icon({
                                 lat: 40,
                                 deg: typeRegion.instantDirection,
