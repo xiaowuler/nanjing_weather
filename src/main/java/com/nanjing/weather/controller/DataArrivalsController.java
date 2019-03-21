@@ -20,7 +20,7 @@ public class DataArrivalsController {
     @Autowired
     private DataArrivalsService dataArrivalsService;
 
-    //查询
+    // 查询
     @RequestMapping("/findByType")
     public PageResult<DataArrivals> findByType(String startTime, String endTime, Integer page, Integer rows, String type,String regionCode) {
 

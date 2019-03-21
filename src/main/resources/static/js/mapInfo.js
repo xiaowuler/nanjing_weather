@@ -127,7 +127,7 @@ var MapInfo = function () {
                 this.basePoltDirNameValue.addLayer(L.marker([label.latitude, label.longitude], {
                     icon: L.divIcon({
                         className: 'name-label text-shadow',
-                        html: label.name
+                        html: '<div class="map-text">'+label.name+'</div>'
                     })
                 }));
 
@@ -159,7 +159,7 @@ var MapInfo = function () {
                 this.encryptionPointNameValue.addLayer(L.marker([label.latitude, label.longitude], {
                     icon: L.divIcon({
                         className: 'name-label text-shadow',
-                        html: label.name
+                        html: '<div class="map-text">'+label.name+'</div>'
                     })
                 }));
 
