@@ -37,12 +37,23 @@ var GroundDetection = function () {
         var endTime = $('#end-date').val() +'/'+ $('#end-combobox').combobox('getValue');
         var time = this.timeFormat(startTime,endTime);
 
+        this.clearOverdueDate();
+
         this.senseRainfallCheck(time);
         this.senseTermperCheck(time);
         this.senseWindCheck(time);
         this.senseGroundTermperCheck(time);
         this.sensePressCheck(time);
         this.senseHumCheck(time);
+    }
+
+    this.clearOverdueDate = function () {
+        this.rainFallResult = null;
+        this.windResult = null;
+        this.temperatureResult = null;
+        this.groundTemperatureResult = null;
+        this.pressureResult = null;
+        this.humidityResult = null;
     }
 
     this.senseRainfallCheck = function (time) {
