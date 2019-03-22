@@ -121,8 +121,10 @@ var App = function () {
                         }
                     }
                 },
-                {field: 'description', title: '备注', align: 'center', width: 160},
-                {
+                {field: 'description', title: '采集描述', align: 'center', width: 160}
+
+                // 隐藏这一列，后期处理
+                /*{
                     field: 'Operate', title: '操作', align: 'center', width: 120,
                     formatter: function (value, row) {
                         if (row.timeliness_code == 'all') {
@@ -133,7 +135,7 @@ var App = function () {
                             return btn;
                         }
                     }
-                }
+                }*/
             ]],
             striped: true,
             singleSelect: true,

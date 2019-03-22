@@ -164,6 +164,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
     height: 50px;
     position: relative;
     background: url("../images/top-bg.jpg") repeat-x;
+    z-index: 1000;
 }
 
 .top-bg {

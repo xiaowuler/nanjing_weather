@@ -17,6 +17,10 @@ public interface TemperatureMapper {
 
     List<Temperature> findAllBySomeDatahh(TemperatureNinMax temperatureNinMax);
 
+    List<Temperature> findAllBySomeDataOfHour(TemperatureCenter temperatureCenter);
+
+    List<Temperature> findAllBySomeDataOfTime(TemperatureCenter temperatureCenter);
+
     List<Temperature> findAllBySomeDatahH(TemperatureNinMax temperatureNinMax);
 
 }

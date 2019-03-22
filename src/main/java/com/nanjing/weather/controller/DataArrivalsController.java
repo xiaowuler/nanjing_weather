@@ -84,7 +84,6 @@ public class DataArrivalsController {
         return pageResult;
     }
 
-
     private PageResult<DataArrivals> getDataArrivalsPageResultAllType(String startTime, String endTime, Integer page, Integer rows, String type) {
         String[] strs = startTime.split("/");
         String[] strs2 = endTime.split("/");
@@ -98,6 +97,7 @@ public class DataArrivalsController {
         pageResult.setRows(rowsList);
         return pageResult;
     }
+
     private List<DataArrivals> getDataArrivals(PageResult<DataArrivals> pageResult) {
         List<DataArrivals> rowsList = pageResult.getRows();
         for (DataArrivals dataArrivals : rowsList) {
@@ -117,7 +117,4 @@ public class DataArrivalsController {
     public List<List<DataState>> findState() {
         return dataArrivalsService.findDataState();
     }
-
-
-
 }

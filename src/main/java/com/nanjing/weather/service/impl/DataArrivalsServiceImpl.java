@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
 @Transactional
 public class DataArrivalsServiceImpl implements DataArrivalsService {
+
     @Autowired
     private DataArrivalsMapper dataArrivalsMapper;
 
@@ -170,7 +170,7 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
             for(DataArrivalLitter dataArrivalLitter:dataState.getDataArrivalLitter()){
                 for(CenterDataArrival centerDataArrival:dataArrivalLitter.getCenterDataArrival()){
                     String num = centerDataArrival.getDescription().replaceAll("[^0-9\\-]", "");
-                    if ("-1".equals(num))
+                    if ("-1".equals(num) || "-".equals(num) || "".equals(num))
                         num = "0";
                     centerDataArrival.setDescription(num);
                 }

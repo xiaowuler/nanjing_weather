@@ -9,6 +9,11 @@
     -ms-user-select:none; user-select:none;
 }
 
+.color-info{
+    position: absolute;
+    bottom: 0px !important;
+}
+
 .color-unit{
     margin-right: -20px;
     float: left;

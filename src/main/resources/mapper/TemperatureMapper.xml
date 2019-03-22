@@ -29,6 +29,23 @@
         </if>
     </select>
 
+    <select id="findAllBySomeDataOfHour" parameterType="com.nanjing.weather.entity.TemperatureCenter"
+            resultMap="findAllBySomeDataHHMap">
+        SELECT * FROM temperatures where 1 = 1
+        <if test="value != null">
+            and value >= #{value}
+        </if>
+        <if test="createTime != null and routineTime != null">
+            and routine_time BETWEEN #{createTime} AND #{routineTime}
+        </if>
+        <if test="createTime == null and routineTime == null">
+            and create_time BETWEEN (SELECT date_sub((SELECT date_sub((SELECT Max(create_time) FROM temperatures),interval 24 hour)),interval 1 hour)) and (SELECT date_sub((SELECT Max(create_time) FROM temperatures),interval 24 hour))
+        </if>
+        <if test="createTime == null and routineTime != null">
+            and create_time BETWEEN (SELECT date_sub((SELECT Max(create_time) FROM temperatures),interval 1 hour)) and (SELECT Max(create_time) FROM temperatures)
+        </if>
+    </select>
+
     <select id="findAllBySomeDataHh" parameterType="com.nanjing.weather.entity.TemperatureCenter"
             resultMap="findAllBySomeDataHHMap">
         SELECT * FROM temperatures where 1 = 1
@@ -45,6 +62,23 @@
             and create_time BETWEEN (SELECT date_sub(NOW(),interval #{routineTime} hour)) and NOW()
         </if>
 
+    </select>
+
+    <select id="findAllBySomeDataOfTime" parameterType="com.nanjing.weather.entity.TemperatureCenter"
+            resultMap="findAllBySomeDataHHMap">
+        SELECT * FROM temperatures where 1 = 1
+        <if test="value != null">
+            and value &lt; #{value}
+        </if>
+        <if test="createTime != null and routineTime != null">
+            and routine_time BETWEEN #{createTime} AND #{routineTime}
+        </if>
+        <if test="createTime == null and routineTime == null">
+            and create_time BETWEEN (SELECT date_sub((SELECT date_sub((SELECT Max(create_time) FROM temperatures),interval 24 hour)),interval 1 hour)) and (SELECT date_sub((SELECT Max(create_time) FROM temperatures),interval 24 hour))
+        </if>
+        <if test="createTime == null and routineTime != null">
+            and create_time BETWEEN (SELECT date_sub((SELECT Max(create_time) FROM temperatures),interval 1 hour)) and (SELECT Max(create_time) FROM temperatures)
+        </if>
     </select>
 
     <resultMap id="findAllBySomeDatahhMap" type="com.nanjing.weather.entity.Temperature">

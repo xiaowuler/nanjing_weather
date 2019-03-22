@@ -30,6 +30,7 @@ var GroundDetection = function () {
         this.plotValueClick();
 
         $('#search').on('click',this.searchClick.bind(this));
+        this.searchClick();
     }
 
     this.searchClick = function () {

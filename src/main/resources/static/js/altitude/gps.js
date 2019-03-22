@@ -88,6 +88,23 @@ var App = function () {
         $('#export').on('click', function () {
             // Get download url
             var imageUrl = $(".imgeUrl").find(".action").find("img").attr("src");
+            while (imageUrl.indexOf("\\") != -1) {
+                imageUrl = imageUrl.replace("\\", "/");
+            }
+            var downloadUrl = 'products/downloadFile?url={0}'.format(imageUrl);
+
+            // Trigger click event
+            var link = $('#download-link');
+            link.attr('href', downloadUrl);
+            link[0].click();
+        });
+
+        $('#export-a').on('click', function () {
+            // Get download url
+            var imageUrl = $(".imgeUrl").find(".action").find("img").attr("src");
+            while (imageUrl.indexOf("\\") != -1) {
+                imageUrl = imageUrl.replace("\\", "/");
+            }
             var downloadUrl = 'products/downloadFile?url={0}'.format(imageUrl);
 
             // Trigger click event
@@ -103,7 +120,24 @@ var App = function () {
         }.bind(this));
 
         $('#pause').on('click', this.OnPlayButtonClick.bind(this));
+        $('#pause-caption').on('click', this.OnPlayCationButtonClick.bind(this));
         $('#play').on('click', this.OnPauseButtonClick.bind(this));
+        $('#play-caption').on('click', this.OnPauseCationButtonClick.bind(this));
+    }
+
+    this.OnPauseCationButtonClick = function () {
+        this.UpdatePlayButtons(true);
+
+        this.timer = setInterval(function(){
+            var show = new ProductShow();
+            show.Init('#detail-slide');
+            show.ActiveNext();
+        }.bind(this), this.GetTimerInterval());
+    }
+
+    this.OnPlayCationButtonClick = function () {
+        this.UpdatePlayButtons(false);
+        clearInterval(this.timer);
     }
 
     this.GetTimerInterval = function () {
@@ -128,7 +162,14 @@ var App = function () {
     this.UpdatePlayButtons = function (isPlaying) {
         $('#play').toggle();
         $('#pause').toggle();
-        $('#play-caption').text(isPlaying ? "暂停" : "播放");
+        //$('#play-caption').text(isPlaying ? "暂停" : "播放");
+        if (isPlaying){
+            $('#play-caption').css("display", "none");
+            $('#pause-caption').css("display", "block");
+        }else {
+            $('#play-caption').css("display", "block");
+            $('#pause-caption').css("display", "none");
+        }
     }
 
     this.BindProductSelectClick = function () {

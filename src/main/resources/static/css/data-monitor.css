@@ -247,7 +247,11 @@
 }
 
 .monitor .datagrid-row-alt{
-    background: #f3f3f3;
+     background: #f3f3f3;
+}
+
+.monitor .datagrid-row-selected{
+    background: #ffe48d;
 }
 
 .monitor .datagrid-header-inner{

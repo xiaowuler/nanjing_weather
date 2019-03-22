@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>高空探测 - 南京市基础气象信息综合数据平台</title>
-    <link rel="shortcut icon" href="icos/weather.ico"/>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="easyUI/easyui.css">
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/aerological-sound.css">
@@ -62,12 +62,13 @@
                             <a href="javascript:;"val="5000">5s</a>
                         </div>
 
-                        <a href="javascript:;" class="operate-text operate-control-text" id="play-caption">播放</a>
+                        <a href="javascript:;" class="operate-text operate-control-text" id="play-caption" style="display: block">播放</a>
+                        <a href="javascript:;" class="operate-text operate-control-text" id="pause-caption" style="display:none">暂停</a>
                         <button class="operate-control control-button"id="pause"></button>
                         <button class="operate-control suspend-button" id="play"style="display:none"></button>
                     </div>
                     <div class="operate-border clearfix">
-                        <a href="javascript:;" class="operate-text operate-export" >导出</a>
+                        <a href="javascript:;" class="operate-text operate-export" id="export-a">导出</a>
                         <button class="operate-control export-button" id="export"></button>
                         <a href="products/downloadFile" class="operate-text operate-export" id="download-link" style="display:none;"></a>
                     </div>
