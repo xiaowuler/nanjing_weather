@@ -34,16 +34,6 @@ public class Hellocontroller {
         return user;
     }
 
-   /* @RequestMapping("/login")
-    public String controller(@RequestBody User user){
-        String username=user.getUsername();
-        String password=user.getPassword();
-
-        System.out.println(username);
-        System.out.println(password);
-        return user.toString();
-    }*/
-
     @RequestMapping("/findUsers")
     public List<User> findUsers() {
         return userMapper.findUserList();
