@@ -14,12 +14,22 @@ var App = function () {
         this.CalendarControl();
         window.onresize = this.Relayout.bind(this);
         $('.first-menu:first-child ul').show();
-        this.LoadList();
+        this.timeProcessing();
+        this.InitDateHour();
         this.BindProductSelectClick();//产品列表
         this.BindQueryButtonClick();
 
-    };
-        this.InitDateHour = function () {
+    }
+
+    this.timeProcessing = function () {
+        var myDate = new Date();
+        var hour = myDate.getHours();
+        var hourText = hour.length > 1 ? hour : "0{0}".format(hour);
+        $('#end-select').combobox('setValue',hourText + '时');
+        //$('#end-select').combobox('setValue','{0}时'.format(new Date().addHours(1).getHours()))
+    }
+
+    this.InitDateHour = function () {
            var startDay = $('#calendar').val();
            var startHour = $('#start-select').combobox('getValue');
            this.startTime = startDay + '/' + startHour;
@@ -63,7 +73,8 @@ var App = function () {
             $(e.target).parents('li').addClass("active").siblings().removeClass("active");
             this.productValue= $(e.target).parents('li').attr('val');
             this.RegionCode=$('#region a[class=action]').attr('val');
-            this.LoadList();
+            //this.LoadList();
+            this.InitDateHour();
         }.bind(this))
     }
 
@@ -72,7 +83,8 @@ var App = function () {
             $(e.target).addClass('action').siblings().removeClass('action');
             this.RegionCode= $(e.target).attr("val");
             //this.productValue=$('.second-nav li[class=action]').attr('val');
-            this.LoadList();
+            //this.LoadList();
+            this.InitDateHour();
         }.bind(this))
     }
 
