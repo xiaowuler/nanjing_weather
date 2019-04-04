@@ -64,6 +64,15 @@ var ProductShow = function (activeProductCallback) {
 
         // Bind product event
         this.ProductContainer.find('li').on('click', this.OnProductClick.bind(this));
+
+        if(products.length < 11)
+            this.HandlerPicHide(products.length);
+    }
+
+    this.HandlerPicHide = function (count) {
+        for(var i = 0; i < count-1; i++){
+            this.LeftScroller.trigger("click");
+        }
     }
 
     this.ActivePrevious = function () {
