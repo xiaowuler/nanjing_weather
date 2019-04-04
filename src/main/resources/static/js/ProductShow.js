@@ -73,6 +73,10 @@ var ProductShow = function (activeProductCallback) {
         for(var i = 0; i < count-1; i++){
             this.LeftScroller.trigger("click");
         }
+
+        for(var i = 0; i < count-1; i++){
+            this.RightScroller.trigger("click");
+        }
     }
 
     this.ActivePrevious = function () {
