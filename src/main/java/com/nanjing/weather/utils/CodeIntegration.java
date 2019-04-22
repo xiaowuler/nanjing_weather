@@ -111,7 +111,7 @@ public class CodeIntegration {
                         Class objs = Class.forName(allClassName);
                         Object o = objs.newInstance();
                         objs.getMethod("setStationId",String.class).invoke(o,(clazz.getMethod("getStationId").invoke(object).toString()));
-                        objs.getMethod(creObjSetMeth,BigDecimal.class).invoke(o,(new BigDecimal(new DecimalFormat("#.00").format(x / y))));
+                        objs.getMethod(creObjSetMeth,BigDecimal.class).invoke(o,(new BigDecimal(new DecimalFormat("#.0").format(x / y))));
                         creList.add(o);
                     }
 

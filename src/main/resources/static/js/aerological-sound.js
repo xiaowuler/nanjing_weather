@@ -2,22 +2,22 @@
  * Created by Administrator on 2018/11/22.
  */
 var App = function () {
-       var overview = $('#overview');
-       var length = overview.find('ul li').length;
-       var tab = $('#tab');
-       var dWidth = $('.detail-tab').width();
-        var tabNum = tab.find('ul li').length;
-        var tabWidth = dWidth / 7;
-         var number = 0;
-        var index = 0;
-       var showNum = 7;
-       var time;
-       var i = 1;
-       var interval = $('#interval-select li');
-       var interval6 = $('#interval-select6 li');
-       var interval30 = $('#interval-select30 li');
-       var broad = $('#broad-select li');
-       var iLength = $('#interval-select li').length;
+    var overview = $('#overview');
+    var length = overview.find('ul li').length;
+    var tab = $('#tab');
+    var dWidth = $('.detail-tab').width();
+    var tabNum = tab.find('ul li').length;
+    var tabWidth = dWidth / 7;
+    var number = 0;
+    var index = 0;
+    var showNum = 7;
+    var time;
+    var i = 1;
+    var interval = $('#interval-select li');
+    var interval6 = $('#interval-select6 li');
+    var interval30 = $('#interval-select30 li');
+    var broad = $('#broad-select li');
+    var iLength = $('#interval-select li').length;
 
 
     this.slide = $('#slide ul');

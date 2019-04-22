@@ -135,9 +135,15 @@ var GroundDetection = function () {
     this.timeProcessing = function () {
         var myDate = new Date();
         var hour = myDate.getHours();
-        $('#start-combobox').combobox('setValue',hour + '时');
-        $('#end-combobox').combobox('setValue','{0}时'.format(new Date().addHours(1).getHours()))
+        $('#start-combobox').combobox('setValue',hour.toString().PadLeft(2, '0') + '时');
+        $('#end-combobox').combobox('setValue','{0}时'.format(new Date().addHours(1).getHours().toString().PadLeft(2, '0')));
+        this.SetEndDateBoxValue($('#start-combobox').combobox('getValue'), $('#end-combobox').combobox('getValue'));
     }
+
+    this.SetEndDateBoxValue = function (startTime, endTime) {
+        if (startTime.substring(0, 2) >= endTime.substring(0, 2))
+            $('#end-date').datebox('setValue',  moment(new Date().addDays(1)).format('YYYY/MM/DD'));
+    }.bind(this);
 
     this.loadClick = function (flag) {
         if (flag) {
@@ -172,25 +178,18 @@ var GroundDetection = function () {
                     this.loadClick(false);
                     this.flag = true;
 
-                    if(requestValue == 'temperatures'){
+                    if(requestValue == 'temperatures')
                         this.temperatureResult = data;
-                        //this.result.addData('temperatures',data.valuePoints);
-                    }else if(requestValue == 'rainfalls'){
+                    else if(requestValue == 'rainfalls')
                         this.rainFallResult = data;
-                        //this.result.addData('rainfalls',data.valuePoints);
-                    }else if(requestValue == 'winds'){
+                    else if(requestValue == 'winds')
                         this.windResult = data;
-                        //this.result.addData('winds',data.valuePoints);
-                    }else if(requestValue == 'groundTemperature'){
+                    else if(requestValue == 'groundTemperature')
                         this.groundTemperatureResult = data;
-                        //this.result.addData('groundTemperature',data.valuePoints);
-                    }else if(requestValue == 'pressures'){
+                    else if(requestValue == 'pressures')
                         this.pressureResult = data;
-                        //this.result.addData('pressures',data.valuePoints);
-                    }else if(requestValue == 'humidities'){
+                    else if(requestValue == 'humidities')
                         this.humidityResult = data;
-                        //this.result.addData('humidities',data.valuePoints);
-                    }
 
                     this.insertData();
                     this.getCheckLayerInfo();

@@ -2,7 +2,7 @@
  * Created by Administrator on 2018/11/23.
  */
 var App = function () {
-   this.productValue ="rainfall";
+    this.productValue ="rainfall";
     this.startTime = '';
     this.endTime = '';
     this.categoryCodeValue = '';
@@ -26,7 +26,6 @@ var App = function () {
         var hour = myDate.getHours();
         var hourText = hour.length > 1 ? hour : "0{0}".format(hour);
         $('#end-select').combobox('setValue',hourText + '时');
-        //$('#end-select').combobox('setValue','{0}时'.format(new Date().addHours(1).getHours()))
     }
 
     this.InitDateHour = function () {
@@ -73,7 +72,6 @@ var App = function () {
             $(e.target).parents('li').addClass("active").siblings().removeClass("active");
             this.productValue= $(e.target).parents('li').attr('val');
             this.RegionCode=$('#region a[class=action]').attr('val');
-            //this.LoadList();
             this.InitDateHour();
         }.bind(this))
     }
@@ -82,8 +80,6 @@ var App = function () {
         $('.operate-border a').click(function (e) {
             $(e.target).addClass('action').siblings().removeClass('action');
             this.RegionCode= $(e.target).attr("val");
-            //this.productValue=$('.second-nav li[class=action]').attr('val');
-            //this.LoadList();
             this.InitDateHour();
         }.bind(this))
     }
@@ -114,8 +110,6 @@ var App = function () {
     }
 
     this.LoadList = function () {
-        /* var params = this.GetSearchParams();
-        var template= 'dataArrivals/findByType?type={0}&startTime={1}&endTime={2}&regionCode={3}';*/
         $('#data-monitor-grid').datagrid({
             columns: [[
                 {field: 'routine', title: '资料时间', align: 'center', width: 180},

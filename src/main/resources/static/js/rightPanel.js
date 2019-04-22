@@ -553,18 +553,6 @@ var RightPanel = function () {
     }
 
     this.checkNull = function () {
-        /*if (this.MapInfo.basePlotValueValue != null) {
-            this.MapInfo.Map.removeLayer(this.MapInfo.basePlotValueValue);
-        }
-        if (this.MapInfo.encryPlotValueValue != null) {
-            this.MapInfo.Map.removeLayer(this.MapInfo.encryPlotValueValue);
-        }
-        if (this.MapInfo.basePoltDirNameValue != null) {
-            this.MapInfo.Map.removeLayer(this.MapInfo.basePoltDirNameValue);
-        }
-        if (this.MapInfo.encryptionPointNameValue != null) {
-            this.MapInfo.Map.removeLayer(this.MapInfo.encryptionPointNameValue);
-        }*/
         if (this.MapInfo.ContourLayer != null)
             this.MapInfo.Map.removeLayer(this.MapInfo.ContourLayer);
 

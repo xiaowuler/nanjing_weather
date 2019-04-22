@@ -9,7 +9,6 @@ var App = function () {
         this.WindSelect();
         this.RightScroll();
         this.Drag();
-        //this.IntervalSelect();
         this.HumiditySelect();
         this.VariableSelect();
         this.LayerTextSelect();
@@ -19,9 +18,6 @@ var App = function () {
         this.TemperatureSelect();
         this.OnShrinkRightButton();
         window.onresize = this.Relayout.bind(this);
-        //$('#shrink-left').on('click', this.OnShrinkLeftButton.bind(this));
-        //$('#shrink-right').on('click', this.OnShrinkRightButton.bind(this));
-        //$('#shrink-bottom').on('click', this.OnShrinkBottomButton.bind(this));
     };
 
     this.Relayout = function () {
@@ -45,54 +41,6 @@ var App = function () {
             $('.right').toggleClass('right-line');
         });
     };
-
-    /*this.IntervalSelect = function () {
-        $(".interval-select a").click(function () {
-            $(this).toggleClass("action").siblings().removeClass("action");
-        });
-    };
-
-    this.MillimeterSelect = function () {
-        $('.millimeter-select a').click(function () {
-            $(this).toggleClass("action").siblings().removeClass("action");
-        });
-    };
-
-    this.VariableSelect = function () {
-        $('.variable-select a').click(function () {
-            $(this).toggleClass("action").siblings().removeClass("action");
-        });
-    };
-
-    this.TemperatureSelect = function () {
-        $('.temperature-select a').click(function () {
-            $(this).toggleClass("action").siblings().removeClass("action");
-        });
-    };
-
-    this.WindSelect = function () {
-        $('.wind-select a').click(function () {
-            $(this).toggleClass("action").siblings().removeClass("action");
-        });
-    };
-
-    this.GeothermalSelect = function () {
-        $('.geothermal-select a').click(function () {
-            $(this).toggleClass("action").siblings().removeClass("action");
-        });
-    };
-
-    this.AirPressureSelect = function () {
-        $('.air-pressure-select a').click(function () {
-            $(this).toggleClass("action").siblings().removeClass("action");
-        });
-    };
-
-    this.HumiditySelect = function () {
-        $('.humidity-select a').click(function () {
-            $(this).toggleClass("action").siblings().removeClass("action");
-        });
-    };*/
 
     this.MillimeterSelect = function () {
         $('.millimeter-select a').click(function (e) {
