@@ -40,4 +40,6 @@ public interface DataArrivalsMapper {
 
     List<DataArrival> findMaxTime();
 
+    DataArrival findMaxByProductCategory(String productCategory);
+
 }

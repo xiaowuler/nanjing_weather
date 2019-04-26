@@ -49,7 +49,7 @@
     </select>
 
     <select id="findOneByTypeAndArea" resultType="com.nanjing.weather.domain.ProductData">
-        select id,category_code categoryCode,region_code regionCode,type_code typeCode,url,routine_time routineTime,create_time createTime from  (select * from products where category_code = #{0} AND region_code = #{1} and type_code = #{2} AND url !='data-miss.jpg') p ORDER BY p.routine_time desc  LIMIT 0,1
+        select id,category_code categoryCode,region_code regionCode,type_code typeCode,url,routine_time routineTime,create_time createTime from products where category_code = #{0} AND region_code = #{1} and type_code = #{2} AND url !='data-miss.jpg'  ORDER BY routine_time desc  LIMIT 0,1
     </select>
 
     <resultMap id="findProductCategoryRegionRelsMap" type="com.nanjing.weather.domain.ProductCategoryRegionRels">
@@ -106,5 +106,9 @@
 
     <select id="findOneByTypeAndTwo" resultType="com.nanjing.weather.domain.ProductData">
         SELECT id,category_code categoryCode,region_code regionCode,type_code typeCode,url,routine_time routineTime,create_time createTime from products where category_code = 'feng-kuo-xian' AND region_code = #{type} AND type_code = '6-fen-zhong' AND url !='data-miss.jpg' and reserved1 = 'contour' ORDER BY routine_time DESC LIMIT 0,1
+    </select>
+
+    <select id="findAllProductType" resultType="com.nanjing.weather.domain.ProductType">
+        SELECT code as code, category_code as categoryCode, `name` as `name`, sequence as sequence FROM product_types
     </select>
 </mapper>

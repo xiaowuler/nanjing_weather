@@ -2,6 +2,7 @@ package com.nanjing.weather.dao;
 
 import com.nanjing.weather.domain.ProductCategoryRegionRels;
 import com.nanjing.weather.domain.ProductData;
+import com.nanjing.weather.domain.ProductType;
 import com.nanjing.weather.domain.Products;
 import com.nanjing.weather.dto.Category;
 import org.apache.ibatis.annotations.Mapper;
@@ -39,4 +40,6 @@ public interface ProductsMapper {
     ProductData findOneByTypeAndOne(String area);
 
     ProductData findOneByTypeAndTwo(String area);
+
+    List<ProductType> findAllProductType();
 }

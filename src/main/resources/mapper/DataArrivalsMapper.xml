@@ -157,4 +157,8 @@
         ORDER BY
             routine_time
     </select>
+
+    <select id="findMaxByProductCategory" parameterType="String" resultType="com.nanjing.weather.entity.DataArrival">
+        SELECT product_type_code as productTypeCode, routine_time as routineTime FROM data_arrivals WHERE product_type_code = #{0} ORDER BY routine_time DESC LIMIT 0,1
+    </select>
 </mapper>

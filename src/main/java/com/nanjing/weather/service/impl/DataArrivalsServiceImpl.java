@@ -1,6 +1,7 @@
 package com.nanjing.weather.service.impl;
 
 import com.nanjing.weather.dao.DataArrivalsMapper;
+import com.nanjing.weather.dao.ProductsMapper;
 import com.nanjing.weather.domain.*;
 import com.nanjing.weather.entity.DataArrival;
 import com.nanjing.weather.service.DataArrivalsService;
@@ -18,6 +19,9 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
 
     @Autowired
     private DataArrivalsMapper dataArrivalsMapper;
+
+    @Autowired
+    private ProductsMapper productsMapper;
 
     @Override
     public PageResult<DataArrivals> findAllType(Integer pageNum, Integer pageSize, String type) {
@@ -117,7 +121,10 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
     @Override
     public List<List<DataState>> findDataState() {
         List<List<DataState>> list = new ArrayList<>();
-        List<DataArrival> maxList = dataArrivalsMapper.findMaxTime();
+        //List<DataArrival> maxList = dataArrivalsMapper.findMaxTime();
+
+        List<DataArrival> maxList = GetProductCategoryMaxRoutineTime();
+
         List<DataState> routineData = new ArrayList<>();
         List<DataState> notRoutineData = new ArrayList<>();
         List<DataState> windData = new ArrayList<>();
@@ -183,6 +190,18 @@ public class DataArrivalsServiceImpl implements DataArrivalsService {
         windData = getUpArea(windData);
         list.add(setAreaName(windData));
         return list;
+    }
+
+    private List<DataArrival> GetProductCategoryMaxRoutineTime(){
+        List<DataArrival> dataArrivals = new ArrayList<>();
+        List<ProductType> productTypes = productsMapper.findAllProductType();
+        for (ProductType productType: productTypes) {
+            DataArrival dataArrival = dataArrivalsMapper.findMaxByProductCategory(productType.getCode());
+            if (dataArrival != null)
+                dataArrivals.add(dataArrival);
+        }
+
+        return dataArrivals;
     }
 
     private List<DataState> getHandleTime(List<DataState> dataStates){
