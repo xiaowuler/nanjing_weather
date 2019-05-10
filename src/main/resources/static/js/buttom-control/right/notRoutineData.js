@@ -66,7 +66,6 @@ var NotRoutineData = function () {
 
         /*console.log(textHtml)*/
         $("#notRoutine-data").html(textHtml);
-        this.Slide();
     }
 
     this.Slide = function () {

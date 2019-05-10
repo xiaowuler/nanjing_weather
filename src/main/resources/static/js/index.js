@@ -229,15 +229,16 @@ var App = function () {
     };
 
     this.Slide = function () {
-        var swiper = new Swiper('.swiper-left', {
+        this.Swiper1 = new Swiper('.swiper-left', {
             slidesPerView: 5,
-            loop: true,
+            watchOverflow: true,
             nextButton: '.swiper-next-left',
             prevButton: '.swiper-prev-left'
         });
-        var swiper = new Swiper('.swiper-right', {
+
+        this.Swiper2 = new Swiper('.swiper-right', {
             slidesPerView: 5,
-            loop: true,
+            watchOverflow: true,
             nextButton: '.swiper-next-right',
             prevButton: '.swiper-prev-right'
         });

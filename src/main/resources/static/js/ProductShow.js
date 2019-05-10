@@ -89,8 +89,16 @@ var ProductShow = function (activeProductCallback) {
     this.ActiveNext = function () {
         var product = this.GetActiveProduct();
         var next = product.next().find('img:first');
-        if (next != null)
+        if (next.length > 0)
             next.trigger('click');
+        else
+        {
+            product = this.GetFirstProduct();
+            if (product == null)
+                return;
+
+            product.find('img:first').trigger('click');
+        }
     }
 
     this.CreateProduct = function (product) {
@@ -100,6 +108,11 @@ var ProductShow = function (activeProductCallback) {
 
     this.GetActiveProduct = function () {
         var elements = this.ProductContainer.find('li.action ');
+        return elements.length > 0 ? $(elements[0]) : null;
+    }
+
+    this.GetFirstProduct = function () {
+        var elements = this.ProductContainer.find('li:first ');
         return elements.length > 0 ? $(elements[0]) : null;
     }
 

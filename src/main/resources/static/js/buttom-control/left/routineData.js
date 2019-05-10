@@ -40,12 +40,9 @@ var RoutineData = function () {
                 else
                     textHtml += this.typeCodes[i].writeHtml(j,'center');
             }
-
         }
 
         $("#routine-data").html(textHtml);
-
-        this.Slide();
     }
 
     this.Slide = function () {

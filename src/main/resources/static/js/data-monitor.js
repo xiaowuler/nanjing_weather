@@ -23,7 +23,7 @@ var App = function () {
 
     this.timeProcessing = function () {
         var myDate = new Date();
-        var hour = myDate.getHours();
+        var hour = myDate.getHours().toString();
         var hourText = hour.length > 1 ? hour : "0{0}".format(hour);
         $('#end-select').combobox('setValue',hourText + '时');
     }
