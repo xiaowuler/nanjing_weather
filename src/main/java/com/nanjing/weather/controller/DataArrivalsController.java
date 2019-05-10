@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -23,6 +26,9 @@ public class DataArrivalsController {
     // 查询
     @RequestMapping("/findByType")
     public PageResult<DataArrivals> findByType(String startTime, String endTime, Integer page, Integer rows, String type,String regionCode) {
+
+        if (getEndTime(endTime) != null)
+            endTime = getEndTime(endTime);
 
         if (type.equals("60-fen-zhong")) {
             type = "6-fen-zhong";
@@ -68,6 +74,22 @@ public class DataArrivalsController {
                 return getDataArrivalsPageResult(startTime, endTime, page, rows, type,regionCode);
             }
         }
+    }
+
+    private String getEndTime(String endTime){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/HH时");
+        try {
+            Date endDate = sdf.parse(endTime);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(endDate);
+            cal.add(Calendar.HOUR, 1);
+            endDate = cal.getTime();
+            return sdf.format(endDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     private PageResult<DataArrivals> getDataArrivalsPageResult(String startTime, String endTime, Integer page, Integer rows, String type,String regionCode) {
