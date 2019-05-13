@@ -172,6 +172,8 @@ var GroundDetection = function () {
                     // hide loading
                     this.loadClick(false);
                     this.flag = true;
+                    this.checkNull();
+                    this.clearPointValue();
                 }.bind(this),
                 success: function (data) {
                     // hide loading...
@@ -203,6 +205,10 @@ var GroundDetection = function () {
     }
 
     this.insertData = function () {
+
+        this.checkNull();
+        this.clearPointValue();
+
         var array = [];
         if(this.rainFallResult != null)
             array.push(new Array('rainfalls',this.rainFallResult.valuePoints));
@@ -335,6 +341,18 @@ var GroundDetection = function () {
     this.getCheckedByLayerText = function () {
         if($('.layer-text a.action').length === 0)
             this.checkNull();
+    }
+
+    this.clearPointValue = function () {
+        if (this.MapInfo.encryPlotValueValue != null)
+            this.MapInfo.Map.removeLayer(this.MapInfo.encryPlotValueValue);
+        if (this.MapInfo.encryptionPointNameValue != null)
+            this.MapInfo.Map.removeLayer(this.MapInfo.encryptionPointNameValue);
+
+        if (this.MapInfo.basePlotValueValue != null)
+            this.MapInfo.Map.removeLayer(this.MapInfo.basePlotValueValue);
+        if (this.MapInfo.basePoltDirNameValue != null)
+            this.MapInfo.Map.removeLayer(this.MapInfo.basePoltDirNameValue);
     }
 
     this.checkNull = function () {

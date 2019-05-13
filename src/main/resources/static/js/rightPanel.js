@@ -298,6 +298,10 @@ var RightPanel = function () {
     }
 
     this.insertData = function () {
+
+        this.checkNull();
+        this.clearPointValue();
+
         var array = [];
         if(this.rainFallResult != null)
             array.push(new Array('rainfalls',this.rainFallResult.valuePoints));
@@ -312,6 +316,18 @@ var RightPanel = function () {
         if (this.humidityResult != null)
             array.push(new Array('humidities',this.humidityResult.valuePoints));
         this.result.addData(array)
+    }
+
+    this.clearPointValue = function () {
+        if (this.MapInfo.encryPlotValueValue != null)
+            this.MapInfo.Map.removeLayer(this.MapInfo.encryPlotValueValue);
+        if (this.MapInfo.encryptionPointNameValue != null)
+            this.MapInfo.Map.removeLayer(this.MapInfo.encryptionPointNameValue);
+
+        if (this.MapInfo.basePlotValueValue != null)
+            this.MapInfo.Map.removeLayer(this.MapInfo.basePlotValueValue);
+        if (this.MapInfo.basePoltDirNameValue != null)
+            this.MapInfo.Map.removeLayer(this.MapInfo.basePoltDirNameValue);
     }
 
     this.basePlotClick = function () {

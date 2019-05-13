@@ -39,10 +39,10 @@
             and routine_time BETWEEN #{createTime} AND #{routineTime}
         </if>
         <if test="createTime == null and routineTime == null">
-            and create_time BETWEEN (SELECT date_sub((SELECT date_sub((SELECT Max(create_time) FROM temperatures),interval 24 hour)),interval 1 hour)) and (SELECT date_sub((SELECT Max(create_time) FROM temperatures),interval 24 hour))
+            and routine_time = (SELECT date_sub((SELECT Max(create_time) FROM temperatures),interval 24 hour))
         </if>
         <if test="createTime == null and routineTime != null">
-            and create_time BETWEEN (SELECT date_sub((SELECT Max(create_time) FROM temperatures),interval 1 hour)) and (SELECT Max(create_time) FROM temperatures)
+            and routine_time = (SELECT Max(routine_time) FROM temperatures)
         </if>
     </select>
 

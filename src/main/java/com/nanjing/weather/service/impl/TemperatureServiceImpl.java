@@ -109,7 +109,11 @@ public class TemperatureServiceImpl implements TemperatureService {
                 temperatureCenter.setRoutineTime("24");
                 temperatureList = temperaturesMapper.findAllBySomeDataOfTime(temperatureCenter);
             }
-            temperatures = handler24HourWarming(temperatureList, temperatureOne);
+
+            if (temperatureOne.size() == 0)
+                return null;
+            else
+                temperatures = handler24HourWarming(temperatureList, temperatureOne);
         }
         list = CodeIntegration.getValuePoint(temperatures, "getStationId", "getValue");
         if (time != null) {
