@@ -51,8 +51,9 @@ var ProductShow = function (activeProductCallback) {
         if (products === null || products.length === 0)
         {
             this.ProductContainer = null;
+            var imagePath = '<li style="display: list-item;"><div><img class="img1" src="images/miss data.png"></div></li>'
             $('.imgeUrl').html('');
-            $('.imgeUrl2').html('');
+            $('.imgeUrl2').html(imagePath);
             return;
         }
 
