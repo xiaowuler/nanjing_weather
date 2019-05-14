@@ -49,7 +49,12 @@ var ProductShow = function (activeProductCallback) {
 
     this.Load = function (products) {
         if (products === null || products.length === 0)
+        {
+            this.ProductContainer = null;
+            $('.imgeUrl').html('');
+            $('.imgeUrl2').html('');
             return;
+        }
 
         // Initialize products
         this.ProductContainer.empty();
