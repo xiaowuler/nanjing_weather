@@ -31,8 +31,8 @@ public class TemperatureServiceImpl implements TemperatureService {
         List<Temperature> temperatures = new ArrayList<>();
         List<com.nanjing.weather.entity.Temperature> temperatureList = new ArrayList<>();
         Integer num = Integer.parseInt(parmTwo.substring(1));
+        String numParm = parmTwo.substring(0, 1);
         if (parmOne.equals("温度")) {
-            String numParm = parmTwo.substring(0, 1);
             if (numParm.equals("≥")) {
                 TemperatureCenter temperatureCenter = new TemperatureCenter();
                 temperatureCenter.setValue(new BigDecimal(parmTwo.substring(1)));
@@ -53,7 +53,7 @@ public class TemperatureServiceImpl implements TemperatureService {
             temperatures = CodeIntegration.caleAvg(temperatureList,"getTemperatureCenter","getValue","com.nanjing.weather.entitys.Temperature","setValue");
 
         } else if (parmOne.equals("最高温度")) {
-            if (num >= 0) {
+            if (numParm.equals("≥")) {
                 TemperatureNinMax temperatureNinMax = new TemperatureNinMax();
                 temperatureNinMax.setMaxValue(new BigDecimal(parmTwo.substring(1)));
                 if (time != null) {
@@ -74,7 +74,7 @@ public class TemperatureServiceImpl implements TemperatureService {
             temperatures = CodeIntegration.caleAvg(temperatureList,"getTemperatureNinMaxe","getMaxValue","com.nanjing.weather.entitys.Temperature","setValue");
 
         } else if (parmOne.equals("最低温度")) {
-            if (num >= 0) {
+            if (numParm.equals("≥")) {
                 TemperatureNinMax temperatureNinMax = new TemperatureNinMax();
                 temperatureNinMax.setMinValue(new BigDecimal(parmTwo.substring(1)));
                 if (time != null) {
@@ -95,7 +95,7 @@ public class TemperatureServiceImpl implements TemperatureService {
             temperatures = CodeIntegration.caleAvg(temperatureList,"getTemperatureNinMaxe","getMinValue","com.nanjing.weather.entitys.Temperature","setValue");
         } else if (parmOne.equals("24小时变温")) {
             List<com.nanjing.weather.entity.Temperature> temperatureOne;
-            String numParm = parmTwo.substring(0, 1);
+            //String numParm = parmTwo.substring(0, 1);
             if (numParm.equals("≥")) {
                 TemperatureCenter temperatureCenter = new TemperatureCenter();
                 temperatureCenter.setValue(new BigDecimal(parmTwo.substring(1)));
