@@ -104,7 +104,7 @@
             and routine_time BETWEEN #{createTime} AND #{routineTime}
         </if>
         <if test="createTime == null and routineTime == null">
-            and routine_time = (SELECT max(routine_time) FROM `temperatures`)
+            and routine_time = (SELECT max(routine_time) FROM `temperatures_min_max`)
         </if>
     </select>
 
@@ -121,7 +121,7 @@
             and routine_time BETWEEN #{createTime} AND #{routineTime}
         </if>
         <if test="createTime == null and routineTime == null">
-            and routine_time = (SELECT max(routine_time) FROM `temperatures`)
+            and routine_time = (SELECT max(routine_time) FROM `temperatures_min_max`)
         </if>
     </select>
 

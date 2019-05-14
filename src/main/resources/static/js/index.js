@@ -219,7 +219,7 @@ var App = function () {
     };
 
     this.LayerTextSelect = function (classname) {
-        $('.layer-text a.'+classname).click(function (e) {
+        $('.layer-text a.'+classname).off('click').on('click', function (e) {
             $(e.target).toggleClass("action").siblings().removeClass("action");
         }.bind(this));
     };

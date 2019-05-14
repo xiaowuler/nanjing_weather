@@ -55,6 +55,9 @@ var GroundDetection = function () {
         this.groundTemperatureResult = null;
         this.pressureResult = null;
         this.humidityResult = null;
+
+        this.checkNull();
+        this.clearPointValue();
     }
 
     this.senseRainfallCheck = function (time) {
@@ -205,10 +208,6 @@ var GroundDetection = function () {
     }
 
     this.insertData = function () {
-
-        this.checkNull();
-        this.clearPointValue();
-
         var array = [];
         if(this.rainFallResult != null)
             array.push(new Array('rainfalls',this.rainFallResult.valuePoints));
