@@ -10,8 +10,10 @@
 }
 
 .color-info{
+    /*position: absolute;
+    bottom: 0px !important;*/
     position: absolute;
-    bottom: 0px !important;
+    bottom: 10px;
 }
 
 .color-unit{
