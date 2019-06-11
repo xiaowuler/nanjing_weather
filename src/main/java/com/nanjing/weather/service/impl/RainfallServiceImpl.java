@@ -52,7 +52,7 @@ public class RainfallServiceImpl implements RainfallService {
         List<RainFall> rainFalls = rainfallsMapper.findAllBySomeTerm(rainFallCenter);
         //rainfallsList = CodeIntegration.caleAvg(rainFalls,"getRainFallCenter","getValue","com.nanjing.weather.entitys.Rainfall","setValue");
         if (time == null)
-            rainfallsList = GetIndexValue(rainFalls);
+            rainfallsList = GetIndexValue(rainFalls,Double.parseDouble(parmTwo));
         else
             rainfallsList = GetValues(rainFalls,Double.parseDouble(parmOne));
 
@@ -113,7 +113,7 @@ public class RainfallServiceImpl implements RainfallService {
         return rainfallsList;
     }
 
-    private List<Rainfalls> GetIndexValue(List<RainFall> rainFalls){
+    private List<Rainfalls> GetIndexValue(List<RainFall> rainFalls, Double maxValue){
         List<Rainfalls> rainfallsList = new ArrayList<>();
         Rainfalls rainfalls;
         SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -143,10 +143,12 @@ public class RainfallServiceImpl implements RainfallService {
 
             }
 
-            rainfalls = new Rainfalls();
-            rainfalls.setStation_Id(rainfall.getStationId());
-            rainfalls.setValue(new BigDecimal(new DecimalFormat("#.0").format(count)));
-            rainfallsList.add(rainfalls);
+            if (count >= maxValue){
+                rainfalls = new Rainfalls();
+                rainfalls.setStation_Id(rainfall.getStationId());
+                rainfalls.setValue(new BigDecimal(new DecimalFormat("#.0").format(count)));
+                rainfallsList.add(rainfalls);
+            }
         }
 
         return rainfallsList;
