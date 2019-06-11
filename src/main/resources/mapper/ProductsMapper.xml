@@ -12,7 +12,7 @@
     </select>
 
     <select id="findByTime" resultType="com.nanjing.weather.domain.Products">
-        select * from products WHERE url !='data-miss.jpg'and type_code = #{0} and  routine_time BETWEEN (SELECT date_sub((#{1}),interval 24 hour)) and (#{1}) AND RIGHT(routine_time,5)='00:00' and region_code=#{2} GROUP BY routine_time ORDER BY routine_time desc;
+        select * from products WHERE url !='data-miss.jpg'and type_code = #{0} and  routine_time >= (SELECT date_sub((#{1}),interval 24 hour)) and routine_time &lt;= (#{1}) AND RIGHT(routine_time,5)='00:00' and region_code=#{2} GROUP BY routine_time ORDER BY routine_time desc;
     </select>
 
     <select id="findAllByTime" resultType="com.nanjing.weather.domain.Products">

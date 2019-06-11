@@ -101,8 +101,8 @@ var MapInfoGround = function () {
     };
 
     this.GetFillColor = function (polygon, levels) {
-        if (polygon.Area > 1 && levels[0].type == 'rainfalls')
-            return 'rgb(' + levels[0].Color + ')';
+        /*if (polygon.Area > 1 && levels[0].type == 'rainfalls')
+            return 'rgb(' + levels[0].Color + ')';*/
 
         var color = levels[levels.length - 1];
         for (var i = 0; i < levels.length; i++) {

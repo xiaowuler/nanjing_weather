@@ -13,18 +13,16 @@
     </resultMap>
 
     <select id="findAllBySomeTerm" resultMap="findAllBySomeMap">
+
         SELECT * from rainfalls where 1 = 1
         <if test="createTime != null and routineTime != null">
-            and routine_time BETWEEN #{createTime} AND #{routineTime}
+            and routine_time >= #{createTime} AND routine_time &lt;= #{routineTime} and RIGHT(routine_time,5)='00:00'
         </if>
 
         <if test="routineTime != null and createTime == null">
-            and create_time BETWEEN (SELECT date_sub(NOW(),interval #{routineTime} hour)) and NOW()
+            and create_time BETWEEN (SELECT date_sub(NOW(),interval #{routineTime} hour)) and NOW() ORDER by routine_time
         </if>
 
-        <if test="value != null">
-            and value >= #{value}
-        </if>
 
     </select>
 
