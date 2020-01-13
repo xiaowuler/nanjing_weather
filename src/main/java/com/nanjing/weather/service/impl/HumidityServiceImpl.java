@@ -38,7 +38,6 @@ public class HumidityServiceImpl implements HumidityService {
         }
         List<Humiditie> allBySomeTerm = humiditiesMapper.findAllBySomeTerm(humiditieCenter);
         humiditiesList = CodeIntegration.caleAvg(allBySomeTerm,"getHumiditieCenter","getValue","com.nanjing.weather.entitys.Humidity","setValue");
-
         list = CodeIntegration.getValuePoint(humiditiesList, "getStationId", "getValue");
 
         if(allBySomeTerm != null && allBySomeTerm.size()>0){
